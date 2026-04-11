@@ -48,9 +48,9 @@ export function PortfolioModal({ project, onClose }: PortfolioModalProps) {
       <GlassCard className="relative flex w-full max-w-[320px] flex-col overflow-hidden border-[color:var(--ui-border)] bg-[image:var(--ui-card)] p-3 sm:max-w-[520px] sm:p-4">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(244,74,34,0.22),transparent_30%),radial-gradient(circle_at_80%_18%,rgba(255,160,85,0.16),transparent_24%),radial-gradient(circle_at_bottom_right,rgba(255,112,92,0.12),transparent_28%)]" />
         <div className="relative flex items-start justify-between gap-3">
-          <div>
+          <div className="min-w-0 flex-1">
             <p className="text-[8px] uppercase tracking-[0.2em] text-[color:var(--ui-soft)]">{project.category}</p>
-            <h2 className="mt-2 max-w-[13ch] text-[13px] font-semibold leading-none tracking-tight text-[color:var(--ui-strong)] sm:text-[18px]">
+            <h2 className="mt-2 text-[13px] font-semibold leading-none tracking-tight text-[color:var(--ui-strong)] sm:text-[18px]">
               {project.title}
             </h2>
           </div>
@@ -64,7 +64,7 @@ export function PortfolioModal({ project, onClose }: PortfolioModalProps) {
         </div>
 
         <div className="relative mt-4 grid gap-3 sm:grid-cols-[1.05fr_0.95fr] sm:gap-4">
-          <div className="max-w-md">
+          <div>
             <p className="text-[8px] leading-4 text-[color:var(--ui-muted)] sm:text-[9px] sm:leading-4.5">{project.description}</p>
           </div>
           <div className="space-y-2.5">

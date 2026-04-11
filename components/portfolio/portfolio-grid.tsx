@@ -43,8 +43,8 @@ export function PortfolioGrid({ compact = false, projects }: PortfolioGridProps)
                 <h2
                   className={
                     compact
-                      ? "mt-1.5 max-w-[14ch] text-[11px] font-semibold leading-none tracking-tight text-[color:var(--ui-strong)] sm:text-[13px]"
-                      : "mt-2.5 max-w-[14ch] text-[12px] font-semibold leading-none tracking-tight text-[color:var(--ui-strong)] sm:text-[16px]"
+                      ? "mt-1.5 text-[11px] font-semibold leading-none tracking-tight text-[color:var(--ui-strong)] sm:text-[13px]"
+                      : "mt-2.5 text-[12px] font-semibold leading-none tracking-tight text-[color:var(--ui-strong)] sm:text-[16px]"
                   }
                 >
                   {project.title}
@@ -54,8 +54,8 @@ export function PortfolioGrid({ compact = false, projects }: PortfolioGridProps)
               <p
                 className={
                   compact
-                    ? "line-clamp-2 max-w-[30ch] text-[7px] leading-3.5 text-[color:var(--ui-muted)] sm:text-[8px] sm:leading-4"
-                    : "line-clamp-2 max-w-[30ch] text-[8px] leading-4 text-[color:var(--ui-muted)] sm:text-[9px] sm:leading-4.5"
+                    ? "line-clamp-2 text-[7px] leading-3.5 text-[color:var(--ui-muted)] sm:text-[8px] sm:leading-4"
+                    : "line-clamp-2 text-[8px] leading-4 text-[color:var(--ui-muted)] sm:text-[9px] sm:leading-4.5"
                 }
               >
                 {project.description}

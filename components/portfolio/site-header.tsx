@@ -8,7 +8,7 @@ export function SiteHeader() {
     <header className="sticky top-3 z-30 sm:top-4">
       <GlassCard className="mx-auto max-w-6xl px-4 py-3 sm:px-6 sm:py-4">
         <div className="grid gap-4 lg:grid-cols-[1fr_auto] lg:items-start">
-          <div className="flex min-w-0 items-center gap-4 lg:justify-self-start">
+          <div className="flex min-w-0 items-start gap-4 lg:justify-self-start">
             <div className="relative h-10 w-10 overflow-hidden rounded-2xl border border-[color:var(--ui-border)] bg-[var(--ui-chip)] sm:h-12 sm:w-12">
               <Image
                 alt="@alhakimi"
@@ -29,7 +29,7 @@ export function SiteHeader() {
             </div>
           </div>
 
-          <div className="justify-self-center lg:justify-self-end">
+          <div className="justify-self-center pt-4 lg:justify-self-end lg:pt-0">
             <HeaderClock />
           </div>
         </div>
