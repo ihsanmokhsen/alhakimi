@@ -1,9 +1,8 @@
-"use client";
-
 import type { Project } from "@prisma/client";
 import Link from "next/link";
 
 import { BackgroundLayer } from "@/components/portfolio/background-layer";
+import { BottomNav } from "@/components/portfolio/bottom-nav";
 import { PortfolioGrid } from "@/components/portfolio/portfolio-grid";
 import { SiteFooter } from "@/components/portfolio/site-footer";
 import { SiteHeader } from "@/components/portfolio/site-header";
@@ -47,6 +46,7 @@ export function HomeShell({ projects }: HomeShellProps) {
       >
         Login
       </Link>
+      <BottomNav />
     </main>
   );
 }

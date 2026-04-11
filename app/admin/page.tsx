@@ -1,16 +1,20 @@
 import Link from "next/link";
 
+import { JournalForm } from "@/components/admin/journal-form";
+import { JournalList } from "@/components/admin/journal-list";
 import { BackgroundLayer } from "@/components/portfolio/background-layer";
 import { ProjectList } from "@/components/admin/project-list";
+import { createJournalAction } from "@/lib/actions/journals";
 import { GlassCard } from "@/components/ui/glass-card";
 import { logoutAction } from "@/lib/actions/auth";
 import { reorderProjectsAction } from "@/lib/actions/projects";
+import { getJournals } from "@/lib/data/journals";
 import { getProjects } from "@/lib/data/projects";
 import { requireAdmin } from "@/lib/auth";
 
 export default async function AdminPage() {
   const admin = await requireAdmin();
-  const projects = await getProjects();
+  const [projects, journals] = await Promise.all([getProjects(), getJournals()]);
 
   return (
     <main className="relative isolate min-h-screen px-4 py-4 sm:px-6">
@@ -40,6 +44,16 @@ export default async function AdminPage() {
         </GlassCard>
 
         <ProjectList onReorder={reorderProjectsAction} projects={projects} />
+
+        <section className="space-y-5">
+          <div className="space-y-2">
+            <p className="text-[11px] uppercase tracking-[0.3em] text-[color:var(--ui-soft)]">Journal</p>
+            <h2 className="text-2xl font-semibold text-[color:var(--ui-strong)]">Add a note</h2>
+          </div>
+
+          <JournalForm action={createJournalAction} />
+          <JournalList journals={journals} />
+        </section>
       </div>
     </main>
   );

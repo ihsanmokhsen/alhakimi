@@ -47,6 +47,17 @@ async function main() {
       position: 1
     }
   });
+
+  await prisma.journal.upsert({
+    where: { id: "journal-welcome-entry" },
+    update: {},
+    create: {
+      id: "journal-welcome-entry",
+      title: "Jurnal pertama",
+      content: "Catatan singkat ini bisa Anda ganti atau hapus dari halaman admin.",
+      publishedAt: new Date()
+    }
+  });
 }
 
 main()
