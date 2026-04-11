@@ -29,7 +29,7 @@ export function SiteHeader() {
             </div>
           </div>
 
-          <div className="justify-self-center pt-4 lg:justify-self-end lg:pt-0">
+          <div className="justify-self-end pt-4 lg:pt-0">
             <HeaderClock />
           </div>
         </div>
