@@ -1,5 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 
+import { assertDatabaseEnv } from "@/lib/db-env";
+
+assertDatabaseEnv();
+
 const globalForPrisma = globalThis as typeof globalThis & {
   prisma?: PrismaClient;
 };
