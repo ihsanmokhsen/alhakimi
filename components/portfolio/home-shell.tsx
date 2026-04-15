@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { BackgroundLayer } from "@/components/portfolio/background-layer";
 import { BottomNav } from "@/components/portfolio/bottom-nav";
+import { EmailButton } from "@/components/portfolio/email-button";
 import { PortfolioGrid } from "@/components/portfolio/portfolio-grid";
 import { SiteFooter } from "@/components/portfolio/site-footer";
 import { SiteHeader } from "@/components/portfolio/site-header";
@@ -46,6 +47,7 @@ export function HomeShell({ projects }: HomeShellProps) {
       >
         Login
       </Link>
+      <EmailButton />
       <BottomNav />
     </main>
   );

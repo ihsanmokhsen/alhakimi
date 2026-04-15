@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { BackgroundLayer } from "@/components/portfolio/background-layer";
 import { BottomNav } from "@/components/portfolio/bottom-nav";
+import { EmailButton } from "@/components/portfolio/email-button";
 import { SiteHeader } from "@/components/portfolio/site-header";
 import { GlassCard } from "@/components/ui/glass-card";
 import { getJournalById } from "@/lib/data/journals";
@@ -54,6 +55,7 @@ export default async function JournalDetailPage({ params }: JournalDetailPagePro
         </GlassCard>
       </div>
 
+      <EmailButton />
       <BottomNav />
     </main>
   );

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { JournalGrid } from "@/components/portfolio/journal-grid";
 import { BackgroundLayer } from "@/components/portfolio/background-layer";
 import { BottomNav } from "@/components/portfolio/bottom-nav";
+import { EmailButton } from "@/components/portfolio/email-button";
 import { SiteFooter } from "@/components/portfolio/site-footer";
 import { SiteHeader } from "@/components/portfolio/site-header";
 import { getJournals } from "@/lib/data/journals";
@@ -32,6 +33,7 @@ export default async function JournalPage() {
       >
         Login
       </Link>
+      <EmailButton />
       <BottomNav />
     </main>
   );
