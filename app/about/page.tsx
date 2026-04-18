@@ -12,21 +12,21 @@ export default function AboutPage() {
     <main className="relative isolate min-h-screen px-4 pt-3 pb-8 sm:px-6 sm:pt-4">
       <BackgroundLayer />
 
-      <SiteHeader />
+      <SiteHeader light />
 
       <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col">
         <section className="min-h-[10vh] sm:min-h-[14vh]" />
 
         <section className="pb-8">
-          <GlassCard className="mx-auto max-w-4xl p-6 sm:p-8">
+          <GlassCard className="mx-auto max-w-4xl border-[color:var(--public-border)] bg-[color:var(--public-surface)] p-6 sm:p-8">
             <div className="space-y-3">
-              <p className="text-[10px] uppercase tracking-[0.26em] text-[color:var(--ui-soft)]">About Me</p>
-              <h1 className="text-2xl font-semibold leading-tight text-[color:var(--ui-strong)] sm:text-4xl">
+              <p className="text-[10px] uppercase tracking-[0.26em] text-[color:var(--public-text-soft)]">About Me</p>
+              <h1 className="text-2xl font-semibold leading-tight text-[color:var(--public-text-strong)] sm:text-4xl">
                 Muhammad Ihsanul Hakim Mokhsen
               </h1>
             </div>
 
-            <p className="mt-6 whitespace-pre-line text-sm leading-8 text-[color:var(--ui-muted)] sm:text-[15px]">
+            <p className="mt-6 whitespace-pre-line text-sm leading-8 text-[color:var(--public-text-muted)] sm:text-[15px]">
               As a civil servant at the Regional Revenue and Asset Agency of East Nusa Tenggara Province, I actively
               develop simple web-based applications to support operational activities and improve workflow efficiency
               within the institution.
@@ -39,7 +39,7 @@ export default function AboutPage() {
           </GlassCard>
         </section>
 
-        <SiteFooter />
+        <SiteFooter light />
       </div>
 
       <Link

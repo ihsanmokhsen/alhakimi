@@ -25,7 +25,7 @@ export function HomeShell({ projects }: HomeShellProps) {
     >
       <BackgroundLayer />
 
-      <SiteHeader />
+      <SiteHeader light />
 
       <div
         className={cn(
@@ -35,11 +35,15 @@ export function HomeShell({ projects }: HomeShellProps) {
       >
         <section className={cn(isCompact ? "min-h-[3vh] sm:min-h-[5vh]" : "min-h-[10vh] sm:min-h-[14vh]")} />
 
-        <section className={cn(isCompact ? "flex-1 pb-3" : "pb-8")}>
+        <section className={cn(isCompact ? "pb-3" : "pb-8")}>
+          <div className="pb-6 text-center sm:pb-8">
+            <h1 className="text-4xl font-semibold tracking-[0.08em] text-white sm:text-6xl lg:text-7xl">Works</h1>
+          </div>
+
           <PortfolioGrid compact={isCompact} projects={projects} />
         </section>
 
-        <SiteFooter compact={isCompact} />
+        <SiteFooter compact={isCompact} light />
       </div>
       <Link
         className="fixed bottom-3 right-3 z-40 rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1.5 text-[9px] uppercase tracking-[0.28em] text-white/34 backdrop-blur-xl transition duration-300 hover:border-white/18 hover:text-accent sm:bottom-5 sm:right-5 sm:px-3 sm:py-2 sm:text-[10px]"

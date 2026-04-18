@@ -24,7 +24,7 @@ export function BottomNav() {
           <Link
             className={cn(
               "text-[9px] uppercase tracking-[0.24em] transition sm:text-[10px]",
-              isActive ? "text-[color:var(--ui-strong)]" : "text-[color:var(--ui-soft)] hover:text-accent"
+              isActive ? "text-white/88" : "text-white/52 hover:text-accent"
             )}
             href={item.href}
             key={item.href}

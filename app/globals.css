@@ -16,11 +16,32 @@
   --ui-card: linear-gradient(135deg, rgba(255, 248, 242, 0.26), rgba(255, 243, 234, 0.1));
   --ui-card-hover: rgba(255, 243, 234, 0.16);
   --ui-chip: rgba(255, 244, 236, 0.16);
+  --public-text-strong: rgba(255, 255, 255, 0.92);
+  --public-text-muted: rgba(255, 255, 255, 0.78);
+  --public-text-soft: rgba(255, 255, 255, 0.56);
+  --public-text-faint: rgba(255, 255, 255, 0.4);
+  --public-surface: rgba(255, 255, 255, 0.04);
+  --public-surface-strong: rgba(255, 255, 255, 0.03);
+  --public-border: rgba(255, 255, 255, 0.1);
 }
 
 html {
   color-scheme: dark;
   scroll-behavior: smooth;
+}
+
+html[data-a11y-font-color="black"] {
+  --public-text-strong: rgba(18, 18, 18, 0.92);
+  --public-text-muted: rgba(20, 20, 20, 0.78);
+  --public-text-soft: rgba(26, 26, 26, 0.62);
+  --public-text-faint: rgba(26, 26, 26, 0.48);
+  --public-surface: rgba(255, 255, 255, 0.78);
+  --public-surface-strong: rgba(255, 255, 255, 0.72);
+  --public-border: rgba(255, 255, 255, 0.38);
+}
+
+html[data-a11y-font-size="large"] {
+  font-size: 112.5%;
 }
 
 body {
@@ -45,4 +66,59 @@ button,
 input,
 textarea {
   -webkit-tap-highlight-color: transparent;
+}
+
+@keyframes worksFadeUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes worksFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-works-fade-up {
+  animation: worksFadeUp 900ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.animate-works-fade-in {
+  animation: worksFadeIn 700ms ease both;
+}
+
+@keyframes worksGlitch {
+  0% {
+    transform: translate3d(0, 0, 0);
+    filter: none;
+  }
+
+  20% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  40% {
+    transform: translate3d(1px, 0, 0);
+  }
+
+  60% {
+    transform: translate3d(-1px, 0, 0);
+    filter: blur(0.2px);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0);
+    filter: none;
+  }
 }

@@ -27,28 +27,28 @@ export default async function JournalDetailPage({ params }: JournalDetailPagePro
     <main className="relative isolate min-h-screen px-4 pt-3 pb-8 sm:px-6 sm:pt-4">
       <BackgroundLayer />
 
-      <SiteHeader />
+      <SiteHeader light />
 
       <div className="mx-auto mt-10 max-w-4xl space-y-5">
         <Link
-          className="inline-flex rounded-full border border-[color:var(--ui-border)] bg-[var(--ui-chip)] px-4 py-2 text-[10px] uppercase tracking-[0.24em] text-[color:var(--ui-muted)] transition hover:text-accent"
+          className="inline-flex rounded-full border border-[color:var(--public-border)] bg-[color:var(--public-surface)] px-4 py-2 text-[10px] uppercase tracking-[0.24em] text-[color:var(--public-text-muted)] transition hover:text-accent"
           href="/journal"
         >
           Back to journal
         </Link>
 
-        <GlassCard className="p-6 sm:p-8">
+        <GlassCard className="border-[color:var(--public-border)] bg-[color:var(--public-surface)] p-6 sm:p-8">
           <div className="space-y-3">
-            <p className="text-[10px] uppercase tracking-[0.26em] text-[color:var(--ui-soft)]">
+            <p className="text-[10px] uppercase tracking-[0.26em] text-[color:var(--public-text-soft)]">
               {formatJournalDate(journal.publishedAt)}
             </p>
-            <h1 className="text-2xl font-semibold leading-tight text-[color:var(--ui-strong)] sm:text-4xl">
+            <h1 className="text-2xl font-semibold leading-tight text-[color:var(--public-text-strong)] sm:text-4xl">
               {journal.title}
             </h1>
           </div>
 
-          <div className="mt-6 rounded-[24px] border border-[color:var(--ui-border)] bg-[var(--ui-chip)] p-5 sm:p-6">
-            <p className="whitespace-pre-wrap text-sm leading-8 text-[color:var(--ui-muted)] sm:text-[15px]">
+          <div className="mt-6 rounded-[24px] border border-[color:var(--public-border)] bg-[color:var(--public-surface-strong)] p-5 sm:p-6">
+            <p className="whitespace-pre-wrap text-sm leading-8 text-[color:var(--public-text-muted)] sm:text-[15px]">
               {journal.content}
             </p>
           </div>

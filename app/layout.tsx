@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
 import "@/app/globals.css";
+import { AccessibilityControls } from "@/components/portfolio/accessibility-controls";
+import { EntrySplash } from "@/components/portfolio/entry-splash";
 
 export const metadata: Metadata = {
   title: "@alhakimi",
@@ -14,7 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id">
-      <body>{children}</body>
+      <body>
+        {children}
+        <AccessibilityControls />
+        <EntrySplash />
+      </body>
     </html>
   );
 }

@@ -17,7 +17,11 @@ function formatNow(date: Date) {
   };
 }
 
-export function HeaderClock() {
+type HeaderClockProps = {
+  light?: boolean;
+};
+
+export function HeaderClock({ light = false }: HeaderClockProps) {
   const [now, setNow] = useState(() => formatNow(new Date()));
 
   useEffect(() => {
@@ -30,10 +34,10 @@ export function HeaderClock() {
 
   return (
     <div className="shrink-0 text-right">
-      <p className="text-[8px] font-semibold tracking-[0.08em] text-[color:var(--ui-strong)] sm:text-[9px]">
+      <p className={light ? "text-[8px] font-semibold tracking-[0.08em] text-[color:var(--public-text-strong)] sm:text-[9px]" : "text-[8px] font-semibold tracking-[0.08em] text-[color:var(--ui-strong)] sm:text-[9px]"}>
         {now.time}
       </p>
-      <p className="mt-1 text-[7px] uppercase tracking-[0.16em] text-[color:var(--ui-soft)] sm:text-[8px]">
+      <p className={light ? "mt-1 text-[7px] uppercase tracking-[0.16em] text-[color:var(--public-text-soft)] sm:text-[8px]" : "mt-1 text-[7px] uppercase tracking-[0.16em] text-[color:var(--ui-soft)] sm:text-[8px]"}>
         {now.date}
       </p>
     </div>

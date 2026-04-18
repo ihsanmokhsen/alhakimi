@@ -17,14 +17,14 @@ export default async function JournalPage() {
     <main className="relative isolate min-h-screen px-4 pt-3 pb-8 sm:px-6 sm:pt-4">
       <BackgroundLayer />
 
-      <SiteHeader />
+      <SiteHeader light />
 
       <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col">
         <section className="min-h-[10vh] sm:min-h-[14vh]" />
 
         <JournalGrid journals={journals} />
 
-        <SiteFooter />
+        <SiteFooter light />
       </div>
 
       <Link
