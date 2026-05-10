@@ -24,6 +24,8 @@ export default async function JournalDetailPage({ params }: JournalDetailPagePro
     notFound();
   }
 
+  const photoVersion = new Date(journal.updatedAt).getTime();
+
   return (
     <main className="relative isolate min-h-screen px-4 pt-3 pb-8 sm:px-6 sm:pt-4">
       <BackgroundLayer />
@@ -55,7 +57,7 @@ export default async function JournalDetailPage({ params }: JournalDetailPagePro
                 className="object-cover"
                 fill
                 sizes="(max-width: 640px) 160px, 192px"
-                src={`/api/journal-photo/${journal.id}`}
+                src={`/api/journal-photo/${journal.id}?v=${photoVersion}`}
               />
             </div>
           ) : null}

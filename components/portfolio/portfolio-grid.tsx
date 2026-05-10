@@ -18,8 +18,11 @@ export function PortfolioGrid({ compact = false, projects }: PortfolioGridProps)
   return (
     <>
       <div className={compact ? "grid h-full gap-2.5 sm:grid-cols-2 sm:gap-3" : "grid gap-3 sm:grid-cols-2 xl:grid-cols-3"}>
-        {projects.map((project) => (
-          <button
+        {projects.map((project) => {
+          const logoVersion = new Date(project.updatedAt).getTime();
+
+          return (
+            <button
             className="group animate-works-fade-up text-left transition duration-700 hover:-translate-y-1"
             key={project.id}
             onClick={() => setActiveProject(project)}
@@ -77,13 +80,14 @@ export function PortfolioGrid({ compact = false, projects }: PortfolioGridProps)
                     className="object-cover"
                     fill
                     sizes={compact ? "(max-width: 640px) 84px, 96px" : "(max-width: 640px) 94px, 118px"}
-                    src={`/api/project-logo/${project.id}`}
+                    src={`/api/project-logo/${project.id}?v=${logoVersion}`}
                   />
                 </div>
               </div>
             </GlassCard>
-          </button>
-        ))}
+            </button>
+          );
+        })}
       </div>
 
       {activeProject ? (

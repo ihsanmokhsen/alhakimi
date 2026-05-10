@@ -18,6 +18,7 @@ export function JournalList({ journals }: JournalListProps) {
 
       {journals.map((journal) => {
         const deleteAction = deleteJournalAction.bind(null, journal.id);
+        const photoVersion = new Date(journal.updatedAt).getTime();
 
         return (
           <GlassCard className="flex flex-col gap-5 p-5 sm:flex-row sm:items-start sm:justify-between" key={journal.id}>
@@ -37,7 +38,7 @@ export function JournalList({ journals }: JournalListProps) {
                       className="object-cover"
                       fill
                       sizes="56px"
-                      src={`/api/journal-photo/${journal.id}`}
+                      src={`/api/journal-photo/${journal.id}?v=${photoVersion}`}
                     />
                   </div>
                 ) : null}

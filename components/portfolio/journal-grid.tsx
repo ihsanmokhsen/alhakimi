@@ -23,8 +23,11 @@ export function JournalGrid({ journals }: JournalGridProps) {
       </div>
 
       <div className="space-y-5">
-        {journals.map((journal) => (
-          <article
+        {journals.map((journal) => {
+          const photoVersion = new Date(journal.updatedAt).getTime();
+
+          return (
+            <article
             className="mx-auto max-w-4xl rounded-[28px] border border-[color:var(--public-border)] bg-[color:var(--public-surface)] p-6 shadow-[0_18px_60px_rgba(0,0,0,0.18)] sm:p-8"
             key={journal.id}
           >
@@ -44,7 +47,7 @@ export function JournalGrid({ journals }: JournalGridProps) {
                     className="object-cover"
                     fill
                     sizes="(max-width: 640px) 64px, 80px"
-                    src={`/api/journal-photo/${journal.id}`}
+                    src={`/api/journal-photo/${journal.id}?v=${photoVersion}`}
                   />
                 </div>
               ) : null}
@@ -53,8 +56,9 @@ export function JournalGrid({ journals }: JournalGridProps) {
             <p className="mt-5 whitespace-pre-wrap text-sm leading-8 text-[color:var(--public-text-muted)] sm:text-[15px]">
               {journal.content}
             </p>
-          </article>
-        ))}
+            </article>
+          );
+        })}
       </div>
     </section>
   );
