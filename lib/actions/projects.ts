@@ -8,6 +8,8 @@ import { requireAdmin } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { isValidProjectUrl } from "@/lib/utils";
 
+const MAX_LOGO_FILE_SIZE = 5 * 1024 * 1024;
+
 export type ProjectFormState = {
   error?: string;
 };
@@ -34,6 +36,28 @@ function parseProjectInput(formData: FormData) {
   });
 }
 
+async function parseLogoFile(formData: FormData) {
+  const uploaded = formData.get("logoFile");
+
+  if (!(uploaded instanceof File) || uploaded.size === 0) {
+    return null;
+  }
+
+  if (!uploaded.type.startsWith("image/")) {
+    throw new Error("Logo must be an image file.");
+  }
+
+  if (uploaded.size > MAX_LOGO_FILE_SIZE) {
+    throw new Error("Logo terlalu besar. Maksimal 5MB.");
+  }
+
+  const bytes = Buffer.from(await uploaded.arrayBuffer());
+  return {
+    logoImage: bytes,
+    logoMimeType: uploaded.type
+  };
+}
+
 export async function createProjectAction(
   _previousState: ProjectFormState,
   formData: FormData
@@ -46,9 +70,17 @@ export async function createProjectAction(
     return { error: parsed.error.issues[0]?.message ?? "Project data is incomplete." };
   }
 
+  let logoData: { logoImage: Buffer; logoMimeType: string } | null = null;
+  try {
+    logoData = await parseLogoFile(formData);
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : "Logo upload failed." };
+  }
+
   await prisma.project.create({
     data: {
       ...parsed.data,
+      ...(logoData ?? {}),
       position: await prisma.project.count()
     }
   });
@@ -71,9 +103,19 @@ export async function updateProjectAction(
     return { error: parsed.error.issues[0]?.message ?? "Project changes are not valid yet." };
   }
 
+  let logoData: { logoImage: Buffer; logoMimeType: string } | null = null;
+  try {
+    logoData = await parseLogoFile(formData);
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : "Logo upload failed." };
+  }
+
   await prisma.project.update({
     where: { id },
-    data: parsed.data
+    data: {
+      ...parsed.data,
+      ...(logoData ?? {})
+    }
   });
 
   revalidatePath("/");

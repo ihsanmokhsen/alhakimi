@@ -7,6 +7,8 @@ import { requireAdmin } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { parseMakassarDateTimeInput } from "@/lib/utils";
 
+const MAX_JOURNAL_PHOTO_SIZE = 5 * 1024 * 1024;
+
 export type JournalFormState = {
   error?: string;
 };
@@ -28,6 +30,28 @@ function parseJournalInput(formData: FormData) {
   });
 }
 
+async function parseJournalPhoto(formData: FormData) {
+  const uploaded = formData.get("photoFile");
+
+  if (!(uploaded instanceof File) || uploaded.size === 0) {
+    return null;
+  }
+
+  if (!uploaded.type.startsWith("image/")) {
+    throw new Error("Foto jurnal harus berupa gambar.");
+  }
+
+  if (uploaded.size > MAX_JOURNAL_PHOTO_SIZE) {
+    throw new Error("Foto jurnal terlalu besar. Maksimal 5MB.");
+  }
+
+  const bytes = Buffer.from(await uploaded.arrayBuffer());
+  return {
+    photoImage: bytes,
+    photoMimeType: uploaded.type
+  };
+}
+
 export async function createJournalAction(
   _previousState: JournalFormState,
   formData: FormData
@@ -40,11 +64,19 @@ export async function createJournalAction(
     return { error: parsed.error.issues[0]?.message ?? "Journal data is incomplete." };
   }
 
+  let photoData: { photoImage: Buffer; photoMimeType: string } | null = null;
+  try {
+    photoData = await parseJournalPhoto(formData);
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : "Upload foto jurnal gagal." };
+  }
+
   await prisma.journal.create({
     data: {
       title: parsed.data.title,
       content: parsed.data.content,
-      publishedAt: parseMakassarDateTimeInput(parsed.data.publishedAt) ?? new Date(parsed.data.publishedAt)
+      publishedAt: parseMakassarDateTimeInput(parsed.data.publishedAt) ?? new Date(parsed.data.publishedAt),
+      ...(photoData ?? {})
     }
   });
 

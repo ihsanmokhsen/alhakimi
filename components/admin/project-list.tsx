@@ -2,15 +2,15 @@
 
 import Link from "next/link";
 import { useEffect, useState, useTransition } from "react";
-import type { Project } from "@prisma/client";
 
 import { deleteProjectAction } from "@/lib/actions/projects";
 import { GlassCard } from "@/components/ui/glass-card";
+import type { ProjectCard } from "@/lib/data/projects";
 import { moveItem } from "@/lib/utils";
 
 type ProjectListProps = {
   onReorder: (projectIds: string[]) => Promise<{ error?: string }>;
-  projects: Project[];
+  projects: ProjectCard[];
 };
 
 export function ProjectList({ onReorder, projects }: ProjectListProps) {

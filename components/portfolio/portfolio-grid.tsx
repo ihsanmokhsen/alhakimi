@@ -1,18 +1,19 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
-import type { Project } from "@prisma/client";
 
 import { PortfolioModal } from "@/components/portfolio/portfolio-modal";
 import { GlassCard } from "@/components/ui/glass-card";
+import type { ProjectCard } from "@/lib/data/projects";
 
 type PortfolioGridProps = {
   compact?: boolean;
-  projects: Project[];
+  projects: ProjectCard[];
 };
 
 export function PortfolioGrid({ compact = false, projects }: PortfolioGridProps) {
-  const [activeProject, setActiveProject] = useState<Project | null>(null);
+  const [activeProject, setActiveProject] = useState<ProjectCard | null>(null);
 
   return (
     <>
@@ -39,28 +40,47 @@ export function PortfolioGrid({ compact = false, projects }: PortfolioGridProps)
                 <span className="h-2 w-2 rounded-full bg-[color:var(--public-text-faint)] transition duration-300 group-hover:bg-accent" />
               </div>
 
-              <div>
-                <p className="text-[7px] uppercase tracking-[0.16em] text-[color:var(--public-text-soft)]">{project.category}</p>
-                <h2
-                  className={
-                    compact
-                      ? "mt-1.5 text-[11px] font-semibold leading-none tracking-tight text-[color:var(--public-text-strong)] sm:text-[13px]"
-                      : "mt-2.5 text-[12px] font-semibold leading-none tracking-tight text-[color:var(--public-text-strong)] sm:text-[16px]"
-                  }
-                >
-                  {project.title}
-                </h2>
-              </div>
-
-              <p
+              <div
                 className={
                   compact
-                    ? "line-clamp-2 text-[7px] leading-3.5 text-[color:var(--public-text-muted)] sm:text-[8px] sm:leading-4"
-                    : "line-clamp-2 text-[8px] leading-4 text-[color:var(--public-text-muted)] sm:text-[9px] sm:leading-4.5"
+                    ? "mt-1.5 grid flex-1 grid-cols-[minmax(0,1fr)_84px] gap-2 sm:grid-cols-[minmax(0,1fr)_96px]"
+                    : "mt-2.5 grid flex-1 grid-cols-[minmax(0,1fr)_94px] gap-2.5 sm:grid-cols-[minmax(0,1fr)_118px]"
                 }
               >
-                {project.description}
-              </p>
+                <div className="flex min-w-0 flex-col justify-between">
+                  <div>
+                    <p className="text-[7px] uppercase tracking-[0.16em] text-[color:var(--public-text-soft)]">{project.category}</p>
+                    <h2
+                      className={
+                        compact
+                          ? "mt-1.5 text-[11px] font-semibold leading-none tracking-tight text-[color:var(--public-text-strong)] sm:text-[13px]"
+                          : "mt-2 text-[12px] font-semibold leading-none tracking-tight text-[color:var(--public-text-strong)] sm:text-[16px]"
+                      }
+                    >
+                      {project.title}
+                    </h2>
+                  </div>
+                  <p
+                    className={
+                      compact
+                        ? "mt-2 line-clamp-2 text-[7px] leading-3.5 text-[color:var(--public-text-muted)] sm:text-[8px] sm:leading-4"
+                        : "mt-2.5 line-clamp-2 text-[8px] leading-4 text-[color:var(--public-text-muted)] sm:text-[9px] sm:leading-4.5"
+                    }
+                  >
+                    {project.description}
+                  </p>
+                </div>
+
+                <div className="relative min-h-[78px] overflow-hidden rounded-xl border border-white/12 bg-white/5 sm:min-h-[96px]">
+                  <Image
+                    alt={`${project.title} logo`}
+                    className="object-cover"
+                    fill
+                    sizes={compact ? "(max-width: 640px) 84px, 96px" : "(max-width: 640px) 94px, 118px"}
+                    src={`/api/project-logo/${project.id}`}
+                  />
+                </div>
+              </div>
             </GlassCard>
           </button>
         ))}

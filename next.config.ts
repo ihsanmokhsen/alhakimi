@@ -5,7 +5,12 @@ import type { NextConfig } from "next";
  * bisa salah mendeteksi workspace root dan merusak file tracing di build/deploy.
  */
 const nextConfig: NextConfig = {
-  outputFileTracingRoot: process.cwd()
+  outputFileTracingRoot: process.cwd(),
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "8mb"
+    }
+  }
 };
 
 export default nextConfig;

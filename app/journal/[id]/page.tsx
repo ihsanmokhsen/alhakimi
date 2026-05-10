@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 
 import { BackgroundLayer } from "@/components/portfolio/background-layer";
@@ -46,6 +47,18 @@ export default async function JournalDetailPage({ params }: JournalDetailPagePro
               {journal.title}
             </h1>
           </div>
+
+          {journal.hasPhoto ? (
+            <div className="relative mt-6 h-40 w-40 overflow-hidden rounded-2xl border border-[color:var(--public-border)] bg-[color:var(--public-surface-strong)] sm:h-48 sm:w-48">
+              <Image
+                alt={`Foto untuk ${journal.title}`}
+                className="object-cover"
+                fill
+                sizes="(max-width: 640px) 160px, 192px"
+                src={`/api/journal-photo/${journal.id}`}
+              />
+            </div>
+          ) : null}
 
           <div className="mt-6 rounded-[24px] border border-[color:var(--public-border)] bg-[color:var(--public-surface-strong)] p-5 sm:p-6">
             <p className="whitespace-pre-wrap text-sm leading-8 text-[color:var(--public-text-muted)] sm:text-[15px]">

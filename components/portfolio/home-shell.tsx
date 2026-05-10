@@ -1,4 +1,3 @@
-import type { Project } from "@prisma/client";
 import Link from "next/link";
 
 import { BackgroundLayer } from "@/components/portfolio/background-layer";
@@ -7,10 +6,11 @@ import { EmailButton } from "@/components/portfolio/email-button";
 import { PortfolioGrid } from "@/components/portfolio/portfolio-grid";
 import { SiteFooter } from "@/components/portfolio/site-footer";
 import { SiteHeader } from "@/components/portfolio/site-header";
+import type { ProjectCard } from "@/lib/data/projects";
 import { cn } from "@/lib/utils";
 
 type HomeShellProps = {
-  projects: Project[];
+  projects: ProjectCard[];
 };
 
 export function HomeShell({ projects }: HomeShellProps) {

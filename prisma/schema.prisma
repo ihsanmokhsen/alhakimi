@@ -12,6 +12,8 @@ model Project {
   id          String   @id @default(cuid())
   title       String
   url         String   @unique
+  logoImage   Bytes?
+  logoMimeType String?
   description String
   category    String
   featured    Boolean  @default(false)
@@ -24,6 +26,8 @@ model Journal {
   id          String   @id @default(cuid())
   title       String
   content     String
+  photoImage  Bytes?
+  photoMimeType String?
   publishedAt DateTime
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

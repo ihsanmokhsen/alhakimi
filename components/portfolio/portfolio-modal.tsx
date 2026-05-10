@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import type { Project } from "@prisma/client";
 import { GlassCard } from "@/components/ui/glass-card";
+import type { ProjectCard } from "@/lib/data/projects";
 
 type PortfolioModalProps = {
-  project: Project;
+  project: ProjectCard;
   onClose: () => void;
 };
 
