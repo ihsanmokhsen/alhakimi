@@ -8,6 +8,7 @@ import { prisma } from "@/lib/prisma";
 import { parseMakassarDateTimeInput } from "@/lib/utils";
 
 const MAX_JOURNAL_PHOTO_SIZE = 5 * 1024 * 1024;
+type PrismaBytes = Uint8Array<ArrayBuffer>;
 
 export type JournalFormState = {
   error?: string;
@@ -45,7 +46,8 @@ async function parseJournalPhoto(formData: FormData) {
     throw new Error("Foto jurnal terlalu besar. Maksimal 5MB.");
   }
 
-  const bytes = Buffer.from(await uploaded.arrayBuffer());
+  const rawBuffer = await uploaded.arrayBuffer();
+  const bytes = new Uint8Array(rawBuffer) as PrismaBytes;
   return {
     photoImage: bytes,
     photoMimeType: uploaded.type
@@ -64,7 +66,7 @@ export async function createJournalAction(
     return { error: parsed.error.issues[0]?.message ?? "Journal data is incomplete." };
   }
 
-  let photoData: { photoImage: Buffer; photoMimeType: string } | null = null;
+  let photoData: { photoImage: PrismaBytes; photoMimeType: string } | null = null;
   try {
     photoData = await parseJournalPhoto(formData);
   } catch (error) {

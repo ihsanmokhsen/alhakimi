@@ -9,6 +9,7 @@ import { prisma } from "@/lib/prisma";
 import { isValidProjectUrl } from "@/lib/utils";
 
 const MAX_LOGO_FILE_SIZE = 5 * 1024 * 1024;
+type PrismaBytes = Uint8Array<ArrayBuffer>;
 
 export type ProjectFormState = {
   error?: string;
@@ -51,7 +52,8 @@ async function parseLogoFile(formData: FormData) {
     throw new Error("Logo terlalu besar. Maksimal 5MB.");
   }
 
-  const bytes = Buffer.from(await uploaded.arrayBuffer());
+  const rawBuffer = await uploaded.arrayBuffer();
+  const bytes = new Uint8Array(rawBuffer) as PrismaBytes;
   return {
     logoImage: bytes,
     logoMimeType: uploaded.type
@@ -70,7 +72,7 @@ export async function createProjectAction(
     return { error: parsed.error.issues[0]?.message ?? "Project data is incomplete." };
   }
 
-  let logoData: { logoImage: Buffer; logoMimeType: string } | null = null;
+  let logoData: { logoImage: PrismaBytes; logoMimeType: string } | null = null;
   try {
     logoData = await parseLogoFile(formData);
   } catch (error) {
@@ -103,7 +105,7 @@ export async function updateProjectAction(
     return { error: parsed.error.issues[0]?.message ?? "Project changes are not valid yet." };
   }
 
-  let logoData: { logoImage: Buffer; logoMimeType: string } | null = null;
+  let logoData: { logoImage: PrismaBytes; logoMimeType: string } | null = null;
   try {
     logoData = await parseLogoFile(formData);
   } catch (error) {

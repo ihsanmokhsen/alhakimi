@@ -21,7 +21,7 @@ export async function GET(
     return NextResponse.redirect(new URL(FALLBACK_LOGO_PATH, request.url));
   }
 
-  return new NextResponse(project.logoImage, {
+  return new NextResponse(new Uint8Array(project.logoImage), {
     headers: {
       "Content-Type": project.logoMimeType,
       "Cache-Control": "public, max-age=86400"
