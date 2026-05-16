@@ -6,6 +6,13 @@ import type { NextConfig } from "next";
  */
 const nextConfig: NextConfig = {
   outputFileTracingRoot: process.cwd(),
+  images: {
+    localPatterns: [
+      { pathname: "/api/project-logo/**" },
+      { pathname: "/api/journal-photo/**" },
+      { pathname: "/foto.png" }
+    ]
+  },
   experimental: {
     serverActions: {
       bodySizeLimit: "8mb"

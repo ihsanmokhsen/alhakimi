@@ -1,0 +1,26 @@
+name: Supabase Keepalive
+
+on:
+  workflow_dispatch:
+  schedule:
+    # GitHub Actions memakai UTC. 03:43 UTC = 11:43 WITA.
+    - cron: "43 3 */6 * *"
+
+jobs:
+  ping:
+    name: Ping keepalive endpoint
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Call keepalive endpoint
+        env:
+          KEEP_ALIVE_URL: ${{ secrets.KEEP_ALIVE_URL }}
+          KEEP_ALIVE_SECRET: ${{ secrets.KEEP_ALIVE_SECRET }}
+        run: |
+          test -n "$KEEP_ALIVE_URL"
+          test -n "$KEEP_ALIVE_SECRET"
+
+          curl --fail-with-body --show-error --silent \
+            --request POST "$KEEP_ALIVE_URL" \
+            --header "Authorization: Bearer $KEEP_ALIVE_SECRET"

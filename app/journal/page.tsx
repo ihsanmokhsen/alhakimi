@@ -1,11 +1,5 @@
-import Link from "next/link";
-
+import { MaknaFooter, MaknaHeader } from "@/components/portfolio/makna-shell";
 import { JournalGrid } from "@/components/portfolio/journal-grid";
-import { BackgroundLayer } from "@/components/portfolio/background-layer";
-import { BottomNav } from "@/components/portfolio/bottom-nav";
-import { EmailButton } from "@/components/portfolio/email-button";
-import { SiteFooter } from "@/components/portfolio/site-footer";
-import { SiteHeader } from "@/components/portfolio/site-header";
 import { getJournals } from "@/lib/data/journals";
 
 export const dynamic = "force-dynamic";
@@ -14,27 +8,26 @@ export default async function JournalPage() {
   const journals = await getJournals();
 
   return (
-    <main className="relative isolate min-h-screen px-4 pt-3 pb-8 sm:px-6 sm:pt-4">
-      <BackgroundLayer />
+    <main className="min-h-screen overflow-x-hidden bg-[#f5f5f7] text-[#08080a] [color-scheme:light]">
+      <MaknaHeader active="stories" />
 
-      <SiteHeader light />
+      <section className="mx-auto w-full max-w-7xl px-4 pb-14 pt-16 sm:px-6 sm:pb-20 sm:pt-24 lg:px-8">
+        <div className="max-w-4xl">
+          <p className="text-[12px] font-black uppercase text-[#2563ff]">Stories</p>
+          <h1 className="mt-5 text-[clamp(3.8rem,10vw,8.5rem)] font-black leading-[0.86] tracking-normal text-black">
+            Ideas with quiet depth.
+          </h1>
+          <p className="mt-8 max-w-2xl text-[17px] font-medium leading-8 text-black/58 sm:text-[20px]">
+            Notes, reflections, product thinking, and meaningful digital experiments from makna.im.
+          </p>
+        </div>
+      </section>
 
-      <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col">
-        <section className="min-h-[10vh] sm:min-h-[14vh]" />
-
+      <section className="px-4 pb-24 sm:px-6 lg:px-8">
         <JournalGrid journals={journals} />
+      </section>
 
-        <SiteFooter light />
-      </div>
-
-      <Link
-        className="fixed bottom-3 right-3 z-40 rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1.5 text-[9px] uppercase tracking-[0.28em] text-white/34 backdrop-blur-xl transition duration-300 hover:border-white/18 hover:text-accent sm:bottom-5 sm:right-5 sm:px-3 sm:py-2 sm:text-[10px]"
-        href="/login"
-      >
-        Login
-      </Link>
-      <EmailButton />
-      <BottomNav />
+      <MaknaFooter />
     </main>
   );
 }

@@ -1,8 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { GlassCard } from "@/components/ui/glass-card";
+
 import type { ProjectCard } from "@/lib/data/projects";
 
 type PortfolioModalProps = {
@@ -12,6 +13,7 @@ type PortfolioModalProps = {
 
 export function PortfolioModal({ project, onClose }: PortfolioModalProps) {
   const [isReady, setIsReady] = useState(false);
+  const logoVersion = new Date(project.updatedAt).getTime();
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -21,6 +23,7 @@ export function PortfolioModal({ project, onClose }: PortfolioModalProps) {
     }
 
     window.addEventListener("keydown", onKeyDown);
+    const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     const frame = window.requestAnimationFrame(() => {
       setIsReady(true);
@@ -29,22 +32,14 @@ export function PortfolioModal({ project, onClose }: PortfolioModalProps) {
     return () => {
       window.cancelAnimationFrame(frame);
       window.removeEventListener("keydown", onKeyDown);
-      document.body.style.overflow = "";
+      document.body.style.overflow = previousOverflow;
     };
   }, [onClose]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
       <div
-        aria-hidden="true"
-        className={`pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-700 ${
-          isReady ? "opacity-36 blur-0" : "opacity-0 blur-md"
-        }`}
-        style={{ backgroundImage: "url('/wpp.jpg')" }}
-      />
-      <div
-        aria-hidden="true"
-        className={`pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(244,74,34,0.18),transparent_24%),radial-gradient(circle_at_82%_14%,rgba(255,145,77,0.18),transparent_22%),linear-gradient(180deg,rgba(8,8,8,0.44),rgba(11,11,11,0.88)),rgba(11,11,11,0.38)] backdrop-blur-[10px] transition-opacity duration-700 ${
+        className={`absolute inset-0 bg-black/24 backdrop-blur-sm transition-opacity duration-500 ${
           isReady ? "opacity-100" : "opacity-0"
         }`}
       />
@@ -54,55 +49,69 @@ export function PortfolioModal({ project, onClose }: PortfolioModalProps) {
         onClick={onClose}
         type="button"
       />
-      <GlassCard
-        className={`relative flex w-full max-w-[320px] flex-col overflow-hidden border-[color:var(--public-border)] bg-[color:var(--public-surface-strong)] p-3 transition-all duration-700 sm:max-w-[520px] sm:p-4 ${
+
+      <section
+        className={`relative w-full max-w-5xl overflow-hidden rounded-[28px] border border-white/70 bg-white shadow-[0_40px_140px_rgba(10,12,20,0.28)] transition-all duration-500 ${
           isReady ? "translate-y-0 scale-100 opacity-100" : "translate-y-6 scale-[0.985] opacity-0"
         }`}
       >
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(244,74,34,0.22),transparent_30%),radial-gradient(circle_at_80%_18%,rgba(255,160,85,0.16),transparent_24%),radial-gradient(circle_at_bottom_right,rgba(255,112,92,0.12),transparent_28%)]" />
-        <div className="relative flex items-start justify-between gap-3">
-          <div className="min-w-0 flex-1">
-            <p className="text-[8px] uppercase tracking-[0.2em] text-[color:var(--public-text-soft)]">{project.category}</p>
-            <h2 className="mt-2 text-[13px] font-semibold leading-none tracking-tight text-[color:var(--public-text-strong)] sm:text-[18px]">
-              {project.title}
-            </h2>
-          </div>
-          <button
-            className="rounded-full border border-[color:var(--public-border)] bg-[color:var(--public-surface)] px-2 py-1 text-[6px] uppercase tracking-[0.14em] text-[color:var(--public-text-muted)] transition hover:text-accent"
-            onClick={onClose}
-            type="button"
-          >
-            Close
-          </button>
-        </div>
+        <button
+          className="absolute right-4 top-4 z-10 rounded-full border border-black/10 bg-white/78 px-4 py-2 text-[12px] font-bold text-black/58 shadow-[0_10px_30px_rgba(0,0,0,0.08)] backdrop-blur-xl transition hover:text-black"
+          onClick={onClose}
+          type="button"
+        >
+          Close
+        </button>
 
-        <div className="relative mt-4 grid gap-3 sm:grid-cols-[1.05fr_0.95fr] sm:gap-4">
-          <div>
-            <p className="text-[8px] leading-4 text-[color:var(--public-text-muted)] sm:text-[9px] sm:leading-4.5">{project.description}</p>
+        <div className="grid md:grid-cols-[1.08fr_0.92fr]">
+          <div className="relative min-h-[360px] overflow-hidden bg-[#edeef2] sm:min-h-[520px]">
+            <Image
+              alt={`${project.title} visual`}
+              className="object-cover"
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 55vw"
+              src={`/api/project-logo/${project.id}?v=${logoVersion}`}
+            />
           </div>
-          <div className="space-y-2.5">
-            <div className="rounded-[18px] border border-[color:var(--public-border)] bg-[color:var(--public-surface)] p-2.5">
-              <p className="text-[6px] uppercase tracking-[0.14em] text-[color:var(--public-text-soft)]">Project link</p>
-              <Link
-                className="mt-1.5 inline-flex text-[7px] text-[color:var(--public-text-strong)] transition hover:text-accent sm:text-[8px]"
-                href={project.url}
-                rel="noreferrer"
-                target="_blank"
-              >
-                Open application
-              </Link>
+
+          <div className="flex min-h-[360px] flex-col justify-between p-6 sm:p-8 lg:p-10">
+            <div>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="rounded-full bg-[#2563ff]/10 px-3 py-1.5 text-[12px] font-black uppercase text-[#2563ff]">
+                  {project.category}
+                </span>
+                <span className="rounded-full border border-black/10 px-3 py-1.5 text-[12px] font-bold text-black/42">
+                  {project.featured ? "Featured" : "Selected"}
+                </span>
+              </div>
+
+              <h2 className="mt-6 text-[42px] font-black leading-none tracking-normal text-black sm:text-[58px]">
+                {project.title}
+              </h2>
+              <p className="mt-6 text-[16px] font-medium leading-8 text-black/58 sm:text-[18px]">
+                {project.description}
+              </p>
             </div>
-            <div className="rounded-[18px] border border-[color:var(--public-border)] bg-[color:var(--public-surface)] p-2.5">
-              <p className="text-[6px] uppercase tracking-[0.14em] text-[color:var(--public-text-soft)]">Added</p>
-              <p className="mt-1.5 text-[7px] text-[color:var(--public-text-muted)] sm:text-[8px]">
+
+            <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <p className="text-[12px] font-bold uppercase text-black/34">
                 {new Intl.DateTimeFormat("id-ID", {
                   dateStyle: "medium"
                 }).format(project.createdAt)}
               </p>
+              <Link
+                className="inline-flex justify-center rounded-full bg-black px-6 py-3 text-[14px] font-black text-white shadow-[0_20px_45px_rgba(0,0,0,0.18)] transition hover:-translate-y-0.5 hover:bg-[#2563ff]"
+                href={project.url}
+                rel="noreferrer"
+                target="_blank"
+              >
+                Klik Aplikasi
+              </Link>
             </div>
           </div>
         </div>
-      </GlassCard>
+      </section>
     </div>
   );
 }

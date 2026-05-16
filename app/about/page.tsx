@@ -1,55 +1,52 @@
-import Link from "next/link";
-
-import { BackgroundLayer } from "@/components/portfolio/background-layer";
-import { BottomNav } from "@/components/portfolio/bottom-nav";
-import { EmailButton } from "@/components/portfolio/email-button";
-import { SiteFooter } from "@/components/portfolio/site-footer";
-import { SiteHeader } from "@/components/portfolio/site-header";
-import { GlassCard } from "@/components/ui/glass-card";
+import { MaknaFooter, MaknaHeader } from "@/components/portfolio/makna-shell";
 
 export default function AboutPage() {
   return (
-    <main className="relative isolate min-h-screen px-4 pt-3 pb-8 sm:px-6 sm:pt-4">
-      <BackgroundLayer />
+    <main className="min-h-screen overflow-x-hidden bg-[#f5f5f7] text-[#08080a] [color-scheme:light]">
+      <MaknaHeader active="about" />
 
-      <SiteHeader light />
+      <section className="mx-auto grid w-full max-w-7xl gap-12 px-4 pb-24 pt-16 sm:px-6 sm:pt-24 lg:grid-cols-[0.95fr_1.05fr] lg:px-8">
+        <div>
+          <p className="text-[12px] font-black uppercase text-[#2563ff]">About</p>
+          <h1 className="mt-5 text-[clamp(3.9rem,9vw,8rem)] font-black leading-[0.86] tracking-normal text-black">
+            Calm systems for meaningful work.
+          </h1>
+        </div>
 
-      <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col">
-        <section className="min-h-[10vh] sm:min-h-[14vh]" />
-
-        <section className="pb-8">
-          <GlassCard className="mx-auto max-w-4xl border-[color:var(--public-border)] bg-[color:var(--public-surface)] p-6 sm:p-8">
-            <div className="space-y-3">
-              <p className="text-[10px] uppercase tracking-[0.26em] text-[color:var(--public-text-soft)]">About Me</p>
-              <h1 className="text-2xl font-semibold leading-tight text-[color:var(--public-text-strong)] sm:text-4xl">
-                Muhammad Ihsanul Hakim Mokhsen
-              </h1>
+        <div className="space-y-5">
+          <section className="rounded-[28px] border border-black/[0.06] bg-white p-6 shadow-[0_24px_90px_rgba(18,22,34,0.10)] sm:p-8 lg:p-10">
+            <p className="text-[12px] font-black uppercase text-[#2563ff]">Muhammad Ihsanul Hakim Mokhsen</p>
+            <h2 className="mt-5 text-[34px] font-black leading-none tracking-normal text-black sm:text-[52px]">
+              Creative public-sector technology, built with clarity.
+            </h2>
+            <div className="mt-8 space-y-6 text-[16px] font-medium leading-8 text-black/60 sm:text-[18px] sm:leading-9">
+              <p>
+                As a civil servant at the Regional Revenue and Asset Agency of East Nusa Tenggara Province, I actively
+                develop simple web-based applications to support operational activities and improve workflow efficiency
+                within the institution.
+              </p>
+              <p>
+                I focus on building web applications that are clean, fast to use, and visually clear. This page provides
+                a brief introduction, outlines my working approach, and highlights the main ideas behind the projects
+                featured in this portfolio.
+              </p>
             </div>
+          </section>
 
-            <p className="mt-6 whitespace-pre-line text-sm leading-8 text-[color:var(--public-text-muted)] sm:text-[15px]">
-              As a civil servant at the Regional Revenue and Asset Agency of East Nusa Tenggara Province, I actively
-              develop simple web-based applications to support operational activities and improve workflow efficiency
-              within the institution.
-              {"\n\n"}I focus on building web applications that are clean, fast to use, and visually clear. This page
-              provides a brief introduction, outlines my working approach, and highlights the main ideas behind the
-              projects featured in this portfolio.
-              {"\n\n"}Kupang, 2026
-              {"\n"}Muhammad Ihsanul Hakim Mokhsen
-            </p>
-          </GlassCard>
-        </section>
+          <section className="grid gap-5 sm:grid-cols-2">
+            <div className="rounded-[24px] border border-black/[0.06] bg-white p-6 shadow-[0_18px_60px_rgba(18,22,34,0.08)]">
+              <p className="text-[12px] font-black uppercase text-black/36">Location</p>
+              <p className="mt-4 text-[28px] font-black leading-none text-black">Kupang</p>
+            </div>
+            <div className="rounded-[24px] border border-black/[0.06] bg-white p-6 shadow-[0_18px_60px_rgba(18,22,34,0.08)]">
+              <p className="text-[12px] font-black uppercase text-black/36">Focus</p>
+              <p className="mt-4 text-[28px] font-black leading-none text-black">Products and data</p>
+            </div>
+          </section>
+        </div>
+      </section>
 
-        <SiteFooter light />
-      </div>
-
-      <Link
-        className="fixed bottom-3 right-3 z-40 rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1.5 text-[9px] uppercase tracking-[0.28em] text-white/34 backdrop-blur-xl transition duration-300 hover:border-white/18 hover:text-accent sm:bottom-5 sm:right-5 sm:px-3 sm:py-2 sm:text-[10px]"
-        href="/login"
-      >
-        Login
-      </Link>
-      <EmailButton />
-      <BottomNav />
+      <MaknaFooter />
     </main>
   );
 }

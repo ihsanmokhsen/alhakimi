@@ -5,8 +5,8 @@ import { AccessibilityControls } from "@/components/portfolio/accessibility-cont
 import { EntrySplash } from "@/components/portfolio/entry-splash";
 
 export const metadata: Metadata = {
-  title: "@alhakimi",
-  description: "Minimalist portfolio"
+  title: "makna.im",
+  description: "A modern digital space for ideas, stories, products, creativity, and meaningful experiences."
 };
 
 export default function RootLayout({

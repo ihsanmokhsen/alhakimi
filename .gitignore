@@ -4,6 +4,7 @@
 .next
 node_modules
 .env
+.codex/
 coverage
 dist
 *.log

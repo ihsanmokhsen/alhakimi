@@ -1,58 +1,54 @@
 import Link from "next/link";
 
-import { BackgroundLayer } from "@/components/portfolio/background-layer";
-import { BottomNav } from "@/components/portfolio/bottom-nav";
-import { EmailButton } from "@/components/portfolio/email-button";
+import { MaknaFooter, MaknaHeader } from "@/components/portfolio/makna-shell";
 import { PortfolioGrid } from "@/components/portfolio/portfolio-grid";
-import { SiteFooter } from "@/components/portfolio/site-footer";
-import { SiteHeader } from "@/components/portfolio/site-header";
 import type { ProjectCard } from "@/lib/data/projects";
-import { cn } from "@/lib/utils";
 
 type HomeShellProps = {
   projects: ProjectCard[];
 };
 
 export function HomeShell({ projects }: HomeShellProps) {
-  const isCompact = projects.length <= 2;
-
   return (
-    <main
-      className={cn(
-        "relative isolate px-4 pt-3 sm:px-6 sm:pt-4",
-        isCompact ? "flex min-h-screen flex-col overflow-hidden pb-4 sm:pb-5" : "pb-8"
-      )}
-    >
-      <BackgroundLayer />
+    <main className="min-h-screen overflow-x-hidden bg-[#f5f5f7] text-[#08080a] [color-scheme:light]">
+      <MaknaHeader />
 
-      <SiteHeader light />
-
-      <div
-        className={cn(
-          "mx-auto flex w-full max-w-6xl flex-1 flex-col",
-          isCompact ? "justify-between" : ""
-        )}
+      <section
+        className="relative mx-auto flex min-h-[calc(88svh-4rem)] w-full max-w-7xl flex-col items-center justify-center px-4 pb-20 pt-10 text-center sm:min-h-[calc(94svh-5rem)] sm:px-6 sm:pb-24 sm:pt-14 lg:px-8"
+        id="explore"
       >
-        <section className={cn(isCompact ? "min-h-[3vh] sm:min-h-[5vh]" : "min-h-[10vh] sm:min-h-[14vh]")} />
+        <p className="mb-5 text-[11px] font-bold uppercase text-black/42 sm:mb-7 sm:text-[12px]">
+          Creative technology and modern storytelling
+        </p>
+        <h1 className="max-w-5xl text-[clamp(3.15rem,12vw,9.5rem)] font-black leading-[0.9] tracking-normal text-black sm:leading-[0.86]">
+          <span className="block">Every Idea</span>
+          <span className="block">Has</span>
+          <span className="block text-[#2563ff]">Meaning</span>
+        </h1>
+        <p className="mt-6 max-w-xl text-[15px] font-medium leading-7 text-black/58 sm:mt-8 sm:max-w-2xl sm:text-[18px] sm:leading-8">
+          A modern digital space for ideas, stories, products, creativity, and meaningful experiences.
+        </p>
+        <div className="mt-7 flex flex-col items-center gap-3 sm:mt-9 sm:flex-row">
+          <Link
+            className="inline-flex min-w-44 justify-center rounded-full bg-[#2563ff] px-7 py-3.5 text-[14px] font-bold text-white shadow-[0_20px_45px_rgba(37,99,255,0.26)] transition hover:-translate-y-0.5 hover:bg-[#0f4ff2]"
+            href="#works"
+          >
+            Explore Makna
+          </Link>
+          <Link
+            className="inline-flex min-w-44 justify-center rounded-full border border-black/10 bg-white/70 px-7 py-3.5 text-[14px] font-bold text-black shadow-[0_18px_45px_rgba(0,0,0,0.07)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-black/18 hover:bg-white"
+            href="#works"
+          >
+            View Works
+          </Link>
+        </div>
+      </section>
 
-        <section className={cn(isCompact ? "pb-3" : "pb-8")}>
-          <div className="pb-6 text-center sm:pb-8">
-            <h1 className="text-4xl font-semibold tracking-[0.08em] text-white sm:text-6xl lg:text-7xl">Works</h1>
-          </div>
+      <section className="relative -mt-12 px-4 pb-24 sm:-mt-16 sm:px-6 lg:px-8" id="works">
+        <PortfolioGrid projects={projects} />
+      </section>
 
-          <PortfolioGrid compact={isCompact} projects={projects} />
-        </section>
-
-        <SiteFooter compact={isCompact} light />
-      </div>
-      <Link
-        className="fixed bottom-3 right-3 z-40 rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1.5 text-[9px] uppercase tracking-[0.28em] text-white/34 backdrop-blur-xl transition duration-300 hover:border-white/18 hover:text-accent sm:bottom-5 sm:right-5 sm:px-3 sm:py-2 sm:text-[10px]"
-        href="/login"
-      >
-        Login
-      </Link>
-      <EmailButton />
-      <BottomNav />
+      <MaknaFooter />
     </main>
   );
 }

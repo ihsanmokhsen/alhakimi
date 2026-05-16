@@ -1,12 +1,8 @@
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { BackgroundLayer } from "@/components/portfolio/background-layer";
-import { BottomNav } from "@/components/portfolio/bottom-nav";
-import { EmailButton } from "@/components/portfolio/email-button";
-import { SiteHeader } from "@/components/portfolio/site-header";
-import { GlassCard } from "@/components/ui/glass-card";
+import { MaknaFooter, MaknaHeader } from "@/components/portfolio/makna-shell";
 import { getJournalById } from "@/lib/data/journals";
 import { formatJournalDate } from "@/lib/utils";
 
@@ -27,51 +23,51 @@ export default async function JournalDetailPage({ params }: JournalDetailPagePro
   const photoVersion = new Date(journal.updatedAt).getTime();
 
   return (
-    <main className="relative isolate min-h-screen px-4 pt-3 pb-8 sm:px-6 sm:pt-4">
-      <BackgroundLayer />
+    <main className="min-h-screen overflow-x-hidden bg-[#f5f5f7] text-[#08080a] [color-scheme:light]">
+      <MaknaHeader active="stories" />
 
-      <SiteHeader light />
-
-      <div className="mx-auto mt-10 max-w-4xl space-y-5">
+      <article className="mx-auto w-full max-w-7xl px-4 pb-24 pt-12 sm:px-6 sm:pt-20 lg:px-8">
         <Link
-          className="inline-flex rounded-full border border-[color:var(--public-border)] bg-[color:var(--public-surface)] px-4 py-2 text-[10px] uppercase tracking-[0.24em] text-[color:var(--public-text-muted)] transition hover:text-accent"
+          className="inline-flex rounded-full border border-black/10 bg-white px-5 py-3 text-[12px] font-black text-black/56 shadow-[0_14px_40px_rgba(18,22,34,0.08)] transition hover:-translate-y-0.5 hover:text-[#2563ff]"
           href="/journal"
         >
-          Back to journal
+          Back to Stories
         </Link>
 
-        <GlassCard className="border-[color:var(--public-border)] bg-[color:var(--public-surface)] p-6 sm:p-8">
-          <div className="space-y-3">
-            <p className="text-[10px] uppercase tracking-[0.26em] text-[color:var(--public-text-soft)]">
+        <div className="mt-10 grid gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-start">
+          <header>
+            <p className="text-[12px] font-black uppercase text-[#2563ff]">
               {formatJournalDate(journal.publishedAt)}
             </p>
-            <h1 className="text-2xl font-semibold leading-tight text-[color:var(--public-text-strong)] sm:text-4xl">
+            <h1 className="mt-5 text-[clamp(3.6rem,8vw,7.5rem)] font-black leading-[0.88] tracking-normal text-black">
               {journal.title}
             </h1>
-          </div>
+          </header>
 
-          {journal.hasPhoto ? (
-            <div className="relative mt-6 h-40 w-40 overflow-hidden rounded-2xl border border-[color:var(--public-border)] bg-[color:var(--public-surface-strong)] sm:h-48 sm:w-48">
-              <Image
-                alt={`Foto untuk ${journal.title}`}
-                className="object-cover"
-                fill
-                sizes="(max-width: 640px) 160px, 192px"
-                src={`/api/journal-photo/${journal.id}?v=${photoVersion}`}
-              />
+          <section className="overflow-hidden rounded-[28px] border border-black/[0.06] bg-white shadow-[0_24px_90px_rgba(18,22,34,0.12)]">
+            {journal.hasPhoto ? (
+              <div className="relative min-h-[320px] overflow-hidden bg-[#ebecef] sm:min-h-[460px]">
+                <Image
+                  alt={`Foto untuk ${journal.title}`}
+                  className="object-cover"
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 55vw"
+                  src={`/api/journal-photo/${journal.id}?v=${photoVersion}`}
+                />
+              </div>
+            ) : null}
+
+            <div className="p-6 sm:p-8 lg:p-10">
+              <p className="whitespace-pre-wrap text-[16px] font-medium leading-8 text-black/62 sm:text-[18px] sm:leading-9">
+                {journal.content}
+              </p>
             </div>
-          ) : null}
+          </section>
+        </div>
+      </article>
 
-          <div className="mt-6 rounded-[24px] border border-[color:var(--public-border)] bg-[color:var(--public-surface-strong)] p-5 sm:p-6">
-            <p className="whitespace-pre-wrap text-sm leading-8 text-[color:var(--public-text-muted)] sm:text-[15px]">
-              {journal.content}
-            </p>
-          </div>
-        </GlassCard>
-      </div>
-
-      <EmailButton />
-      <BottomNav />
+      <MaknaFooter />
     </main>
   );
 }
