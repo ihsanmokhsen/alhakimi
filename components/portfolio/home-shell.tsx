@@ -37,9 +37,11 @@ export function HomeShell({ projects }: HomeShellProps) {
           </Link>
           <Link
             className="inline-flex min-w-44 justify-center rounded-full border border-black/10 bg-white/70 px-7 py-3.5 text-[14px] font-bold text-black shadow-[0_18px_45px_rgba(0,0,0,0.07)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-black/18 hover:bg-white"
-            href="#works"
+            href="https://www.instagram.com/rex.orange777/"
+            rel="noreferrer"
+            target="_blank"
           >
-            View Works
+            Let&apos;s Collab
           </Link>
         </div>
       </section>

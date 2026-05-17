@@ -11,6 +11,13 @@ const navItems = [
   { href: "/about", id: "about", label: "About" }
 ] as const;
 
+const footerLinks = [
+  { href: "https://www.instagram.com/rex.orange777/", label: "Instagram" },
+  { href: "https://www.linkedin.com/in/ihsanmokhsen/", label: "LinkedIn" },
+  { href: "https://www.ihsanmokhsen.com/", label: "Website" },
+  { href: "mailto:ihsanmokhsen17@gmail.com", label: "Email" }
+] as const;
+
 export function MaknaHeader({ active }: MaknaHeaderProps) {
   return (
     <header className="sticky top-0 z-50 border-b border-black/[0.06] bg-[#f5f5f7]/75 backdrop-blur-2xl">
@@ -60,8 +67,29 @@ export function MaknaHeader({ active }: MaknaHeaderProps) {
 
 export function MaknaFooter() {
   return (
-    <footer className="border-t border-black/[0.06] px-4 py-10 text-center text-[12px] font-semibold text-black/40 sm:px-6">
-      makna.im - ideas, stories, products, creativity, and meaningful experiences.
+    <footer className="overflow-hidden bg-black px-4 py-14 text-center text-white sm:px-6 sm:py-20 lg:px-8">
+      <div className="mx-auto max-w-7xl border-y border-white/18 py-8 sm:py-12">
+        <p className="text-[clamp(2.05rem,9vw,10.5rem)] font-black lowercase leading-[0.82] tracking-normal">
+          <span className="block">works.</span>
+          <span className="block">ihsanmokhsen</span>
+          <span className="block">.com</span>
+        </p>
+      </div>
+      <div className="mx-auto mt-8 flex max-w-3xl flex-wrap items-center justify-center gap-x-4 gap-y-3 text-[12px] font-bold uppercase tracking-normal text-white/58 sm:mt-10 sm:gap-x-5 sm:text-[13px]">
+        {footerLinks.map((item, index) => (
+          <div className="flex items-center gap-4 sm:gap-5" key={item.href}>
+            {index > 0 ? <span className="h-1 w-1 rounded-full bg-white/24" /> : null}
+            <a
+              className="transition hover:text-white"
+              href={item.href}
+              rel={item.href.startsWith("http") ? "noreferrer" : undefined}
+              target={item.href.startsWith("http") ? "_blank" : undefined}
+            >
+              {item.label}
+            </a>
+          </div>
+        ))}
+      </div>
     </footer>
   );
 }
