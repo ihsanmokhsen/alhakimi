@@ -10,8 +10,6 @@ type PortfolioGridProps = {
   projects: ProjectCard[];
 };
 
-const filterTabs = ["Stories", "Products", "Visuals", "Experiments", "Journals"] as const;
-
 const cardHeights = [
   "h-[420px] sm:h-[540px]",
   "h-[360px] sm:h-[440px]",
@@ -20,33 +18,18 @@ const cardHeights = [
   "h-[430px] sm:h-[560px]"
 ];
 
-function getEditorialCategory(index: number) {
-  return filterTabs[index % filterTabs.length];
-}
-
 export function PortfolioGrid({ projects }: PortfolioGridProps) {
   const [activeProject, setActiveProject] = useState<ProjectCard | null>(null);
-  const [activeFilter, setActiveFilter] = useState<string | null>(null);
   const [query, setQuery] = useState("");
 
-  const cards = projects.map((project, index) => ({
-    editorialCategory: getEditorialCategory(index),
-    project
-  }));
-
-  const visibleCards = cards.filter(({ editorialCategory, project }) => {
+  const visibleProjects = projects.filter((project) => {
     const normalizedQuery = query.trim().toLowerCase();
-    const matchesFilter = !activeFilter || editorialCategory === activeFilter;
-
-    if (!matchesFilter) {
-      return false;
-    }
 
     if (!normalizedQuery) {
       return true;
     }
 
-    return [project.title, project.description, project.category, editorialCategory]
+    return [project.title, project.description, project.category]
       .join(" ")
       .toLowerCase()
       .includes(normalizedQuery);
@@ -55,43 +38,20 @@ export function PortfolioGrid({ projects }: PortfolioGridProps) {
   return (
     <>
       <div className="mx-auto w-full max-w-7xl">
-        <div className="mb-10 rounded-[999px] border border-white/70 bg-white/[0.72] p-2 shadow-[0_24px_80px_rgba(20,24,36,0.12)] backdrop-blur-2xl">
-          <div className="flex flex-col gap-2 lg:flex-row lg:items-center">
-            <input
-              aria-label="Search works"
-              className="min-h-12 flex-1 rounded-full border border-black/[0.06] bg-[#f5f5f7]/90 px-5 text-[14px] font-semibold text-black outline-none transition placeholder:text-black/34 focus:border-[#2563ff]/45 focus:bg-white"
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="Search ideas, products, stories"
-              type="search"
-              value={query}
-            />
-
-            <div className="flex gap-2 overflow-x-auto pb-1 lg:pb-0">
-              {filterTabs.map((tab) => {
-                const isActive = activeFilter === tab;
-
-                return (
-                  <button
-                    className={`shrink-0 rounded-full px-4 py-3 text-[12px] font-bold transition ${
-                      isActive
-                        ? "bg-[#2563ff] text-white shadow-[0_14px_30px_rgba(37,99,255,0.24)]"
-                        : "bg-white text-black/56 hover:bg-black hover:text-white"
-                    }`}
-                    key={tab}
-                    onClick={() => setActiveFilter(isActive ? null : tab)}
-                    type="button"
-                  >
-                    {tab}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+        <div className="mx-auto mb-10 max-w-3xl rounded-[999px] border border-white/70 bg-white/[0.72] p-2 shadow-[0_24px_80px_rgba(20,24,36,0.12)] backdrop-blur-2xl">
+          <input
+            aria-label="Search works"
+            className="min-h-[3.25rem] w-full rounded-full border border-black/[0.06] bg-[#f5f5f7]/90 px-6 text-[14px] font-semibold text-black outline-none transition placeholder:text-black/34 focus:border-[#2563ff]/45 focus:bg-white sm:px-7 sm:text-[15px]"
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Search works"
+            type="search"
+            value={query}
+          />
         </div>
 
-        {visibleCards.length > 0 ? (
+        {visibleProjects.length > 0 ? (
           <div className="columns-1 gap-5 md:columns-2 xl:columns-3">
-            {visibleCards.map(({ editorialCategory, project }, index) => {
+            {visibleProjects.map((project, index) => {
               const logoVersion = new Date(project.updatedAt).getTime();
 
               return (
@@ -114,9 +74,6 @@ export function PortfolioGrid({ projects }: PortfolioGridProps) {
                     <div className="absolute left-4 top-4 flex items-center gap-2 sm:left-5 sm:top-5">
                       <span className="rounded-full border border-white/70 bg-white/[0.78] px-3 py-1.5 text-[11px] font-black uppercase text-[#2563ff] shadow-[0_10px_28px_rgba(0,0,0,0.08)] backdrop-blur-xl">
                         {project.category}
-                      </span>
-                      <span className="rounded-full border border-white/60 bg-white/[0.58] px-3 py-1.5 text-[11px] font-bold text-black/52 backdrop-blur-xl">
-                        {editorialCategory}
                       </span>
                     </div>
 
