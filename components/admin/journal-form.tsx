@@ -3,7 +3,6 @@
 import { startTransition, useActionState } from "react";
 
 import type { JournalFormState } from "@/lib/actions/journals";
-import { GlassCard } from "@/components/ui/glass-card";
 
 type JournalFormProps = {
   action: (state: JournalFormState, formData: FormData) => Promise<JournalFormState>;
@@ -141,23 +140,23 @@ export function JournalForm({ action }: JournalFormProps) {
   }
 
   return (
-    <GlassCard className="p-6 sm:p-8">
-      <form action={actionWithCompressedPhoto} className="space-y-5">
-        <div className="grid gap-5 sm:grid-cols-[minmax(0,1fr)_220px]">
-          <label className="space-y-2">
-            <span className="text-[11px] uppercase tracking-[0.24em] text-[color:var(--ui-soft)]">Title</span>
+    <section className="rounded-[24px] border border-black/[0.06] bg-white p-4 shadow-[0_20px_70px_rgba(18,22,34,0.09)] sm:p-6">
+      <form action={actionWithCompressedPhoto} className="space-y-4">
+        <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_220px]">
+          <label className="space-y-1.5">
+            <span className="text-[12px] font-black uppercase text-black/42">Title</span>
             <input
-              className="w-full rounded-2xl border border-[color:var(--ui-border)] bg-[var(--ui-chip)] px-4 py-3 text-sm text-[color:var(--ui-strong)] outline-none transition focus:border-[color:var(--ui-soft)]"
+              className="w-full rounded-[16px] border border-black/[0.08] bg-[#f5f5f7] px-4 py-3 text-[14px] font-semibold text-black outline-none transition placeholder:text-black/30 focus:border-[#2563ff]/45 focus:bg-white"
               name="title"
               required
               type="text"
             />
           </label>
 
-          <label className="space-y-2">
-            <span className="text-[11px] uppercase tracking-[0.24em] text-[color:var(--ui-soft)]">Time</span>
+          <label className="space-y-1.5">
+            <span className="text-[12px] font-black uppercase text-black/42">Time</span>
             <input
-              className="w-full rounded-2xl border border-[color:var(--ui-border)] bg-[var(--ui-chip)] px-4 py-3 text-sm text-[color:var(--ui-strong)] outline-none transition focus:border-[color:var(--ui-soft)]"
+              className="w-full rounded-[16px] border border-black/[0.08] bg-[#f5f5f7] px-4 py-3 text-[14px] font-semibold text-black outline-none transition focus:border-[#2563ff]/45 focus:bg-white"
               defaultValue={getDefaultDatetimeValue()}
               name="publishedAt"
               required
@@ -166,36 +165,36 @@ export function JournalForm({ action }: JournalFormProps) {
           </label>
         </div>
 
-        <label className="space-y-2">
-          <span className="text-[11px] uppercase tracking-[0.24em] text-[color:var(--ui-soft)]">Writing</span>
+        <label className="space-y-1.5">
+          <span className="text-[12px] font-black uppercase text-black/42">Writing</span>
           <textarea
-            className="min-h-40 w-full rounded-2xl border border-[color:var(--ui-border)] bg-[var(--ui-chip)] px-4 py-3 text-sm leading-7 text-[color:var(--ui-strong)] outline-none transition focus:border-[color:var(--ui-soft)]"
+            className="min-h-32 w-full rounded-[16px] border border-black/[0.08] bg-[#f5f5f7] px-4 py-3 text-[14px] font-semibold leading-6 text-black outline-none transition placeholder:text-black/30 focus:border-[#2563ff]/45 focus:bg-white"
             name="content"
             required
           />
         </label>
 
-        <label className="space-y-2">
-          <span className="text-[11px] uppercase tracking-[0.24em] text-[color:var(--ui-soft)]">Photo (new post only)</span>
+        <label className="space-y-1.5">
+          <span className="text-[12px] font-black uppercase text-black/42">Photo (new post only)</span>
           <input
             accept="image/*"
-            className="w-full rounded-2xl border border-[color:var(--ui-border)] bg-[var(--ui-chip)] px-4 py-3 text-sm text-[color:var(--ui-strong)] outline-none file:mr-3 file:rounded-xl file:border file:border-[color:var(--ui-border)] file:bg-transparent file:px-3 file:py-1.5 file:text-xs file:text-[color:var(--ui-muted)]"
+            className="w-full rounded-[16px] border border-black/[0.08] bg-[#f5f5f7] px-4 py-3 text-[13px] font-semibold text-black outline-none file:mr-3 file:rounded-full file:border-0 file:bg-black file:px-3.5 file:py-1.5 file:text-[12px] file:font-black file:text-white"
             name="photoFile"
             type="file"
           />
-          <p className="text-[11px] text-[color:var(--ui-soft)]">Foto akan otomatis dikompres ke sekitar 200KB.</p>
+          <p className="text-[12px] font-medium text-black/42">Foto akan otomatis dikompres ke sekitar 200KB.</p>
         </label>
 
-        {state.error ? <p className="text-sm text-[#ff8e75]">{state.error}</p> : null}
+        {state.error ? <p className="rounded-2xl bg-[#2563ff]/10 px-4 py-3 text-sm font-bold text-[#2563ff]">{state.error}</p> : null}
 
         <button
-          className="rounded-2xl border border-[color:var(--ui-border)] bg-[var(--ui-chip)] px-5 py-3 text-[11px] uppercase tracking-[0.28em] text-[color:var(--ui-muted)] transition hover:border-[color:var(--ui-soft)] hover:text-accent disabled:opacity-60"
+          className="rounded-full bg-black px-5 py-3 text-[12px] font-black text-white shadow-[0_14px_34px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5 hover:bg-[#2563ff] disabled:translate-y-0 disabled:opacity-60"
           disabled={pending}
           type="submit"
         >
           {pending ? "Saving" : "Save journal"}
         </button>
       </form>
-    </GlassCard>
+    </section>
   );
 }
