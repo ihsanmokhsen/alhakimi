@@ -2,9 +2,33 @@ import { redirect } from "next/navigation";
 
 import { LoginForm } from "@/components/admin/login-form";
 import { MaknaFooter, MaknaHeader } from "@/components/portfolio/makna-shell";
-import { getCurrentAdmin } from "@/lib/auth";
+import { clearSessionCookie, getCurrentAdmin } from "@/lib/auth";
 
-export default async function LoginPage() {
+type LoginPageProps = {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+};
+
+function getParam(value: string | string[] | undefined) {
+  if (typeof value === "string") {
+    return value;
+  }
+
+  if (Array.isArray(value)) {
+    return value[0] || "";
+  }
+
+  return "";
+}
+
+export default async function LoginPage({ searchParams }: LoginPageProps) {
+  const params = searchParams ? await searchParams : {};
+  const fresh = getParam(params.fresh).trim() === "1";
+  const resetSuccess = getParam(params.reset).trim() === "success";
+
+  if (fresh) {
+    await clearSessionCookie();
+  }
+
   const admin = await getCurrentAdmin();
 
   if (admin) {
@@ -26,7 +50,7 @@ export default async function LoginPage() {
           </p>
         </div>
 
-        <LoginForm />
+        <LoginForm notice={resetSuccess ? "Password berhasil diubah. Silakan login dengan password baru." : undefined} />
       </section>
 
       <MaknaFooter />

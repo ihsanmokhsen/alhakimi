@@ -20,7 +20,7 @@ export function HomeShell({ projects }: HomeShellProps) {
         <p className="mb-5 text-[11px] font-bold uppercase text-black/42 sm:mb-7 sm:text-[12px]">
           Creative technology and modern storytelling
         </p>
-        <h1 className="max-w-5xl text-[clamp(3.15rem,12vw,9.5rem)] font-black leading-[0.9] tracking-normal text-black sm:leading-[0.86]">
+        <h1 className="max-w-4xl text-[clamp(2.65rem,9vw,7.1rem)] font-black leading-[0.92] tracking-normal text-black sm:leading-[0.88]">
           <span className="block">Every Idea</span>
           <span className="block">Has</span>
           <span className="block text-[#2563ff]">Meaning</span>

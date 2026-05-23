@@ -36,6 +36,22 @@ model Journal {
 model AdminUser {
   id           String   @id @default(cuid())
   username     String   @unique
+  email        String?  @unique
   passwordHash String
   createdAt    DateTime @default(now())
+  passwordResetTokens PasswordResetToken[]
+}
+
+model PasswordResetToken {
+  id          String   @id @default(cuid())
+  tokenHash   String   @unique
+  adminUserId String
+  expiresAt   DateTime
+  usedAt      DateTime?
+  createdAt   DateTime @default(now())
+
+  adminUser   AdminUser @relation(fields: [adminUserId], references: [id], onDelete: Cascade)
+
+  @@index([adminUserId])
+  @@index([expiresAt])
 }

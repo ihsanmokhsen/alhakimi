@@ -1,12 +1,17 @@
 "use client";
 
+import Link from "next/link";
 import { useActionState } from "react";
 
 import { loginAction, type AuthFormState } from "@/lib/actions/auth";
 
 const initialState: AuthFormState = {};
 
-export function LoginForm() {
+type LoginFormProps = {
+  notice?: string;
+};
+
+export function LoginForm({ notice }: LoginFormProps) {
   const [state, formAction, pending] = useActionState(loginAction, initialState);
 
   return (
@@ -45,6 +50,13 @@ export function LoginForm() {
           />
         </div>
 
+        <div className="flex justify-end">
+          <Link className="text-xs font-bold text-[#2563ff] hover:underline" href="/forgot-password">
+            Forgot password?
+          </Link>
+        </div>
+
+        {notice ? <p className="rounded-2xl bg-emerald-500/10 px-4 py-3 text-sm font-bold text-emerald-700">{notice}</p> : null}
         {state.error ? <p className="rounded-2xl bg-[#2563ff]/10 px-4 py-3 text-sm font-bold text-[#2563ff]">{state.error}</p> : null}
 
         <button
