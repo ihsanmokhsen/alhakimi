@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>KopiTrack</title>
+    <link rel="stylesheet" href="/kopitrack/styles.css?v=20260523-db" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js" defer></script>
+    <script src="/kopitrack/app.js?v=20260523-db" defer></script>
+  </head>
+  <body>
+    <div class="loading-overlay" id="loadingOverlay" hidden>
+      <div class="loader" aria-hidden="true"></div>
+      <p>Memproses</p>
+    </div>
+
+    <div class="toast-stack" id="toastStack" aria-live="polite" aria-atomic="true"></div>
+    <div class="sidebar-backdrop" id="sidebarBackdrop" hidden></div>
+
+    <div class="app-shell">
+      <main class="workspace">
+        <button class="menu-button" id="menuButton" type="button" aria-label="Buka navigasi" aria-controls="sidebar" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">KopiTrack</p>
+            <h1 id="pageTitle">Dashboard</h1>
+          </div>
+          <a class="back-link" href="/">Kembali ke makna.im</a>
+        </header>
+
+        <section class="view is-active" id="viewDashboard" data-view="dashboard">
+          <div class="summary-grid">
+            <article class="metric-item">
+              <span>Total pengeluaran</span>
+              <strong id="totalExpense">Rp0</strong>
+            </article>
+            <article class="metric-item">
+              <span>Total pembelian</span>
+              <strong id="totalPurchases">0</strong>
+            </article>
+            <article class="metric-item">
+              <span>Brand favorit</span>
+              <strong id="favoriteBrand">Belum ada</strong>
+            </article>
+            <article class="metric-item">
+              <span>Rata-rata</span>
+              <strong id="averageExpense">Rp0</strong>
+            </article>
+          </div>
+
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Histori</p>
+                <h2>Histori kopi</h2>
+              </div>
+              <button class="secondary-button" type="button" data-route="riwayat">Lihat riwayat</button>
+            </div>
+            <div class="table-wrap dashboard-history">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Brand</th>
+                    <th>Varian</th>
+                    <th>Harga</th>
+                    <th>Tanggal</th>
+                  </tr>
+                </thead>
+                <tbody id="dashboardHistoryBody"></tbody>
+              </table>
+            </div>
+            <div class="empty-state" id="dashboardEmpty" hidden>Belum ada pembelian kopi.</div>
+          </section>
+        </section>
+
+        <section class="view" id="viewPasscode" data-view="passcode">
+          <section class="auth-panel">
+            <p class="eyebrow">Passcode</p>
+            <h2>Akses tambah kopi</h2>
+            <form class="form-grid" id="passcodeForm">
+              <label>
+                <span>Passcode</span>
+                <input id="passcodeInput" type="password" inputmode="numeric" autocomplete="one-time-code" required />
+              </label>
+              <button class="primary-button" type="submit">Unlock</button>
+            </form>
+          </section>
+        </section>
+
+        <section class="view" id="viewTambah" data-view="tambah">
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Tambah Kopi</p>
+                <h2>Catat pembelian</h2>
+              </div>
+              <button class="secondary-button" id="lockButton" type="button">Lock</button>
+            </div>
+
+            <form class="form-grid" id="coffeeForm">
+              <div class="field-row">
+                <label>
+                  <span>Brand</span>
+                  <input id="brandInput" name="brand" type="text" autocomplete="off" required />
+                </label>
+                <label>
+                  <span>Varian</span>
+                  <input id="variantInput" name="variant" type="text" autocomplete="off" required />
+                </label>
+              </div>
+              <div class="field-row">
+                <label>
+                  <span>Harga</span>
+                  <input id="priceInput" name="price" type="number" min="1" step="1" inputmode="numeric" required />
+                </label>
+                <label>
+                  <span>Tanggal</span>
+                  <input id="dateInput" name="date" type="date" required />
+                </label>
+              </div>
+              <button class="primary-button" type="submit">Simpan kopi</button>
+            </form>
+          </section>
+        </section>
+
+        <section class="view" id="viewRiwayat" data-view="riwayat">
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Riwayat</p>
+                <h2>Semua pembelian</h2>
+              </div>
+              <button class="primary-button" id="exportCsvButton" type="button">Export CSV</button>
+            </div>
+
+            <div class="toolbar">
+              <label>
+                <span>Cari brand</span>
+                <input id="searchInput" type="search" autocomplete="off" placeholder="Contoh: Janji Jiwa" />
+              </label>
+              <label>
+                <span>Sort</span>
+                <select id="sortSelect">
+                  <option value="date-desc">Tanggal terbaru</option>
+                  <option value="date-asc">Tanggal terlama</option>
+                  <option value="price-desc">Harga tertinggi</option>
+                  <option value="price-asc">Harga terendah</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Brand</th>
+                    <th>Varian</th>
+                    <th>Harga</th>
+                    <th>Tanggal</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="historyBody"></tbody>
+              </table>
+            </div>
+            <div class="empty-state" id="historyEmpty" hidden>Belum ada data yang cocok.</div>
+          </section>
+        </section>
+
+        <section class="view" id="viewStatistik" data-view="statistik">
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Statistik</p>
+                <h2>Pengeluaran dan brand</h2>
+              </div>
+            </div>
+            <div class="empty-state" id="statsEmpty" hidden>Belum ada data untuk ditampilkan.</div>
+            <div class="chart-grid" id="statsCharts">
+              <article class="chart-panel">
+                <h3>Pengeluaran bulanan</h3>
+                <canvas id="monthlyChart" height="260"></canvas>
+              </article>
+              <article class="chart-panel">
+                <h3>Brand favorit</h3>
+                <canvas id="brandChart" height="260"></canvas>
+              </article>
+            </div>
+          </section>
+        </section>
+      </main>
+
+      <aside class="sidebar" id="sidebar">
+        <div class="brand-mark">
+          <span>K</span>
+          <div>
+            <strong>KopiTrack</strong>
+            <small id="unlockStatus">Terkunci</small>
+          </div>
+        </div>
+
+        <nav class="side-nav" aria-label="Navigasi KopiTrack">
+          <button type="button" data-route="dashboard">Dashboard</button>
+          <button type="button" data-route="tambah">Tambah Kopi</button>
+          <button type="button" data-route="riwayat">Riwayat</button>
+          <button type="button" data-route="statistik">Statistik</button>
+        </nav>
+
+        <div class="sidebar-actions">
+          <button class="secondary-button" id="themeButton" type="button">Mode gelap</button>
+          <button class="secondary-button" type="button" data-route="passcode">Passcode</button>
+        </div>
+      </aside>
+    </div>
+
+    <div class="modal" id="deleteModal" hidden role="dialog" aria-modal="true" aria-labelledby="deleteTitle">
+      <div class="modal-content">
+        <h2 id="deleteTitle">Hapus data?</h2>
+        <p id="deleteMessage">Data pembelian akan dihapus.</p>
+        <div class="modal-actions">
+          <button class="secondary-button" id="cancelDeleteButton" type="button">Batal</button>
+          <button class="danger-button" id="confirmDeleteButton" type="button">Hapus</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="editModal" hidden role="dialog" aria-modal="true" aria-labelledby="editTitle">
+      <div class="modal-content">
+        <h2 id="editTitle">Edit pembelian</h2>
+        <form class="form-grid" id="editForm">
+          <label>
+            <span>Brand</span>
+            <input id="editBrandInput" type="text" required />
+          </label>
+          <label>
+            <span>Varian</span>
+            <input id="editVariantInput" type="text" required />
+          </label>
+          <label>
+            <span>Harga</span>
+            <input id="editPriceInput" type="number" min="1" step="1" inputmode="numeric" required />
+          </label>
+          <label>
+            <span>Tanggal</span>
+            <input id="editDateInput" type="date" required />
+          </label>
+          <div class="modal-actions">
+            <button class="secondary-button" id="cancelEditButton" type="button">Batal</button>
+            <button class="primary-button" type="submit">Simpan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,14 +1,17 @@
 import Link from "next/link";
 
+import { MobileHeaderMenu } from "@/components/portfolio/mobile-header-menu";
+
 type MaknaHeaderProps = {
-  active?: "explore" | "stories" | "works" | "about" | "login";
+  active?: "explore" | "stories" | "works" | "about" | "kopitrack" | "login";
 };
 
 const navItems = [
   { href: "/#explore", id: "explore", label: "Explore" },
   { href: "/journal", id: "stories", label: "Stories" },
   { href: "/#works", id: "works", label: "Works" },
-  { href: "/about", id: "about", label: "About" }
+  { href: "/about", id: "about", label: "About" },
+  { href: "/kopitrack/index.html", id: "kopitrack", label: "KopiTrack" }
 ] as const;
 
 const footerLinks = [
@@ -20,7 +23,7 @@ const footerLinks = [
 
 export function MaknaHeader({ active }: MaknaHeaderProps) {
   return (
-    <header className="sticky top-0 z-50 border-b border-black/[0.06] bg-[#f5f5f7]/75 backdrop-blur-2xl">
+    <header className="sticky top-0 z-50 border-b border-black/[0.06] bg-[#f5f5f7] md:bg-[#f5f5f7]/75 md:backdrop-blur-2xl">
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 sm:h-20 sm:px-6 lg:px-8">
         <Link className="text-[18px] font-black leading-none text-black sm:text-[20px]" href="/">
           makna.im
@@ -54,11 +57,12 @@ export function MaknaHeader({ active }: MaknaHeaderProps) {
             Sign In
           </Link>
           <Link
-            className="inline-flex rounded-full bg-black px-4 py-2 text-[13px] font-bold text-white shadow-[0_16px_38px_rgba(0,0,0,0.18)] transition hover:-translate-y-0.5 hover:bg-[#2563ff] sm:px-5"
+            className="hidden rounded-full bg-black px-4 py-2 text-[13px] font-bold text-white shadow-[0_16px_38px_rgba(0,0,0,0.18)] transition hover:-translate-y-0.5 hover:bg-[#2563ff] md:inline-flex lg:px-5"
             href="/#works"
           >
             Get Started
           </Link>
+          <MobileHeaderMenu active={active} items={navItems} />
         </div>
       </div>
     </header>

@@ -33,6 +33,19 @@ model Journal {
   updatedAt   DateTime @updatedAt
 }
 
+model CoffeeConsumption {
+  id         String   @id @default(cuid())
+  brand      String
+  variant    String
+  price      Int
+  consumedAt DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([consumedAt])
+  @@index([brand])
+}
+
 model AdminUser {
   id           String   @id @default(cuid())
   username     String   @unique
