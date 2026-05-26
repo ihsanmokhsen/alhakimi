@@ -17,7 +17,7 @@ export function MobileHeaderMenu({ active, items }: MobileHeaderMenuProps) {
       <input className="peer sr-only" id={menuToggleId} type="checkbox" />
       <label
         aria-label="Buka menu"
-        className="inline-flex cursor-pointer rounded-full bg-black px-4 py-2 text-[13px] font-bold text-white shadow-[0_16px_38px_rgba(0,0,0,0.18)] transition hover:-translate-y-0.5"
+        className="inline-flex cursor-pointer bg-black px-4 py-2 text-[13px] font-bold text-white shadow-[0_16px_38px_rgba(0,0,0,0.18)] transition hover:-translate-y-0.5"
         htmlFor={menuToggleId}
       >
         Get Started
@@ -34,7 +34,7 @@ export function MobileHeaderMenu({ active, items }: MobileHeaderMenuProps) {
             <div className="flex items-center justify-between gap-4 border-b border-black/[0.08] pb-5">
               <p className="text-[18px] font-black leading-none text-black">makna.im</p>
               <label
-                className="cursor-pointer rounded-full border border-black/[0.10] px-3 py-1.5 text-[12px] font-black text-black/[0.64]"
+                className="cursor-pointer border border-black/[0.10] px-3 py-1.5 text-[12px] font-black text-black/[0.64]"
                 htmlFor={menuToggleId}
               >
                 Close
@@ -69,7 +69,7 @@ export function MobileHeaderMenu({ active, items }: MobileHeaderMenuProps) {
             >
               Sign In
             </Link>
-            <Link className="rounded-full bg-black px-4 py-3 text-center text-[13px] font-black text-white" href="/#works">
+            <Link className="bg-black px-4 py-3 text-center text-[13px] font-black text-white" href="/#works">
               Go to Works
             </Link>
           </div>

@@ -20,7 +20,7 @@ const storyHeights = [
 export function JournalGrid({ journals }: JournalGridProps) {
   if (journals.length === 0) {
     return (
-      <div className="mx-auto max-w-7xl rounded-[28px] border border-black/[0.06] bg-white p-10 text-center shadow-[0_22px_80px_rgba(18,22,34,0.08)]">
+      <div className="mx-auto max-w-7xl border border-black/[0.06] bg-white p-10 text-center shadow-[0_22px_80px_rgba(18,22,34,0.08)]">
         <p className="text-[14px] font-bold text-black/52">No stories published yet.</p>
       </div>
     );
@@ -38,13 +38,13 @@ export function JournalGrid({ journals }: JournalGridProps) {
         </p>
       </div>
 
-      <div className="columns-1 gap-5 md:columns-2 xl:columns-3">
+      <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
         {journals.map((journal, index) => {
           const photoVersion = new Date(journal.updatedAt).getTime();
 
           return (
             <Link
-              className={`group mb-5 block break-inside-avoid overflow-hidden rounded-[24px] border border-black/[0.06] bg-white shadow-[0_22px_80px_rgba(18,22,34,0.10)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_32px_100px_rgba(18,22,34,0.16)] ${
+              className={`group block overflow-hidden border border-black/[0.06] bg-white shadow-[0_22px_80px_rgba(18,22,34,0.10)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_32px_100px_rgba(18,22,34,0.16)] ${
                 storyHeights[index % storyHeights.length]
               }`}
               href={`/journal/${journal.id}`}
@@ -75,7 +75,7 @@ export function JournalGrid({ journals }: JournalGridProps) {
                   <p className="mt-4 line-clamp-3 text-[14px] font-medium leading-7 text-black/56">
                     {journal.content}
                   </p>
-                  <span className="mt-6 inline-flex rounded-full bg-black px-4 py-2 text-[12px] font-bold text-white transition group-hover:bg-[#2563ff]">
+                  <span className="mt-6 inline-flex bg-black px-4 py-2 text-[12px] font-bold text-white transition group-hover:bg-[#2563ff]">
                     Read Story
                   </span>
                 </div>

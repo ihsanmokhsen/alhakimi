@@ -49,7 +49,7 @@ export function MaknaHeader({ active }: MaknaHeaderProps) {
 
         <div className="flex items-center gap-2 sm:gap-3">
           <Link
-            className={`hidden rounded-full px-4 py-2 text-[13px] font-semibold transition sm:inline-flex ${
+            className={`hidden px-4 py-2 text-[13px] font-semibold transition sm:inline-flex ${
               active === "login" ? "text-[#2563ff]" : "text-black/62 hover:text-black"
             }`}
             href="/login"
@@ -57,7 +57,7 @@ export function MaknaHeader({ active }: MaknaHeaderProps) {
             Sign In
           </Link>
           <Link
-            className="hidden rounded-full bg-black px-4 py-2 text-[13px] font-bold text-white shadow-[0_16px_38px_rgba(0,0,0,0.18)] transition hover:-translate-y-0.5 hover:bg-[#2563ff] md:inline-flex lg:px-5"
+            className="hidden bg-black px-4 py-2 text-[13px] font-bold text-white shadow-[0_16px_38px_rgba(0,0,0,0.18)] transition hover:-translate-y-0.5 hover:bg-[#2563ff] md:inline-flex lg:px-5"
             href="/#works"
           >
             Get Started
@@ -82,7 +82,7 @@ export function MaknaFooter() {
       <div className="mx-auto mt-8 flex max-w-3xl flex-wrap items-center justify-center gap-x-4 gap-y-3 text-[12px] font-bold uppercase tracking-normal text-white/58 sm:mt-10 sm:gap-x-5 sm:text-[13px]">
         {footerLinks.map((item, index) => (
           <div className="flex items-center gap-4 sm:gap-5" key={item.href}>
-            {index > 0 ? <span className="h-1 w-1 rounded-full bg-white/24" /> : null}
+            {index > 0 ? <span className="h-1 w-1 bg-white/24" /> : null}
             <a
               className="transition hover:text-white"
               href={item.href}

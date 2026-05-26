@@ -28,7 +28,7 @@ export default async function JournalDetailPage({ params }: JournalDetailPagePro
 
       <article className="mx-auto w-full max-w-7xl px-4 pb-24 pt-12 sm:px-6 sm:pt-20 lg:px-8">
         <Link
-          className="inline-flex rounded-full border border-black/10 bg-white px-5 py-3 text-[12px] font-black text-black/56 shadow-[0_14px_40px_rgba(18,22,34,0.08)] transition hover:-translate-y-0.5 hover:text-[#2563ff]"
+          className="inline-flex border border-black/10 bg-white px-5 py-3 text-[12px] font-black text-black/56 shadow-[0_14px_40px_rgba(18,22,34,0.08)] transition hover:-translate-y-0.5 hover:text-[#2563ff]"
           href="/journal"
         >
           Back to Stories
@@ -44,7 +44,7 @@ export default async function JournalDetailPage({ params }: JournalDetailPagePro
             </h1>
           </header>
 
-          <section className="overflow-hidden rounded-[28px] border border-black/[0.06] bg-white shadow-[0_24px_90px_rgba(18,22,34,0.12)]">
+          <section className="overflow-hidden border border-black/[0.06] bg-white shadow-[0_24px_90px_rgba(18,22,34,0.12)]">
             {journal.hasPhoto ? (
               <div className="relative min-h-[320px] overflow-hidden bg-[#ebecef] sm:min-h-[460px]">
                 <Image

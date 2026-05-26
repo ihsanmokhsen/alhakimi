@@ -39,7 +39,7 @@ export default async function ResetPasswordPage({ searchParams }: ResetPasswordP
         {token ? (
           <ResetPasswordForm token={token} />
         ) : (
-          <section className="mx-auto w-full max-w-md rounded-[28px] border border-black/[0.06] bg-white p-6 text-center shadow-[0_24px_90px_rgba(18,22,34,0.12)] sm:p-8">
+          <section className="mx-auto w-full max-w-md border border-black/[0.06] bg-white p-6 text-center shadow-[0_24px_90px_rgba(18,22,34,0.12)] sm:p-8">
             <p className="text-sm font-bold text-red-600">Reset token is missing. Please request a new password reset link.</p>
           </section>
         )}

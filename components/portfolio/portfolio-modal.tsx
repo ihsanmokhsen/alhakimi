@@ -37,9 +37,9 @@ export function PortfolioModal({ project, onClose }: PortfolioModalProps) {
   }, [onClose]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto overscroll-contain p-3 sm:items-center sm:p-6">
+    <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto overscroll-contain p-0 sm:items-center sm:p-6">
       <div
-        className={`fixed inset-0 bg-black/24 backdrop-blur-sm transition-opacity duration-500 ${
+        className={`fixed inset-0 bg-black/[0.34] backdrop-blur-sm transition-opacity duration-500 ${
           isReady ? "opacity-100" : "opacity-0"
         }`}
       />
@@ -51,57 +51,51 @@ export function PortfolioModal({ project, onClose }: PortfolioModalProps) {
       />
 
       <section
-        className={`relative z-10 my-auto max-h-[calc(100svh-1.5rem)] w-full max-w-5xl overflow-y-auto rounded-[28px] border border-white/70 bg-white shadow-[0_40px_140px_rgba(10,12,20,0.28)] transition-all duration-500 sm:max-h-[calc(100svh-3rem)] ${
+        className={`relative z-10 min-h-svh w-full overflow-y-auto border border-black/[0.10] bg-white shadow-[0_40px_140px_rgba(10,12,20,0.28)] transition-all duration-500 sm:my-auto sm:min-h-0 sm:max-h-[calc(100svh-3rem)] sm:max-w-6xl ${
           isReady ? "translate-y-0 scale-100 opacity-100" : "translate-y-6 scale-[0.985] opacity-0"
         }`}
       >
         <button
-          className="absolute right-4 top-4 z-10 rounded-full border border-black/10 bg-white/78 px-4 py-2 text-[12px] font-bold text-black/58 shadow-[0_10px_30px_rgba(0,0,0,0.08)] backdrop-blur-xl transition hover:text-black"
+          className="absolute right-4 top-4 z-10 border border-black/[0.12] bg-white px-4 py-2 text-[12px] font-black uppercase text-black/[0.62] transition hover:text-black"
           onClick={onClose}
           type="button"
         >
           Close
         </button>
 
-        <div className="grid md:grid-cols-[1.08fr_0.92fr]">
-          <div className="relative min-h-[220px] overflow-hidden bg-[#edeef2] sm:min-h-[360px] md:min-h-[520px]">
+        <div className="grid lg:grid-cols-[1.08fr_0.92fr]">
+          <div className="relative min-h-[320px] overflow-hidden bg-[#e8e8e8] sm:min-h-[440px] lg:min-h-[620px]">
             <Image
               alt={`${project.title} visual`}
               className="object-cover"
               fill
               priority
-              sizes="(max-width: 768px) 100vw, 55vw"
+              sizes="(max-width: 1024px) 100vw, 56vw"
               src={`/api/project-logo/${project.id}?v=${logoVersion}`}
             />
           </div>
 
-          <div className="flex min-h-0 flex-col justify-between p-5 sm:min-h-[360px] sm:p-8 lg:p-10">
+          <div className="flex min-h-[460px] flex-col justify-between p-6 sm:p-8 lg:min-h-[620px] lg:p-12">
             <div>
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="rounded-full bg-[#2563ff]/10 px-3 py-1.5 text-[12px] font-black uppercase text-[#2563ff]">
-                  {project.category}
-                </span>
-                <span className="rounded-full border border-black/10 px-3 py-1.5 text-[12px] font-bold text-black/42">
-                  {project.featured ? "Featured" : "Selected"}
-                </span>
-              </div>
-
-              <h2 className="mt-5 text-[32px] font-black leading-none tracking-normal text-black sm:mt-6 sm:text-[58px]">
+              <p className="text-[11px] font-black uppercase tracking-normal text-black/[0.44]">
+                {project.category} / {project.featured ? "Featured" : "Selected"}
+              </p>
+              <h2 className="mt-6 text-[clamp(2.8rem,8vw,6.5rem)] font-black leading-[0.86] tracking-normal text-black">
                 {project.title}
               </h2>
-              <p className="mt-5 text-[15px] font-medium leading-7 text-black/58 sm:mt-6 sm:text-[18px] sm:leading-8">
+              <p className="mt-7 max-w-xl text-[16px] font-medium leading-8 text-black/[0.58] sm:text-[19px] sm:leading-9">
                 {project.description}
               </p>
             </div>
 
             <div className="mt-8 flex flex-col gap-4 sm:mt-10 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-[12px] font-bold uppercase text-black/34">
+              <p className="text-[12px] font-black uppercase tracking-normal text-black/[0.36]">
                 {new Intl.DateTimeFormat("id-ID", {
                   dateStyle: "medium"
                 }).format(project.createdAt)}
               </p>
               <Link
-                className="inline-flex w-full justify-center rounded-full bg-black px-6 py-3 text-[14px] font-black text-white shadow-[0_20px_45px_rgba(0,0,0,0.18)] transition hover:-translate-y-0.5 hover:bg-[#2563ff] sm:w-auto"
+                className="inline-flex w-full justify-center bg-black px-6 py-3 text-[13px] font-black uppercase tracking-normal text-white transition hover:bg-black/[0.76] sm:w-auto"
                 href={project.url}
                 rel="noreferrer"
                 target="_blank"
