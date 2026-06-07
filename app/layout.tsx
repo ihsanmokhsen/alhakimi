@@ -5,7 +5,7 @@ import { AccessibilityControls } from "@/components/portfolio/accessibility-cont
 import { EntrySplash } from "@/components/portfolio/entry-splash";
 
 export const metadata: Metadata = {
-  title: "makna.im",
+  title: "works",
   description: "A modern digital space for ideas, stories, products, creativity, and meaningful experiences."
 };
 

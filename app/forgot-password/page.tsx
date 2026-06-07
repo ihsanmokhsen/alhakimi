@@ -1,10 +1,10 @@
 import { ForgotPasswordForm } from "@/components/admin/forgot-password-form";
-import { MaknaFooter, MaknaHeader } from "@/components/portfolio/makna-shell";
+import { WorksFooter, WorksHeader } from "@/components/portfolio/makna-shell";
 
 export default function ForgotPasswordPage() {
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#f5f5f7] text-[#08080a] [color-scheme:light]">
-      <MaknaHeader active="login" />
+      <WorksHeader active="login" />
 
       <section className="mx-auto grid min-h-[calc(100svh-5rem)] w-full max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8">
         <div>
@@ -20,7 +20,7 @@ export default function ForgotPasswordPage() {
         <ForgotPasswordForm />
       </section>
 
-      <MaknaFooter />
+      <WorksFooter />
     </main>
   );
 }

@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { ProjectForm } from "@/components/admin/project-form";
-import { MaknaFooter, MaknaHeader } from "@/components/portfolio/makna-shell";
+import { WorksFooter, WorksHeader } from "@/components/portfolio/makna-shell";
 import { createProjectAction } from "@/lib/actions/projects";
 import { requireAdmin } from "@/lib/auth";
 
@@ -10,7 +10,7 @@ export default async function NewProjectPage() {
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#f5f5f7] text-[#08080a] [color-scheme:light]">
-      <MaknaHeader />
+      <WorksHeader />
 
       <section className="mx-auto w-full max-w-5xl px-4 pb-16 pt-10 sm:px-6 sm:pt-14 lg:px-8">
         <div className="mb-6 flex flex-col gap-4 border-b border-black/10 pb-6 sm:mb-8 sm:flex-row sm:items-end sm:justify-between">
@@ -31,7 +31,7 @@ export default async function NewProjectPage() {
         <ProjectForm action={createProjectAction} submitLabel="Save project" />
       </section>
 
-      <MaknaFooter />
+      <WorksFooter />
     </main>
   );
 }

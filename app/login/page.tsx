@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
 import { LoginForm } from "@/components/admin/login-form";
-import { MaknaFooter, MaknaHeader } from "@/components/portfolio/makna-shell";
+import { WorksFooter, WorksHeader } from "@/components/portfolio/makna-shell";
 import { clearSessionCookie, getCurrentAdmin } from "@/lib/auth";
 
 type LoginPageProps = {
@@ -46,7 +46,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
             Sign in to shape meaning.
           </h1>
           <p className="mt-8 max-w-xl text-[17px] font-medium leading-8 text-black/58 sm:text-[20px]">
-            Secure access for managing works, stories, and the creative layer behind makna.im.
+            Secure access for managing works, stories, and the creative layer behind works.
           </p>
         </div>
 

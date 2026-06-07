@@ -1,4 +1,4 @@
-import { MaknaFooter, MaknaHeader } from "@/components/portfolio/makna-shell";
+import { WorksFooter, WorksHeader } from "@/components/portfolio/makna-shell";
 import { JournalGrid } from "@/components/portfolio/journal-grid";
 import { getJournals } from "@/lib/data/journals";
 
@@ -9,7 +9,7 @@ export default async function JournalPage() {
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#f5f5f7] text-[#08080a] [color-scheme:light]">
-      <MaknaHeader active="stories" />
+      <WorksHeader active="stories" />
 
       <section className="mx-auto w-full max-w-7xl px-4 pb-14 pt-16 sm:px-6 sm:pb-20 sm:pt-24 lg:px-8">
         <div className="max-w-4xl">
@@ -18,7 +18,7 @@ export default async function JournalPage() {
             Ideas with quiet depth.
           </h1>
           <p className="mt-8 max-w-2xl text-[17px] font-medium leading-8 text-black/58 sm:text-[20px]">
-            Notes, reflections, product thinking, and meaningful digital experiments from makna.im.
+            Notes, reflections, product thinking, and meaningful digital experiments from works.
           </p>
         </div>
       </section>
@@ -27,7 +27,7 @@ export default async function JournalPage() {
         <JournalGrid journals={journals} />
       </section>
 
-      <MaknaFooter />
+      <WorksFooter />
     </main>
   );
 }

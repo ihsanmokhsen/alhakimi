@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { JournalForm } from "@/components/admin/journal-form";
 import { JournalList } from "@/components/admin/journal-list";
-import { MaknaFooter, MaknaHeader } from "@/components/portfolio/makna-shell";
+import { WorksFooter, WorksHeader } from "@/components/portfolio/makna-shell";
 import { ProjectList } from "@/components/admin/project-list";
 import { createJournalAction } from "@/lib/actions/journals";
 import { logoutAction } from "@/lib/actions/auth";
@@ -28,7 +28,7 @@ export default async function AdminPage() {
             </h1>
             <p className="mt-4 max-w-2xl text-[15px] font-medium leading-7 text-black/58 sm:text-[17px]">
               Signed in as <span className="font-black text-black">{admin.username}</span>. Curate projects, publish
-              stories, and keep the makna.im front experience sharp.
+              stories, and keep the works experience sharp.
             </p>
           </div>
 

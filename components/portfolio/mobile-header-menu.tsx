@@ -32,7 +32,7 @@ export function MobileHeaderMenu({ active, items }: MobileHeaderMenuProps) {
         <aside className="absolute right-0 top-0 flex h-[100dvh] min-h-[100dvh] w-[min(82vw,330px)] flex-col justify-between border-l border-black/[0.08] bg-white px-5 py-5 shadow-[-24px_0_70px_rgba(0,0,0,0.18)]">
           <div>
             <div className="flex items-center justify-between gap-4 border-b border-black/[0.08] pb-5">
-              <p className="text-[18px] font-black leading-none text-black">makna.im</p>
+              <p className="text-[18px] font-black leading-none text-black">works</p>
               <label
                 className="cursor-pointer border border-black/[0.10] px-3 py-1.5 text-[12px] font-black text-black/[0.64]"
                 htmlFor={menuToggleId}

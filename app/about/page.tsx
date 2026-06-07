@@ -1,4 +1,4 @@
-import { MaknaFooter, MaknaHeader } from "@/components/portfolio/makna-shell";
+import { WorksFooter, WorksHeader } from "@/components/portfolio/makna-shell";
 
 const focusItems = [
   "Thesis: Improving HAIS-Q",
@@ -15,7 +15,7 @@ const contactLinks = [
 export default function AboutPage() {
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#f5f5f7] text-[#08080a] [color-scheme:light]">
-      <MaknaHeader active="about" />
+      <WorksHeader active="about" />
 
       <section className="mx-auto w-full max-w-7xl px-4 pb-24 pt-14 sm:px-6 sm:pt-24 lg:px-8">
         <div className="border-b border-black/10 pb-12 sm:pb-16 lg:pb-20">

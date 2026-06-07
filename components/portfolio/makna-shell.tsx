@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { MobileHeaderMenu } from "@/components/portfolio/mobile-header-menu";
 
-type MaknaHeaderProps = {
+type WorksHeaderProps = {
   active?: "explore" | "stories" | "works" | "about" | "kopitrack" | "login";
 };
 
@@ -21,12 +21,12 @@ const footerLinks = [
   { href: "mailto:ihsanmokhsen17@gmail.com", label: "Email" }
 ] as const;
 
-export function MaknaHeader({ active }: MaknaHeaderProps) {
+export function WorksHeader({ active }: WorksHeaderProps) {
   return (
     <header className="sticky top-0 z-50 border-b border-black/[0.06] bg-[#f5f5f7] md:bg-[#f5f5f7]/75 md:backdrop-blur-2xl">
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 sm:h-20 sm:px-6 lg:px-8">
         <Link className="text-[18px] font-black leading-none text-black sm:text-[20px]" href="/">
-          makna.im
+          works
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
@@ -69,7 +69,7 @@ export function MaknaHeader({ active }: MaknaHeaderProps) {
   );
 }
 
-export function MaknaFooter() {
+export function WorksFooter() {
   return (
     <footer className="overflow-hidden bg-black px-4 py-14 text-center text-white sm:px-6 sm:py-20 lg:px-8">
       <div className="mx-auto max-w-7xl border-y border-white/18 py-8 sm:py-12">
