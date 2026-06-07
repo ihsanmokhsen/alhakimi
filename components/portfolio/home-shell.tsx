@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 
 import { WorksFooter, WorksHeader } from "@/components/portfolio/makna-shell";
@@ -15,17 +14,10 @@ export function HomeShell({ projects }: HomeShellProps) {
       <WorksHeader />
 
       <section
-        className="relative mx-auto flex min-h-[calc(88svh-4rem)] w-full max-w-7xl flex-col items-center justify-center px-4 pb-20 pt-10 text-center sm:min-h-[calc(94svh-5rem)] sm:px-6 sm:pb-24 sm:pt-14 lg:px-8"
+        className="relative mx-auto flex min-h-[calc(88svh-4rem)] w-full max-w-7xl flex-col items-center justify-center px-4 pb-20 pt-10 text-center sm:min-h-[calc(94svh-5rem)] sm:px-6 sm:pb-24 sm:pt-14 lg:px-8 bg-[url('/hero.png')] bg-cover bg-center"
         id="explore"
       >
-        <Image
-          src="/hero.png"
-          alt="Hero background"
-          fill
-          className="pointer-events-none -z-10 object-cover opacity-100"
-          priority
-        />
-        <h1 className="max-w-4xl text-[clamp(2.65rem,9vw,7.1rem)] font-black leading-[0.92] tracking-normal text-black sm:leading-[0.88]">
+        <h1 className="relative z-10 max-w-4xl text-[clamp(2.65rem,9vw,7.1rem)] font-black leading-[0.92] tracking-normal text-black sm:leading-[0.88]">
           <span className="block">works</span>
         </h1>
         <p className="mt-6 max-w-xl text-[15px] font-medium leading-7 text-black/58 sm:mt-8 sm:max-w-2xl sm:text-[18px] sm:leading-8">
