@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
 import { LoginForm } from "@/components/admin/login-form";
-import { WorksFooter, WorksHeader } from "@/components/portfolio/makna-shell";
+import { MaknaFooter, MaknaHeader } from "@/components/portfolio/makna-shell";
 import { clearSessionCookie, getCurrentAdmin } from "@/lib/auth";
 
 type LoginPageProps = {

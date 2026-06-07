@@ -1,4 +1,4 @@
-import { WorksFooter, WorksHeader } from "@/components/portfolio/makna-shell";
+import { MaknaFooter, WorksHeader } from "@/components/portfolio/makna-shell";
 
 const focusItems = [
   "Thesis: Improving HAIS-Q",

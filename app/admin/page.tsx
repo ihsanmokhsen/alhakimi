@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { JournalForm } from "@/components/admin/journal-form";
 import { JournalList } from "@/components/admin/journal-list";
-import { WorksFooter, WorksHeader } from "@/components/portfolio/makna-shell";
+import { MaknaFooter, MaknaHeader } from "@/components/portfolio/makna-shell";
 import { ProjectList } from "@/components/admin/project-list";
 import { createJournalAction } from "@/lib/actions/journals";
 import { logoutAction } from "@/lib/actions/auth";

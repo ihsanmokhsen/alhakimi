@@ -97,3 +97,5 @@ export function WorksFooter() {
     </footer>
   );
 }
+
+export { WorksHeader as MaknaHeader, WorksFooter as MaknaFooter };
