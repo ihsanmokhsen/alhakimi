@@ -10,7 +10,8 @@ const nextConfig: NextConfig = {
     localPatterns: [
       { pathname: "/api/project-logo/**" },
       { pathname: "/api/journal-photo/**" },
-      { pathname: "/foto.png" }
+      { pathname: "/foto.png" },
+      { pathname: "/hero.png" }
     ]
   },
   experimental: {

@@ -17,13 +17,15 @@ export function HomeShell({ projects }: HomeShellProps) {
         className="relative mx-auto flex min-h-[calc(88svh-4rem)] w-full max-w-7xl flex-col items-center justify-center px-4 pb-20 pt-10 text-center sm:min-h-[calc(94svh-5rem)] sm:px-6 sm:pb-24 sm:pt-14 lg:px-8 bg-[url('/hero.png')] bg-cover bg-center"
         id="explore"
       >
-        <h1 className="relative z-10 max-w-4xl text-[clamp(2.65rem,9vw,7.1rem)] font-black leading-[0.92] tracking-normal text-black sm:leading-[0.88]">
-          <span className="block">works</span>
-        </h1>
-        <p className="mt-6 max-w-xl text-[15px] font-medium leading-7 text-black/58 sm:mt-8 sm:max-w-2xl sm:text-[18px] sm:leading-8">
-          Beberapa Apps yang dibuat untuk kebutuhan kantor dan pribadi.
-        </p>
-        <div className="mt-7 flex flex-col items-center gap-3 sm:mt-9 sm:flex-row">
+        <div className="absolute inset-0 bg-black/45" />
+        <div className="relative z-10 flex flex-col items-center">
+          <h1 className="max-w-4xl text-[clamp(2.65rem,9vw,7.1rem)] font-black leading-[0.92] tracking-normal text-white sm:leading-[0.88]">
+            <span className="block">works</span>
+          </h1>
+          <p className="mt-6 max-w-xl text-[15px] font-medium leading-7 text-white/85 sm:mt-8 sm:max-w-2xl sm:text-[18px] sm:leading-8">
+            Beberapa Apps yang dibuat untuk kebutuhan kantor dan pribadi.
+          </p>
+          <div className="mt-7 flex flex-col items-center gap-3 sm:mt-9 sm:flex-row">
           <Link
             className="inline-flex min-w-44 justify-center bg-[#2563ff] px-7 py-3.5 text-[14px] font-bold text-white shadow-[0_20px_45px_rgba(37,99,255,0.26)] transition hover:-translate-y-0.5 hover:bg-[#0f4ff2]"
             href="#works"
@@ -39,6 +41,7 @@ export function HomeShell({ projects }: HomeShellProps) {
             Let&apos;s Collab
           </Link>
         </div>
+      </div>
       </section>
 
       <section className="relative -mt-12 px-4 pb-24 sm:-mt-16 sm:px-6 lg:px-8" id="works">
