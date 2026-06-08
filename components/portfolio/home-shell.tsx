@@ -10,14 +10,13 @@ type HomeShellProps = {
 
 export function HomeShell({ projects }: HomeShellProps) {
   return (
-    <main className="min-h-screen overflow-x-hidden bg-[#f5f5f7] text-[#08080a] [color-scheme:light]">
+    <main className="min-h-screen overflow-x-hidden bg-transparent text-[#08080a] [color-scheme:light]">
       <WorksHeader />
 
       <section
-        className="relative mx-auto flex min-h-[calc(88svh-4rem)] w-full max-w-7xl flex-col items-center justify-center px-4 pb-20 pt-10 text-center sm:min-h-[calc(94svh-5rem)] sm:px-6 sm:pb-24 sm:pt-14 lg:px-8 bg-[url('/hero.png')] bg-cover bg-center"
+        className="relative mx-auto -mt-16 flex h-screen w-full max-w-7xl flex-col items-center justify-center px-4 pb-20 pt-10 text-center sm:px-6 sm:pb-24 sm:pt-14 lg:px-8 bg-[url('/hero.png')] bg-cover bg-center"
         id="explore"
       >
-        <div className="absolute inset-0 bg-black/45" />
         <div className="relative z-10 flex flex-col items-center">
           <h1 className="max-w-4xl text-[clamp(2.65rem,9vw,7.1rem)] font-black leading-[0.92] tracking-normal text-white sm:leading-[0.88]">
             <span className="block">works</span>

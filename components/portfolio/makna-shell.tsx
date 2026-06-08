@@ -23,7 +23,7 @@ const footerLinks = [
 
 export function WorksHeader({ active }: WorksHeaderProps) {
   return (
-    <header className="sticky top-0 z-50 border-b border-black/[0.06] bg-[#f5f5f7] md:bg-[#f5f5f7]/75 md:backdrop-blur-2xl">
+    <header className="sticky top-0 z-50 border-b border-black/[0.06] bg-transparent md:bg-transparent md:backdrop-blur-2xl">
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 sm:h-20 sm:px-6 lg:px-8">
         <Link className="text-[18px] font-black leading-none text-black sm:text-[20px]" href="/">
           works
