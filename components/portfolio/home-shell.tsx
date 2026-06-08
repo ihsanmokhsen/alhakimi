@@ -10,11 +10,11 @@ type HomeShellProps = {
 
 export function HomeShell({ projects }: HomeShellProps) {
   return (
-    <main className="min-h-screen overflow-x-hidden bg-transparent text-[#08080a] [color-scheme:light]">
-      <WorksHeader />
+    <main className="min-h-screen overflow-x-hidden bg-white text-[#08080a] [color-scheme:light]">
+      <WorksHeader overlay />
 
       <section
-        className="relative mx-auto -mt-16 flex h-screen w-full max-w-7xl flex-col items-center justify-center px-4 pb-20 pt-10 text-center sm:px-6 sm:pb-24 sm:pt-14 lg:px-8 bg-[url('/hero.png')] bg-cover bg-center"
+        className="relative flex min-h-screen w-full flex-col items-center justify-center bg-[url('/hero.png')] bg-cover bg-center px-4 pb-20 pt-10 text-center sm:px-6 sm:pb-24 sm:pt-14 lg:px-8"
         id="explore"
       >
         <div className="relative z-10 flex flex-col items-center">
@@ -43,7 +43,7 @@ export function HomeShell({ projects }: HomeShellProps) {
       </div>
       </section>
 
-      <section className="relative -mt-12 px-4 pb-24 sm:-mt-16 sm:px-6 lg:px-8" id="works">
+      <section className="relative scroll-mt-20 bg-white px-4 pb-24 pt-16 sm:px-6 sm:pt-20 lg:px-8" id="works">
         <PortfolioGrid projects={projects} />
       </section>
 

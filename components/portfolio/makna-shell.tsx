@@ -1,9 +1,11 @@
 import Link from "next/link";
 
 import { MobileHeaderMenu } from "@/components/portfolio/mobile-header-menu";
+import { cn } from "@/lib/utils";
 
 type WorksHeaderProps = {
   active?: "explore" | "stories" | "works" | "about" | "kopitrack" | "login";
+  overlay?: boolean;
 };
 
 const navItems = [
@@ -21,9 +23,14 @@ const footerLinks = [
   { href: "mailto:ihsanmokhsen17@gmail.com", label: "Email" }
 ] as const;
 
-export function WorksHeader({ active }: WorksHeaderProps) {
+export function WorksHeader({ active, overlay = false }: WorksHeaderProps) {
   return (
-    <header className="sticky top-0 z-50 border-b border-black/[0.06] bg-transparent md:bg-transparent md:backdrop-blur-2xl">
+    <header
+      className={cn(
+        overlay ? "fixed inset-x-0 top-0" : "sticky top-0",
+        "z-50 border-b border-black/[0.06] bg-transparent md:bg-transparent md:backdrop-blur-2xl"
+      )}
+    >
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 sm:h-20 sm:px-6 lg:px-8">
         <Link className="text-[18px] font-black leading-none text-black sm:text-[20px]" href="/">
           works
