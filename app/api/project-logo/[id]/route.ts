@@ -24,7 +24,7 @@ export async function GET(
   return new NextResponse(new Uint8Array(project.logoImage), {
     headers: {
       "Content-Type": project.logoMimeType,
-      "Cache-Control": "public, max-age=86400"
+      "Cache-Control": "public, max-age=86400, stale-while-revalidate=604800"
     }
   });
 }

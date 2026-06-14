@@ -1,6 +1,12 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-background: #0b0b0b;
+  --color-foreground: #2a2522;
+  --color-accent: #F44A22;
+  --shadow-glass: 0 20px 80px rgba(0, 0, 0, 0.45);
+  --blur-xs: 2px;
+}
 
 :root {
   --background: #0b0b0b;
@@ -42,6 +48,15 @@ html[data-a11y-font-color="black"] {
 
 html[data-a11y-font-size="large"] {
   font-size: 112.5%;
+}
+
+html[data-a11y-reduce-motion="true"] *,
+html[data-a11y-reduce-motion="true"] *::before,
+html[data-a11y-reduce-motion="true"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
 }
 
 body {

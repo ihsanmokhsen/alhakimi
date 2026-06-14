@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import { ShareButton } from "@/components/portfolio/share-button";
 import type { ProjectCard } from "@/lib/data/projects";
 
 type PortfolioModalProps = {
@@ -88,20 +89,23 @@ export function PortfolioModal({ project, onClose }: PortfolioModalProps) {
               </p>
             </div>
 
-            <div className="mt-8 flex flex-col gap-4 sm:mt-10 sm:flex-row sm:items-center sm:justify-between">
+            <div className="mt-8 flex flex-col gap-4 sm:mt-10">
               <p className="text-[12px] font-black uppercase tracking-normal text-black/[0.36]">
                 {new Intl.DateTimeFormat("id-ID", {
                   dateStyle: "medium"
                 }).format(project.createdAt)}
               </p>
-              <Link
-                className="inline-flex w-full justify-center bg-black px-6 py-3 text-[13px] font-black uppercase tracking-normal text-white transition hover:bg-black/[0.76] sm:w-auto"
-                href={project.url}
-                rel="noreferrer"
-                target="_blank"
-              >
-                Klik Aplikasi
-              </Link>
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <Link
+                  className="inline-flex w-full justify-center bg-black px-6 py-3 text-[13px] font-black uppercase tracking-normal text-white transition hover:bg-black/[0.76] sm:w-auto"
+                  href={project.url}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  Klik Aplikasi
+                </Link>
+                <ShareButton title={project.title} url={project.url} />
+              </div>
             </div>
           </div>
         </div>

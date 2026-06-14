@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { JournalShare } from "@/components/portfolio/journal-share";
 import { MaknaFooter, MaknaHeader } from "@/components/portfolio/makna-shell";
 import { getJournalById } from "@/lib/data/journals";
 import { formatJournalDate } from "@/lib/utils";
@@ -42,6 +43,9 @@ export default async function JournalDetailPage({ params }: JournalDetailPagePro
             <h1 className="mt-5 text-[clamp(3.6rem,8vw,7.5rem)] font-black leading-[0.88] tracking-normal text-black">
               {journal.title}
             </h1>
+            <div className="mt-6">
+              <JournalShare title={journal.title} />
+            </div>
           </header>
 
           <section className="overflow-hidden border border-black/[0.06] bg-white shadow-[0_24px_90px_rgba(18,22,34,0.12)]">
