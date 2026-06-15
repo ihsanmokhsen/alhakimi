@@ -61,6 +61,15 @@ async function main() {
       publishedAt: new Date()
     }
   });
+
+  await prisma.siteSetting.upsert({
+    where: { id: "hero" },
+    update: {},
+    create: {
+      id: "hero",
+      kopitrackPasscode: process.env.KOPITRACK_PASSCODE || "820037"
+    }
+  });
 }
 
 main()

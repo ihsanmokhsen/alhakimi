@@ -2,9 +2,10 @@
   "use strict";
 
   const API_ENDPOINT = "/api/coffee-consumptions";
+  const VERIFY_ENDPOINT = "/api/kopitrack/verify-passcode";
   const THEME_KEY = "kopitrack:theme";
   const UNLOCK_KEY = "kopitrack:unlocked";
-  const PASSCODE = "820037";
+  const PASSCODE_KEY = "kopitrack:passcode";
   const ROUTES = ["dashboard", "passcode", "tambah", "riwayat", "statistik"];
   const ROUTE_TITLES = {
     dashboard: "Dashboard",
@@ -122,7 +123,7 @@
   function mutationHeaders() {
     return {
       "Content-Type": "application/json",
-      "x-kopitrack-passcode": PASSCODE
+      "x-kopitrack-passcode": sessionStorage.getItem(PASSCODE_KEY) || ""
     };
   }
 
@@ -176,6 +177,7 @@
       sessionStorage.setItem(UNLOCK_KEY, "true");
     } else {
       sessionStorage.removeItem(UNLOCK_KEY);
+      sessionStorage.removeItem(PASSCODE_KEY);
     }
 
     renderUnlockStatus();
@@ -628,15 +630,34 @@
     event.preventDefault();
 
     await withLoading(async () => {
-      if (elements.passcodeInput.value.trim() !== PASSCODE) {
-        showToast("Passcode salah.", "error");
+      const entered = elements.passcodeInput.value.trim();
+
+      if (!entered) {
+        showToast("Passcode wajib diisi.", "error");
         return;
       }
 
-      setUnlocked(true);
-      elements.passcodeInput.value = "";
-      showToast("Tambah kopi sudah terbuka.");
-      navigate("tambah");
+      try {
+        const response = await fetch(VERIFY_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ passcode: entered })
+        });
+
+        if (!response.ok) {
+          const payload = await response.json().catch(() => null);
+          showToast(payload?.error || "Passcode salah.", "error");
+          return;
+        }
+
+        sessionStorage.setItem(PASSCODE_KEY, entered);
+        setUnlocked(true);
+        elements.passcodeInput.value = "";
+        showToast("Tambah kopi sudah terbuka.");
+        navigate("tambah");
+      } catch {
+        showToast("Gagal memverifikasi passcode. Coba lagi.", "error");
+      }
     });
   }
 

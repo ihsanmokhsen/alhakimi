@@ -4,21 +4,26 @@ import { HeroForm } from "@/components/admin/hero-form";
 import { JournalForm } from "@/components/admin/journal-form";
 import { JournalList } from "@/components/admin/journal-list";
 import { MaknaFooter, MaknaHeader } from "@/components/portfolio/makna-shell";
+import { PovVideoForm } from "@/components/admin/pov-video-form";
+import { PovVideoList } from "@/components/admin/pov-video-list";
 import { ProjectList } from "@/components/admin/project-list";
 import { createJournalAction } from "@/lib/actions/journals";
+import { createPovVideoAction } from "@/lib/actions/pov-videos";
 import { logoutAction } from "@/lib/actions/auth";
 import { removeHeroAction, updateHeroAction } from "@/lib/actions/hero";
 import { reorderProjectsAction } from "@/lib/actions/projects";
 import { getJournals } from "@/lib/data/journals";
+import { getPovVideos } from "@/lib/data/pov-videos";
 import { getProjects } from "@/lib/data/projects";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/auth";
 
 export default async function AdminPage() {
   const admin = await requireAdmin();
-  const [projects, journals, heroSetting] = await Promise.all([
+  const [projects, journals, povVideos, heroSetting] = await Promise.all([
     getProjects(),
     getJournals(),
+    getPovVideos(),
     prisma.siteSetting.findUnique({
       where: { id: "hero" },
       select: { backgroundImageData: true, heroTitle: true, heroSubtitle: true }
@@ -121,6 +126,23 @@ export default async function AdminPage() {
 
             <JournalForm action={createJournalAction} />
             <JournalList journals={journals} />
+          </section>
+
+          <section className="space-y-4">
+            <div className="grid gap-3 border-t border-black/10 pt-8 sm:pt-10 lg:grid-cols-[0.45fr_1fr]">
+              <div>
+                <p className="text-[12px] font-black uppercase tracking-normal text-[#2563ff]">POV</p>
+                <h2 className="mt-2 text-[36px] font-black leading-none tracking-normal text-black sm:text-[48px]">
+                  Videos
+                </h2>
+              </div>
+              <p className="max-w-2xl text-[15px] font-medium leading-7 text-black/56 sm:text-[17px]">
+                Manage short vertical videos. Paste a YouTube Shorts URL and it will be displayed in portrait mode.
+              </p>
+            </div>
+
+            <PovVideoForm action={createPovVideoAction} />
+            <PovVideoList videos={povVideos} />
           </section>
         </div>
       </section>

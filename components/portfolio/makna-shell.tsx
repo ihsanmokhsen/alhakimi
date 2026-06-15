@@ -4,7 +4,7 @@ import { MobileHeaderMenu } from "@/components/portfolio/mobile-header-menu";
 import { cn } from "@/lib/utils";
 
 type WorksHeaderProps = {
-  active?: "explore" | "stories" | "works" | "about" | "kopitrack" | "login";
+  active?: "explore" | "stories" | "works" | "about" | "kopitrack" | "login" | "pov";
   overlay?: boolean;
 };
 
@@ -12,6 +12,7 @@ const navItems = [
   { href: "/#explore", id: "explore", label: "Explore" },
   { href: "/journal", id: "stories", label: "Stories" },
   { href: "/#works", id: "works", label: "Works" },
+  { href: "/pov", id: "pov", label: "POV" },
   { href: "/about", id: "about", label: "About" },
   { href: "/kopitrack/index.html", id: "kopitrack", label: "KopiTrack" }
 ] as const;

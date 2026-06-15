@@ -1,14 +1,12 @@
-import { timingSafeEqual } from "node:crypto";
-
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
+import { getKopitrackPasscode, isPasscodeMatch } from "@/lib/kopitrack-passcode";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
-const KOPITRACK_PASSCODE = process.env.KOPITRACK_PASSCODE?.trim() || "820037";
 const MAKASSAR_OFFSET_HOURS = 8;
 const NO_STORE_HEADERS = {
   "Cache-Control": "no-store, max-age=0"
@@ -46,19 +44,13 @@ function getProvidedPasscode(request: Request) {
   return request.headers.get("x-kopitrack-passcode")?.trim();
 }
 
-function isValidPasscode(provided: string | null | undefined) {
+async function isValidPasscode(provided: string | null | undefined) {
   if (!provided) {
     return false;
   }
 
-  const expectedBuffer = Buffer.from(KOPITRACK_PASSCODE);
-  const providedBuffer = Buffer.from(provided);
-
-  if (expectedBuffer.length !== providedBuffer.length) {
-    return false;
-  }
-
-  return timingSafeEqual(expectedBuffer, providedBuffer);
+  const expected = await getKopitrackPasscode();
+  return isPasscodeMatch(provided, expected);
 }
 
 function unauthorizedResponse() {
@@ -112,7 +104,7 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  if (!isValidPasscode(getProvidedPasscode(request))) {
+  if (!(await isValidPasscode(getProvidedPasscode(request)))) {
     return unauthorizedResponse();
   }
 

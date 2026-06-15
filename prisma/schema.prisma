@@ -60,6 +60,7 @@ model SiteSetting {
   backgroundImageData String?
   heroTitle           String?
   heroSubtitle        String?
+  kopitrackPasscode   String?
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
 }
@@ -75,4 +76,13 @@ model PasswordResetToken {
 
   @@index([adminUserId])
   @@index([expiresAt])
+}
+
+model PovVideo {
+  id          String   @id @default(cuid())
+  title       String
+  youtubeUrl  String
+  position    Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
