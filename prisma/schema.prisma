@@ -9,28 +9,28 @@ datasource db {
 }
 
 model Project {
-  id          String   @id @default(cuid())
-  title       String
-  url         String   @unique
-  logoImage   Bytes?
+  id           String   @id @default(cuid())
+  title        String
+  url          String   @unique
+  description  String
+  category     String
+  featured     Boolean  @default(false)
+  position     Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  logoImage    Bytes?
   logoMimeType String?
-  description String
-  category    String
-  featured    Boolean  @default(false)
-  position    Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
 }
 
 model Journal {
-  id          String   @id @default(cuid())
-  title       String
-  content     String
-  photoImage  Bytes?
+  id            String   @id @default(cuid())
+  title         String
+  content       String
+  publishedAt   DateTime
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  photoImage    Bytes?
   photoMimeType String?
-  publishedAt DateTime
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
 }
 
 model CoffeeConsumption {
@@ -47,22 +47,30 @@ model CoffeeConsumption {
 }
 
 model AdminUser {
-  id           String   @id @default(cuid())
-  username     String   @unique
-  email        String?  @unique
-  passwordHash String
-  createdAt    DateTime @default(now())
+  id                  String               @id @default(cuid())
+  username            String               @unique
+  passwordHash        String
+  createdAt           DateTime             @default(now())
+  email               String?              @unique
   passwordResetTokens PasswordResetToken[]
 }
 
+model SiteSetting {
+  id                  String   @id
+  backgroundImageData String?
+  heroTitle           String?
+  heroSubtitle        String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
 model PasswordResetToken {
-  id          String   @id @default(cuid())
-  tokenHash   String   @unique
+  id          String    @id @default(cuid())
+  tokenHash   String    @unique
   adminUserId String
   expiresAt   DateTime
   usedAt      DateTime?
-  createdAt   DateTime @default(now())
-
+  createdAt   DateTime  @default(now())
   adminUser   AdminUser @relation(fields: [adminUserId], references: [id], onDelete: Cascade)
 
   @@index([adminUserId])

@@ -1,19 +1,32 @@
 import Link from "next/link";
 
+import { HeroForm } from "@/components/admin/hero-form";
 import { JournalForm } from "@/components/admin/journal-form";
 import { JournalList } from "@/components/admin/journal-list";
 import { MaknaFooter, MaknaHeader } from "@/components/portfolio/makna-shell";
 import { ProjectList } from "@/components/admin/project-list";
 import { createJournalAction } from "@/lib/actions/journals";
 import { logoutAction } from "@/lib/actions/auth";
+import { removeHeroAction, updateHeroAction } from "@/lib/actions/hero";
 import { reorderProjectsAction } from "@/lib/actions/projects";
 import { getJournals } from "@/lib/data/journals";
 import { getProjects } from "@/lib/data/projects";
+import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/auth";
 
 export default async function AdminPage() {
   const admin = await requireAdmin();
-  const [projects, journals] = await Promise.all([getProjects(), getJournals()]);
+  const [projects, journals, heroSetting] = await Promise.all([
+    getProjects(),
+    getJournals(),
+    prisma.siteSetting.findUnique({
+      where: { id: "hero" },
+      select: { backgroundImageData: true, heroTitle: true, heroSubtitle: true }
+    })
+  ]);
+  const hasHero = Boolean(heroSetting?.backgroundImageData);
+  const currentTitle = heroSetting?.heroTitle ?? "";
+  const currentSubtitle = heroSetting?.heroSubtitle ?? "";
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#f5f5f7] text-[#08080a] [color-scheme:light]">
@@ -63,6 +76,14 @@ export default async function AdminPage() {
         </div>
 
         <div className="space-y-10 pt-8 sm:pt-10">
+          <HeroForm
+            currentSubtitle={currentSubtitle}
+            currentTitle={currentTitle}
+            hasHero={hasHero}
+            removeAction={removeHeroAction}
+            updateAction={updateHeroAction}
+          />
+
           <section className="space-y-4">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
               <div>

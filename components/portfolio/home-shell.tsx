@@ -6,23 +6,27 @@ import type { ProjectCard } from "@/lib/data/projects";
 
 type HomeShellProps = {
   projects: ProjectCard[];
+  heroTitle?: string | null;
+  heroSubtitle?: string | null;
 };
 
-export function HomeShell({ projects }: HomeShellProps) {
+export function HomeShell({ projects, heroTitle, heroSubtitle }: HomeShellProps) {
+  const title = heroTitle || "works";
+  const subtitle = heroSubtitle || "Beberapa Apps yang dibuat untuk kebutuhan kantor dan pribadi.";
   return (
     <main className="min-h-screen overflow-x-hidden bg-white text-[#08080a] [color-scheme:light]">
       <WorksHeader overlay />
 
       <section
-        className="relative flex min-h-screen w-full flex-col items-center justify-center bg-[url('/hero.png')] bg-cover bg-center px-4 pb-20 pt-10 text-center sm:px-6 sm:pb-24 sm:pt-14 lg:px-8"
+        className="relative flex min-h-screen w-full flex-col items-center justify-center bg-[url('/api/hero-image')] bg-cover bg-center px-4 pb-20 pt-10 text-center sm:px-6 sm:pb-24 sm:pt-14 lg:px-8"
         id="explore"
       >
         <div className="relative z-10 flex flex-col items-center">
           <h1 className="max-w-4xl text-[clamp(2.65rem,9vw,7.1rem)] font-black leading-[0.92] tracking-normal text-white sm:leading-[0.88]">
-            <span className="block">works</span>
+            <span className="block">{title}</span>
           </h1>
           <p className="mt-6 max-w-xl text-[15px] font-medium leading-7 text-white/85 sm:mt-8 sm:max-w-2xl sm:text-[18px] sm:leading-8">
-            Beberapa Apps yang dibuat untuk kebutuhan kantor dan pribadi.
+            {subtitle}
           </p>
           <div className="mt-7 flex flex-col items-center gap-3 sm:mt-9 sm:flex-row">
           <Link
