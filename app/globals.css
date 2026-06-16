@@ -32,7 +32,6 @@
 }
 
 html {
-  color-scheme: dark;
   scroll-behavior: smooth;
 }
 
@@ -81,6 +80,13 @@ button,
 input,
 textarea {
   -webkit-tap-highlight-color: transparent;
+}
+
+/* Smooth focus ring for all interactive elements */
+:focus-visible {
+  outline: 2px solid rgba(37, 99, 255, 0.5);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 @keyframes worksFadeUp {

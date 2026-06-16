@@ -1,8 +1,14 @@
 import { WorksFooter, WorksHeader } from "@/components/portfolio/makna-shell";
 import { JournalGrid } from "@/components/portfolio/journal-grid";
 import { getJournals } from "@/lib/data/journals";
+import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Stories — works",
+  description: "Notes, reflections, product thinking, and meaningful digital experiments from works."
+};
 
 export default async function JournalPage() {
   const journals = await getJournals();

@@ -52,12 +52,12 @@ export function PortfolioModal({ project, onClose }: PortfolioModalProps) {
       />
 
       <section
-        className={`relative z-10 min-h-svh w-full overflow-y-auto border border-black/[0.10] bg-white shadow-[0_40px_140px_rgba(10,12,20,0.28)] transition-all duration-500 sm:my-auto sm:min-h-0 sm:max-h-[calc(100svh-3rem)] sm:max-w-6xl ${
+        className={`relative z-10 min-h-svh w-full overflow-y-auto rounded-none border border-black/[0.10] bg-white shadow-[0_40px_140px_rgba(10,12,20,0.28)] transition-all duration-500 sm:my-auto sm:min-h-0 sm:max-h-[calc(100svh-3rem)] sm:max-w-6xl sm:rounded-[24px] ${
           isReady ? "translate-y-0 scale-100 opacity-100" : "translate-y-6 scale-[0.985] opacity-0"
         }`}
       >
         <button
-          className="absolute right-4 top-4 z-10 border border-black/[0.12] bg-white px-4 py-2 text-[12px] font-black uppercase text-black/[0.62] transition hover:text-black"
+          className="absolute right-4 top-4 z-10 rounded-full border border-black/[0.12] bg-white px-4 py-2 text-[12px] font-black uppercase text-black/[0.62] transition hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50"
           onClick={onClose}
           type="button"
         >
@@ -97,7 +97,7 @@ export function PortfolioModal({ project, onClose }: PortfolioModalProps) {
               </p>
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <Link
-                  className="inline-flex w-full justify-center bg-black px-6 py-3 text-[13px] font-black uppercase tracking-normal text-white transition hover:bg-black/[0.76] sm:w-auto"
+                  className="inline-flex w-full justify-center rounded-full bg-black px-6 py-3 text-[13px] font-black uppercase tracking-normal text-white transition hover:bg-black/[0.76] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50 sm:w-auto"
                   href={project.url}
                   rel="noreferrer"
                   target="_blank"

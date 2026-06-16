@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
+
 import { MaknaFooter, WorksHeader } from "@/components/portfolio/makna-shell";
+
+export const metadata: Metadata = {
+  title: "About — works",
+  description: "Government IT practitioner and graduate researcher building practical security awareness and human-centered cyber resilience."
+};
 
 const focusItems = [
   "Thesis: Improving HAIS-Q",

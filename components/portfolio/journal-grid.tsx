@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { FadeIn } from "@/components/portfolio/fade-in";
 import type { JournalView } from "@/lib/data/journals";
 import { formatJournalDate } from "@/lib/utils";
 
@@ -43,8 +44,9 @@ export function JournalGrid({ journals }: JournalGridProps) {
           const photoVersion = new Date(journal.updatedAt).getTime();
 
           return (
+            <FadeIn delay={index * 80} key={journal.id}>
             <Link
-              className={`group block overflow-hidden border border-black/[0.06] bg-white shadow-[0_22px_80px_rgba(18,22,34,0.10)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_32px_100px_rgba(18,22,34,0.16)] ${
+              className={`group block overflow-hidden rounded-[20px] border border-black/[0.06] bg-white shadow-[0_22px_80px_rgba(18,22,34,0.10)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_32px_100px_rgba(18,22,34,0.16)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50 focus-visible:ring-offset-2 ${
                 storyHeights[index % storyHeights.length]
               }`}
               href={`/journal/${journal.id}`}
@@ -75,12 +77,13 @@ export function JournalGrid({ journals }: JournalGridProps) {
                   <p className="mt-4 line-clamp-3 text-[14px] font-medium leading-7 text-black/56">
                     {journal.content}
                   </p>
-                  <span className="mt-6 inline-flex bg-black px-4 py-2 text-[12px] font-bold text-white transition group-hover:bg-[#2563ff]">
+                  <span className="mt-6 inline-flex rounded-full bg-black px-4 py-2 text-[12px] font-bold text-white transition group-hover:bg-[#2563ff]">
                     Read Story
                   </span>
                 </div>
               </article>
             </Link>
+            </FadeIn>
           );
         })}
       </div>

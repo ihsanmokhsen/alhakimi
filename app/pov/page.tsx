@@ -1,7 +1,14 @@
+import type { Metadata } from "next";
+
 import { WorksFooter, WorksHeader } from "@/components/portfolio/makna-shell";
 import { getPovVideos } from "@/lib/data/pov-videos";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "POV — works",
+  description: "Short vertical videos documenting everyday moments. Watch in portrait mode."
+};
 
 export default async function PovPage() {
   const videos = await getPovVideos();

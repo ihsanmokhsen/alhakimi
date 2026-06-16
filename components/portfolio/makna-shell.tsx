@@ -29,11 +29,20 @@ export function WorksHeader({ active, overlay = false }: WorksHeaderProps) {
     <header
       className={cn(
         overlay ? "fixed inset-x-0 top-0" : "sticky top-0",
-        "z-50 border-b border-black/[0.06] bg-transparent md:bg-transparent md:backdrop-blur-2xl"
+        "z-50 border-b border-black/[0.06] transition-colors duration-300",
+        overlay
+          ? "bg-black/10 backdrop-blur-xl md:bg-black/5"
+          : "bg-white/80 backdrop-blur-2xl"
       )}
     >
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 sm:h-20 sm:px-6 lg:px-8">
-        <Link className="text-[18px] font-black leading-none text-black sm:text-[20px]" href="/">
+        <Link
+          className={cn(
+            "text-[18px] font-black leading-none sm:text-[20px] transition-colors",
+            overlay ? "text-white" : "text-black"
+          )}
+          href="/"
+        >
           works
         </Link>
 
@@ -43,9 +52,12 @@ export function WorksHeader({ active, overlay = false }: WorksHeaderProps) {
 
             return (
               <Link
-                className={`text-[13px] font-medium transition ${
-                  isActive ? "text-[#2563ff]" : "text-black/58 hover:text-black"
-                }`}
+                className={cn(
+                  "text-[13px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50 focus-visible:ring-offset-2",
+                  overlay
+                    ? isActive ? "text-white" : "text-white/70 hover:text-white"
+                    : isActive ? "text-[#2563ff]" : "text-black/58 hover:text-black"
+                )}
                 href={item.href}
                 key={item.id}
               >
@@ -57,15 +69,18 @@ export function WorksHeader({ active, overlay = false }: WorksHeaderProps) {
 
         <div className="flex items-center gap-2 sm:gap-3">
           <Link
-            className={`hidden px-4 py-2 text-[13px] font-semibold transition sm:inline-flex ${
-              active === "login" ? "text-[#2563ff]" : "text-black/62 hover:text-black"
-            }`}
+            className={cn(
+              "hidden px-4 py-2 text-[13px] font-semibold transition sm:inline-flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50",
+              overlay
+                ? active === "login" ? "text-white" : "text-white/70 hover:text-white"
+                : active === "login" ? "text-[#2563ff]" : "text-black/62 hover:text-black"
+            )}
             href="/login"
           >
             Sign In
           </Link>
           <Link
-            className="hidden bg-black px-4 py-2 text-[13px] font-bold text-white shadow-[0_16px_38px_rgba(0,0,0,0.18)] transition hover:-translate-y-0.5 hover:bg-[#2563ff] md:inline-flex lg:px-5"
+            className="hidden rounded-full bg-black px-4 py-2 text-[13px] font-bold text-white shadow-[0_16px_38px_rgba(0,0,0,0.18)] transition hover:-translate-y-0.5 hover:bg-[#2563ff] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50 focus-visible:ring-offset-2 md:inline-flex lg:px-5"
             href="/#works"
           >
             Get Started
