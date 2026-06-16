@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
+import { parseMakassarDateTimeInput } from "@/lib/utils";
 import { getKopitrackPasscode, isPasscodeMatch } from "@/lib/kopitrack-passcode";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
-const MAKASSAR_OFFSET_HOURS = 8;
 const NO_STORE_HEADERS = {
   "Cache-Control": "no-store, max-age=0"
 };
@@ -18,12 +18,6 @@ const coffeeInputSchema = z.object({
   price: z.coerce.number().int("Harga harus angka bulat.").positive("Harga harus angka positif."),
   date: z.string().trim().regex(/^\d{4}-\d{2}-\d{2}$/, "Tanggal tidak valid.")
 });
-
-function parseMakassarDateInput(value: string) {
-  const [year, month, day] = value.split("-").map(Number);
-
-  return new Date(Date.UTC(year, month - 1, day, -MAKASSAR_OFFSET_HOURS, 0));
-}
 
 function formatMakassarDateInput(value: Date) {
   return new Intl.DateTimeFormat("en-CA", {
@@ -128,7 +122,7 @@ export async function POST(request: Request) {
       brand: parsed.data.brand,
       variant: parsed.data.variant,
       price: parsed.data.price,
-      consumedAt: parseMakassarDateInput(parsed.data.date)
+      consumedAt: parseMakassarDateTimeInput(`${parsed.data.date}T00:00`)!
     }
   });
 

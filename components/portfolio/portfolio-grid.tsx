@@ -1,11 +1,16 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useState } from "react";
 
 import { FadeIn } from "@/components/portfolio/fade-in";
-import { PortfolioModal } from "@/components/portfolio/portfolio-modal";
 import type { ProjectCard } from "@/lib/data/projects";
+
+const PortfolioModal = dynamic(
+  () => import("@/components/portfolio/portfolio-modal").then(m => m.PortfolioModal),
+  { ssr: false }
+);
 
 type PortfolioGridProps = {
   projects: ProjectCard[];
@@ -67,6 +72,7 @@ export function PortfolioGrid({ projects }: PortfolioGridProps) {
                       alt={`${project.title} visual`}
                       className="object-cover transition duration-700 group-hover:scale-105"
                       fill
+                      quality={85}
                       sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                       src={`/api/project-logo/${project.id}?v=${logoVersion}`}
                     />

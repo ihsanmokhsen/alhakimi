@@ -54,3 +54,45 @@ export function parseMakassarDateTimeInput(value: string) {
 
   return new Date(utcTimestamp);
 }
+
+/* ---- Image compression helpers ---- */
+
+export function renameFileToWebp(name: string) {
+  const dotIndex = name.lastIndexOf(".");
+  if (dotIndex <= 0) {
+    return `${name}.webp`;
+  }
+  return `${name.slice(0, dotIndex)}.webp`;
+}
+
+export function loadImage(file: File) {
+  return new Promise<HTMLImageElement>((resolve, reject) => {
+    const objectUrl = URL.createObjectURL(file);
+    const image = new Image();
+    image.onload = () => {
+      URL.revokeObjectURL(objectUrl);
+      resolve(image);
+    };
+    image.onerror = () => {
+      URL.revokeObjectURL(objectUrl);
+      reject(new Error("Gagal membaca gambar."));
+    };
+    image.src = objectUrl;
+  });
+}
+
+export function canvasToBlob(canvas: HTMLCanvasElement, quality: number, mimeType = "image/webp") {
+  return new Promise<Blob>((resolve, reject) => {
+    canvas.toBlob(
+      (blob) => {
+        if (!blob) {
+          reject(new Error("Gagal memproses gambar."));
+          return;
+        }
+        resolve(blob);
+      },
+      mimeType,
+      quality
+    );
+  });
+}

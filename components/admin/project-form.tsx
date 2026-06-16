@@ -4,6 +4,7 @@ import { startTransition, useActionState } from "react";
 
 import type { ProjectFormState } from "@/lib/actions/projects";
 import type { ProjectCard } from "@/lib/data/projects";
+import { canvasToBlob, loadImage, renameFileToWebp } from "@/lib/utils";
 
 type ProjectFormProps = {
   action: (state: ProjectFormState, formData: FormData) => Promise<ProjectFormState>;
@@ -14,51 +15,6 @@ type ProjectFormProps = {
 const initialState: ProjectFormState = {};
 const LOGO_TARGET_BYTES = 200 * 1024;
 const LOGO_MIME_TYPE = "image/webp";
-
-function renameFileToWebp(name: string) {
-  const dotIndex = name.lastIndexOf(".");
-  if (dotIndex <= 0) {
-    return `${name}.webp`;
-  }
-
-  return `${name.slice(0, dotIndex)}.webp`;
-}
-
-function loadImage(file: File) {
-  return new Promise<HTMLImageElement>((resolve, reject) => {
-    const objectUrl = URL.createObjectURL(file);
-    const image = new Image();
-
-    image.onload = () => {
-      URL.revokeObjectURL(objectUrl);
-      resolve(image);
-    };
-
-    image.onerror = () => {
-      URL.revokeObjectURL(objectUrl);
-      reject(new Error("Gagal membaca gambar."));
-    };
-
-    image.src = objectUrl;
-  });
-}
-
-function canvasToBlob(canvas: HTMLCanvasElement, quality: number) {
-  return new Promise<Blob>((resolve, reject) => {
-    canvas.toBlob(
-      (blob) => {
-        if (!blob) {
-          reject(new Error("Gagal memproses logo."));
-          return;
-        }
-
-        resolve(blob);
-      },
-      LOGO_MIME_TYPE,
-      quality
-    );
-  });
-}
 
 async function compressLogo(file: File) {
   const image = await loadImage(file);
@@ -80,7 +36,7 @@ async function compressLogo(file: File) {
     context.drawImage(image, 0, 0, canvas.width, canvas.height);
 
     for (const quality of [0.9, 0.82, 0.74, 0.66, 0.58, 0.5, 0.42]) {
-      const blob = await canvasToBlob(canvas, quality);
+      const blob = await canvasToBlob(canvas, quality, LOGO_MIME_TYPE);
 
       if (!bestBlob || blob.size < bestBlob.size) {
         bestBlob = blob;

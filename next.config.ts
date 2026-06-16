@@ -12,7 +12,7 @@ const nextConfig: NextConfig = {
       { pathname: "/api/journal-photo/**" },
       { pathname: "/api/hero-image" },
       { pathname: "/foto.png" },
-      { pathname: "/hero.png" }
+      { pathname: "/hero.jpg" }
     ]
   },
   experimental: {

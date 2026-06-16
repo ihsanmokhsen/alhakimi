@@ -56,6 +56,7 @@ export default async function JournalDetailPage({ params }: JournalDetailPagePro
                   className="object-cover"
                   fill
                   priority
+                  quality={85}
                   sizes="(max-width: 1024px) 100vw, 55vw"
                   src={`/api/journal-photo/${journal.id}?v=${photoVersion}`}
                 />

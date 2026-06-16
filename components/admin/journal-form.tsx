@@ -3,6 +3,7 @@
 import { startTransition, useActionState } from "react";
 
 import type { JournalFormState } from "@/lib/actions/journals";
+import { canvasToBlob, loadImage, renameFileToWebp } from "@/lib/utils";
 
 type JournalFormProps = {
   action: (state: JournalFormState, formData: FormData) => Promise<JournalFormState>;
@@ -11,51 +12,6 @@ type JournalFormProps = {
 const initialState: JournalFormState = {};
 const JOURNAL_PHOTO_TARGET_BYTES = 200 * 1024;
 const JOURNAL_PHOTO_MIME = "image/webp";
-
-function renameFileToWebp(name: string) {
-  const dotIndex = name.lastIndexOf(".");
-  if (dotIndex <= 0) {
-    return `${name}.webp`;
-  }
-
-  return `${name.slice(0, dotIndex)}.webp`;
-}
-
-function loadImage(file: File) {
-  return new Promise<HTMLImageElement>((resolve, reject) => {
-    const objectUrl = URL.createObjectURL(file);
-    const image = new Image();
-
-    image.onload = () => {
-      URL.revokeObjectURL(objectUrl);
-      resolve(image);
-    };
-
-    image.onerror = () => {
-      URL.revokeObjectURL(objectUrl);
-      reject(new Error("Gagal membaca gambar jurnal."));
-    };
-
-    image.src = objectUrl;
-  });
-}
-
-function canvasToBlob(canvas: HTMLCanvasElement, quality: number) {
-  return new Promise<Blob>((resolve, reject) => {
-    canvas.toBlob(
-      (blob) => {
-        if (!blob) {
-          reject(new Error("Gagal memproses gambar jurnal."));
-          return;
-        }
-
-        resolve(blob);
-      },
-      JOURNAL_PHOTO_MIME,
-      quality
-    );
-  });
-}
 
 async function compressJournalPhoto(file: File) {
   const image = await loadImage(file);
@@ -90,7 +46,7 @@ async function compressJournalPhoto(file: File) {
     );
 
     for (const quality of [0.9, 0.82, 0.74, 0.66, 0.58, 0.5, 0.42]) {
-      const blob = await canvasToBlob(canvas, quality);
+      const blob = await canvasToBlob(canvas, quality, JOURNAL_PHOTO_MIME);
 
       if (!bestBlob || blob.size < bestBlob.size) {
         bestBlob = blob;

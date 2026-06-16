@@ -41,6 +41,7 @@ export function JournalList({ journals }: JournalListProps) {
                       alt={`Foto untuk ${journal.title}`}
                       className="object-cover"
                       fill
+                      quality={85}
                       sizes="56px"
                       src={`/api/journal-photo/${journal.id}?v=${photoVersion}`}
                     />

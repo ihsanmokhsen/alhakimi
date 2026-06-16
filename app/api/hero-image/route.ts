@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 import { prisma } from "@/lib/prisma";
 
-const FALLBACK = "/hero.png";
+const FALLBACK = "/hero.jpg";
 
 export async function GET(request: Request) {
   const setting = await prisma.siteSetting.findUnique({

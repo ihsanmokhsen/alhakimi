@@ -19,6 +19,7 @@ export function SiteHeader({ light = false }: SiteHeaderProps) {
                 className="object-cover"
                 fill
                 priority
+                quality={85}
                 sizes="48px"
                 src="/foto.png"
               />
