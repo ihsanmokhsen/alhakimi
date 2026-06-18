@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { WorksFooter, WorksHeader } from "@/components/portfolio/makna-shell";
+import { HeaderClock } from "@/components/portfolio/header-clock";
 import { PortfolioGrid } from "@/components/portfolio/portfolio-grid";
 import { RunningText } from "@/components/portfolio/running-text";
 import type { ProjectCard } from "@/lib/data/projects";
@@ -22,6 +23,9 @@ export function HomeShell({ projects, heroTitle, heroSubtitle }: HomeShellProps)
         className="relative flex min-h-screen w-full flex-col items-center justify-center bg-[url('/api/hero-image')] bg-cover bg-center px-4 pb-20 pt-10 text-center sm:px-6 sm:pb-24 sm:pt-14 lg:px-8"
         id="explore"
       >
+        <div className="absolute left-1/2 top-28 z-20 -translate-x-1/2 sm:top-32">
+          <HeaderClock light />
+        </div>
         <div className="relative z-10 flex flex-col items-center">
           <h1 className="max-w-4xl text-[clamp(2.65rem,9vw,7.1rem)] font-black leading-[0.92] tracking-normal text-white sm:leading-[0.88]">
             <span className="block">{title}</span>
@@ -38,11 +42,9 @@ export function HomeShell({ projects, heroTitle, heroSubtitle }: HomeShellProps)
             </Link>
             <Link
               className="inline-flex min-w-44 justify-center rounded-full border border-black/10 bg-white/70 px-7 py-3.5 text-[14px] font-bold text-black shadow-[0_18px_45px_rgba(0,0,0,0.07)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-black/18 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
-              href="https://www.instagram.com/rex.orange777/"
-              rel="noreferrer"
-              target="_blank"
+              href="/jurnal"
             >
-              Let&apos;s Collab
+              Baca Jurnal Harian
             </Link>
           </div>
       </div>

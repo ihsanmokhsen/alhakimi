@@ -7,11 +7,12 @@ function formatNow(date: Date) {
     time: new Intl.DateTimeFormat("id-ID", {
       hour: "2-digit",
       minute: "2-digit",
+      second: "2-digit",
       hour12: false
     }).format(date),
-    date: new Intl.DateTimeFormat("id-ID", {
-      day: "2-digit",
-      month: "short",
+    dateFull: new Intl.DateTimeFormat("id-ID", {
+      day: "numeric",
+      month: "long",
       year: "numeric"
     }).format(date)
   };
@@ -27,18 +28,20 @@ export function HeaderClock({ light = false }: HeaderClockProps) {
   useEffect(() => {
     const timer = window.setInterval(() => {
       setNow(formatNow(new Date()));
-    }, 1000 * 30);
+    }, 1000);
 
     return () => window.clearInterval(timer);
   }, []);
 
+  const c = light ? "text-white" : "text-black";
+
   return (
-    <div className="shrink-0 text-right">
-      <p className={light ? "text-[8px] font-semibold tracking-[0.08em] text-[color:var(--public-text-strong)] sm:text-[9px]" : "text-[8px] font-semibold tracking-[0.08em] text-[color:var(--ui-strong)] sm:text-[9px]"}>
+    <div className={`shrink-0 text-center ${c}`}>
+      <p className="text-[22px] font-black leading-none tracking-tight">
         {now.time}
       </p>
-      <p className={light ? "mt-1 text-[7px] uppercase tracking-[0.16em] text-[color:var(--public-text-soft)] sm:text-[8px]" : "mt-1 text-[7px] uppercase tracking-[0.16em] text-[color:var(--ui-soft)] sm:text-[8px]"}>
-        {now.date}
+      <p className={`mt-2 text-[13px] font-black uppercase tracking-[0.08em] ${light ? "text-white/80" : "text-black/80"}`}>
+        {now.dateFull}
       </p>
     </div>
   );
