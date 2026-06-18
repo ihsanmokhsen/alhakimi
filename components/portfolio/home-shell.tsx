@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { WorksFooter, WorksHeader } from "@/components/portfolio/makna-shell";
 import { PortfolioGrid } from "@/components/portfolio/portfolio-grid";
+import { RunningText } from "@/components/portfolio/running-text";
 import type { ProjectCard } from "@/lib/data/projects";
 
 type HomeShellProps = {
@@ -46,6 +47,8 @@ export function HomeShell({ projects, heroTitle, heroSubtitle }: HomeShellProps)
           </div>
       </div>
       </section>
+
+      <RunningText items={projects} />
 
       <section className="relative scroll-mt-20 bg-white px-4 pb-24 pt-16 sm:px-6 sm:pt-20 lg:px-8" id="works">
         <PortfolioGrid projects={projects} />

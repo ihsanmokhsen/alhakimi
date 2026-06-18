@@ -39,7 +39,7 @@ export function JournalGrid({ journals }: JournalGridProps) {
         </p>
       </div>
 
-      <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+      <div className="grid grid-cols-3 gap-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
         {journals.map((journal, index) => {
           const photoVersion = new Date(journal.updatedAt).getTime();
 

@@ -15,7 +15,7 @@ export default function HomeLoading() {
 
       {/* Grid skeleton */}
       <section className="bg-white px-4 py-20 sm:px-6 lg:px-8">
-        <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-2 xl:grid-cols-3">
+        <div className="mx-auto grid max-w-7xl gap-3 grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
           {Array.from({ length: 6 }).map((_, i) => (
             <div
               className="h-[380px] animate-pulse rounded border border-black/[0.06] bg-[#f5f5f7] sm:h-[480px]"

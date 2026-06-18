@@ -16,14 +16,6 @@ type PortfolioGridProps = {
   projects: ProjectCard[];
 };
 
-const cardHeights = [
-  "h-[420px] sm:h-[540px]",
-  "h-[360px] sm:h-[440px]",
-  "h-[460px] sm:h-[620px]",
-  "h-[380px] sm:h-[500px]",
-  "h-[430px] sm:h-[560px]"
-];
-
 export function PortfolioGrid({ projects }: PortfolioGridProps) {
   const [activeProject, setActiveProject] = useState<ProjectCard | null>(null);
   const [query, setQuery] = useState("");
@@ -56,14 +48,14 @@ export function PortfolioGrid({ projects }: PortfolioGridProps) {
         </div>
 
         {visibleProjects.length > 0 ? (
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
             {visibleProjects.map((project, index) => {
               const logoVersion = new Date(project.updatedAt).getTime();
 
               return (
                 <FadeIn delay={index * 80} key={project.id}>
                 <button
-                  className={`group block w-full overflow-hidden rounded-[20px] border border-black/[0.06] bg-white text-left shadow-[0_22px_80px_rgba(18,22,34,0.10)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_32px_100px_rgba(18,22,34,0.16)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50 focus-visible:ring-offset-2 ${cardHeights[index % cardHeights.length]}`}
+                  className="group block w-full overflow-hidden border border-black/[0.06] bg-white text-left shadow-[0_22px_80px_rgba(18,22,34,0.10)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_32px_100px_rgba(18,22,34,0.16)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50 focus-visible:ring-offset-2 aspect-square"
                   onClick={() => setActiveProject(project)}
                   type="button"
                 >
@@ -78,25 +70,25 @@ export function PortfolioGrid({ projects }: PortfolioGridProps) {
                     />
                     <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.04),rgba(0,0,0,0.1)_44%,rgba(0,0,0,0.34))]" />
 
-                    <div className="absolute left-4 top-4 flex items-center gap-2 sm:left-5 sm:top-5">
-                      <span className="rounded-full border border-white/70 bg-white/[0.78] px-3 py-1.5 text-[11px] font-black uppercase text-[#2563ff] shadow-[0_10px_28px_rgba(0,0,0,0.08)] backdrop-blur-xl">
+                    <div className="absolute left-2 top-2 flex items-center gap-1 sm:left-3 sm:top-3">
+                      <span className="border border-white/70 bg-white/[0.78] px-2 py-1 text-[9px] font-black uppercase text-[#2563ff] shadow-[0_10px_28px_rgba(0,0,0,0.08)] backdrop-blur-xl">
                         {project.category}
                       </span>
                     </div>
 
-                    <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
-                      <div className="rounded-[16px] border border-white/70 bg-white/[0.86] p-4 shadow-[0_18px_55px_rgba(0,0,0,0.12)] backdrop-blur-2xl sm:p-5">
-                        <h2 className="text-[24px] font-black leading-none tracking-normal text-black sm:text-[30px]">
+                    <div className="absolute inset-x-0 bottom-0 p-2 sm:p-3">
+                      <div className="border border-white/70 bg-white/[0.86] p-2 shadow-[0_18px_55px_rgba(0,0,0,0.12)] backdrop-blur-2xl sm:p-3">
+                        <h2 className="text-[13px] font-black leading-tight tracking-normal text-black sm:text-[15px]">
                           {project.title}
                         </h2>
-                        <p className="mt-3 line-clamp-2 text-[14px] font-medium leading-6 text-black/56">
+                        <p className="mt-1 line-clamp-1 text-[10px] font-medium leading-snug text-black/56 sm:mt-1.5 sm:text-[11px]">
                           {project.description}
                         </p>
-                        <div className="mt-5 flex items-center justify-between gap-4">
-                          <span className="text-[12px] font-bold text-black/38">
+                        <div className="mt-1.5 flex items-center justify-between gap-2 sm:mt-2">
+                          <span className="text-[9px] font-bold text-black/38 sm:text-[10px]">
                             {project.featured ? "Featured" : "Selected"}
                           </span>
-                          <span className="rounded-full bg-black px-4 py-2 text-[12px] font-bold text-white transition group-hover:bg-[#2563ff]">
+                          <span className="bg-black px-2 py-1 text-[9px] font-bold text-white transition group-hover:bg-[#2563ff] sm:px-3 sm:py-1.5 sm:text-[10px]">
                             Klik Aplikasi
                           </span>
                         </div>
