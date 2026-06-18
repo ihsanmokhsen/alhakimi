@@ -42,7 +42,7 @@ export function HomeShell({ projects, heroTitle, heroSubtitle }: HomeShellProps)
             </Link>
             <Link
               className="inline-flex min-w-44 justify-center rounded-full border border-black/10 bg-white/70 px-7 py-3.5 text-[14px] font-bold text-black shadow-[0_18px_45px_rgba(0,0,0,0.07)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-black/18 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
-              href="/jurnal"
+              href="/journal"
             >
               Baca Jurnal Harian
             </Link>
