@@ -7,22 +7,45 @@ type MobileHeaderMenuProps = {
     id: string;
     label: string;
   }>;
+  onConsultClick?: () => void;
 };
 
 const menuToggleId = "mobile-header-menu-toggle";
 
-export function MobileHeaderMenu({ active, items }: MobileHeaderMenuProps) {
+export function MobileHeaderMenu({ active, items, onConsultClick }: MobileHeaderMenuProps) {
   return (
-    <div className="md:hidden">
+    <div className="flex items-center gap-2 md:hidden">
+      {/* CTA: Buat Website — langsung buka modal */}
+      <button
+        className="inline-flex cursor-pointer rounded-full bg-[#2563ff] px-3 py-2 text-[12px] font-bold text-white shadow-[0_16px_38px_rgba(37,99,255,0.24)] transition hover:-translate-y-0.5 hover:bg-[#0f4ff2] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50 sm:px-4 sm:text-[13px]"
+        onClick={onConsultClick}
+        type="button"
+      >
+        Buat Website
+      </button>
+
+      {/* Hamburger trigger — buka menu navigasi */}
       <input className="peer sr-only" id={menuToggleId} type="checkbox" />
       <label
         aria-label="Buka menu"
-        className="inline-flex cursor-pointer rounded-full bg-black px-4 py-2 text-[13px] font-bold text-white shadow-[0_16px_38px_rgba(0,0,0,0.18)] transition hover:-translate-y-0.5"
+        className="inline-flex cursor-pointer items-center justify-center rounded-full bg-black px-3 py-2 text-[12px] font-bold text-white shadow-[0_16px_38px_rgba(0,0,0,0.18)] transition hover:-translate-y-0.5 sm:px-4 sm:text-[13px]"
         htmlFor={menuToggleId}
       >
-        Get Started
+        <svg
+          className="h-4 w-4"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={2.5}
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M4 6h16M4 12h16M4 18h16"
+            strokeLinecap="round"
+          />
+        </svg>
       </label>
 
+      {/* Mobile drawer */}
       <div className="pointer-events-none fixed inset-0 z-[70] h-[100dvh] min-h-[100dvh] bg-black/[0.34] opacity-0 backdrop-blur-sm transition duration-200 peer-checked:pointer-events-auto peer-checked:opacity-100 md:hidden">
         <label
           aria-label="Tutup menu"
@@ -69,9 +92,13 @@ export function MobileHeaderMenu({ active, items }: MobileHeaderMenuProps) {
             >
               Sign In
             </Link>
-            <Link className="rounded-full bg-black px-4 py-3 text-center text-[13px] font-black text-white" href="/#works">
-              Go to Works
-            </Link>
+            <button
+              className="rounded-full bg-[#2563ff] px-4 py-3 text-center text-[13px] font-black text-white shadow-[0_16px_38px_rgba(37,99,255,0.24)] transition hover:-translate-y-0.5 hover:bg-[#0f4ff2] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50"
+              onClick={onConsultClick}
+              type="button"
+            >
+              Buat Website
+            </button>
           </div>
         </aside>
       </div>
