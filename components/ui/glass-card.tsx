@@ -2,11 +2,18 @@ import type { ComponentProps } from "react";
 
 import { cn } from "@/lib/utils";
 
-export function GlassCard({ className, ...props }: ComponentProps<"div">) {
+type GlassCardProps = ComponentProps<"div"> & {
+  hoverable?: boolean;
+};
+
+export function GlassCard({ className, hoverable, ...props }: GlassCardProps) {
   return (
     <div
       className={cn(
-        "border border-[color:var(--ui-border)] bg-[image:var(--ui-card)] shadow-glass backdrop-blur-2xl",
+        "rounded-2xl border border-[color:var(--ui-border)] bg-[image:var(--ui-card)] shadow-glass backdrop-blur-2xl",
+        hoverable
+          ? "transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_32px_100px_rgba(18,22,34,0.16),0_0_40px_-4px_rgba(37,99,255,0.1)] hover:border-[#2563ff]/20"
+          : null,
         className
       )}
       {...props}
