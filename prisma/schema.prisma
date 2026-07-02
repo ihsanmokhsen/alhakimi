@@ -60,6 +60,7 @@ model SiteSetting {
   backgroundImageData String?
   heroTitle           String?
   heroSubtitle        String?
+  welcomeImageData    String?
   kopitrackPasscode   String?
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt

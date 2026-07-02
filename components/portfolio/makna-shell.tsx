@@ -1,9 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
 
-import { ConsultationModal } from "@/components/portfolio/consultation-modal";
 import { MobileHeaderMenu } from "@/components/portfolio/mobile-header-menu";
 import { cn } from "@/lib/utils";
 
@@ -29,8 +27,6 @@ const footerLinks = [
 ] as const;
 
 export function WorksHeader({ active, overlay = false }: WorksHeaderProps) {
-  const [consultOpen, setConsultOpen] = useState(false);
-
   return (
     <header
       className={cn(
@@ -85,18 +81,10 @@ export function WorksHeader({ active, overlay = false }: WorksHeaderProps) {
           >
             Sign In
           </Link>
-          <button
-            className="hidden cursor-pointer rounded-full bg-[#2563ff] px-4 py-2 text-[13px] font-bold text-white shadow-[0_16px_38px_rgba(37,99,255,0.24)] transition hover:-translate-y-0.5 hover:bg-[#0f4ff2] hover:shadow-[0_22px_48px_rgba(37,99,255,0.34)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50 focus-visible:ring-offset-2 md:inline-flex lg:px-5"
-            onClick={() => setConsultOpen(true)}
-            type="button"
-          >
-            Buat Website
-          </button>
-          <MobileHeaderMenu active={active} items={navItems} onConsultClick={() => setConsultOpen(true)} />
+
+          <MobileHeaderMenu active={active} items={navItems} />
         </div>
       </div>
-
-      <ConsultationModal open={consultOpen} onClose={() => setConsultOpen(false)} />
     </header>
   );
 }
@@ -109,13 +97,13 @@ export function WorksFooter() {
       <div aria-hidden="true" className="pointer-events-none absolute -bottom-40 left-1/4 h-80 w-80 rounded-full bg-violet-600/8 blur-[100px]" />
 
       <div className="relative mx-auto max-w-7xl border-y border-white/12 py-8 sm:py-12">
-        <p className="text-[clamp(2.05rem,9vw,10.5rem)] font-black lowercase leading-[0.82] tracking-normal">
+        <p className="text-[clamp(2.05rem,9vw,10.5rem)] font-black lowercase leading-[0.82] tracking-tight">
           <span className="block bg-gradient-to-r from-white via-white to-white/70 bg-clip-text text-transparent">works.</span>
           <span className="block bg-gradient-to-r from-white/90 via-blue-300 to-white/90 bg-clip-text text-transparent">ihsanmokhsen</span>
           <span className="block text-white/40">.com</span>
         </p>
       </div>
-      <div className="relative mx-auto mt-8 flex max-w-3xl flex-wrap items-center justify-center gap-x-4 gap-y-3 text-[12px] font-bold uppercase tracking-normal text-white/50 sm:mt-10 sm:gap-x-5 sm:text-[13px]">
+      <div className="relative mx-auto mt-8 flex max-w-3xl flex-wrap items-center justify-center gap-x-4 gap-y-3 text-[12px] font-bold uppercase text-white/50 sm:mt-10 sm:gap-x-5 sm:text-[13px]">
         {footerLinks.map((item, index) => (
           <div className="flex items-center gap-4 sm:gap-5" key={item.href}>
             {index > 0 ? <span className="h-1 w-1 rounded-full bg-white/20" /> : null}

@@ -26,8 +26,8 @@ export default function AboutPage() {
 
       <section className="mx-auto w-full max-w-7xl px-4 pb-24 pt-14 sm:px-6 sm:pt-24 lg:px-8">
         <div className="border-b border-black/10 pb-12 sm:pb-16 lg:pb-20">
-          <p className="text-[12px] font-black uppercase tracking-normal text-[#2563ff]">About</p>
-          <h1 className="mt-5 max-w-5xl text-[clamp(3.15rem,8vw,7.5rem)] font-black leading-[0.88] tracking-normal text-black">
+          <p className="text-[12px] font-black uppercase text-[#2563ff]">About</p>
+          <h1 className="mt-5 max-w-5xl text-[clamp(3.15rem,8vw,7.5rem)] font-black leading-[0.88] tracking-tight text-black">
             Security awareness, made practical.
           </h1>
           <p className="mt-8 max-w-3xl text-[20px] font-semibold leading-8 text-black/54 sm:text-[28px] sm:leading-10">
@@ -39,13 +39,13 @@ export default function AboutPage() {
         <div className="divide-y divide-black/10">
           <section className="grid gap-8 py-12 sm:py-16 lg:grid-cols-[0.42fr_1fr] lg:gap-14">
             <div>
-              <p className="text-[12px] font-black uppercase tracking-normal text-black/36">Profile</p>
+              <p className="text-[12px] font-black uppercase text-black/36">Profile</p>
             </div>
             <div>
-              <p className="text-[13px] font-black uppercase tracking-normal text-[#2563ff]">
+              <p className="text-[13px] font-black uppercase text-[#2563ff]">
                 Muhammad Ihsanul Hakim Mokhsen, S.Kom., M.S.F
               </p>
-              <h2 className="mt-5 max-w-4xl text-[34px] font-black leading-none tracking-normal text-black sm:text-[58px]">
+              <h2 className="mt-5 max-w-4xl text-[34px] font-black leading-none tracking-tight text-black sm:text-[58px]">
                 Digital Forensics &amp; Information Security
               </h2>
               <div className="mt-8 max-w-4xl space-y-6 text-[16px] font-medium leading-8 text-black/60 sm:text-[18px] sm:leading-9">
@@ -67,10 +67,10 @@ export default function AboutPage() {
 
           <section className="grid gap-8 py-12 sm:py-16 lg:grid-cols-[0.42fr_1fr] lg:gap-14">
             <div>
-              <p className="text-[12px] font-black uppercase tracking-normal text-black/36">Publication</p>
+              <p className="text-[12px] font-black uppercase text-black/36">Publication</p>
             </div>
             <div>
-              <h3 className="max-w-4xl text-[30px] font-black leading-tight text-black sm:text-[50px]">
+              <h3 className="max-w-4xl text-[30px] font-black leading-tight tracking-tight text-black sm:text-[50px]">
                 Adaptation and Validation of HAIS-Q for Measuring Information Security Awareness in Indonesian
                 Government Institutions
               </h3>
@@ -105,12 +105,12 @@ export default function AboutPage() {
 
           <section className="grid gap-8 py-12 sm:py-16 lg:grid-cols-[0.42fr_1fr] lg:gap-14">
             <div>
-              <p className="text-[12px] font-black uppercase tracking-normal text-black/36">Current focus</p>
+              <p className="text-[12px] font-black uppercase text-black/36">Current focus</p>
             </div>
             <div className="divide-y divide-black/10 border-y border-black/10">
               {focusItems.map((item) => (
                 <p
-                  className="py-5 text-[28px] font-black leading-none text-black sm:py-7 sm:text-[44px]"
+                  className="py-5 text-[28px] font-black leading-none tracking-tight text-black sm:py-7 sm:text-[44px]"
                   key={item}
                 >
                   {item}
@@ -121,9 +121,9 @@ export default function AboutPage() {
 
           <section className="grid gap-8 py-12 sm:py-16 lg:grid-cols-[0.42fr_1fr] lg:gap-14">
             <div>
-              <p className="text-[12px] font-black uppercase tracking-normal text-black/36">Contact</p>
+              <p className="text-[12px] font-black uppercase text-black/36">Contact</p>
             </div>
-            <div className="flex flex-col gap-4 text-[26px] font-black leading-none text-black sm:text-[42px]">
+            <div className="flex flex-col gap-4 text-[26px] font-black leading-none tracking-tight text-black sm:text-[42px]">
               {contactLinks.map((item) => (
                 <a
                   className="w-fit transition hover:text-[#2563ff]"

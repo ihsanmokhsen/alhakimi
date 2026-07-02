@@ -11,6 +11,7 @@ import { createJournalAction } from "@/lib/actions/journals";
 import { createPovVideoAction } from "@/lib/actions/pov-videos";
 import { logoutAction } from "@/lib/actions/auth";
 import { removeHeroAction, updateHeroAction } from "@/lib/actions/hero";
+import { removeWelcomeAction, updateWelcomeAction } from "@/lib/actions/welcome";
 import { reorderProjectsAction } from "@/lib/actions/projects";
 import { getJournals } from "@/lib/data/journals";
 import { getPovVideos } from "@/lib/data/pov-videos";
@@ -26,12 +27,13 @@ export default async function AdminPage() {
     getPovVideos(),
     prisma.siteSetting.findUnique({
       where: { id: "hero" },
-      select: { backgroundImageData: true, heroTitle: true, heroSubtitle: true }
+      select: { backgroundImageData: true, heroTitle: true, heroSubtitle: true, welcomeImageData: true }
     })
   ]);
   const hasHero = Boolean(heroSetting?.backgroundImageData);
   const currentTitle = heroSetting?.heroTitle ?? "";
   const currentSubtitle = heroSetting?.heroSubtitle ?? "";
+  const hasWelcome = Boolean(heroSetting?.welcomeImageData);
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#f5f5f7] text-[#08080a] [color-scheme:light]">
@@ -85,8 +87,11 @@ export default async function AdminPage() {
             currentSubtitle={currentSubtitle}
             currentTitle={currentTitle}
             hasHero={hasHero}
+            hasWelcome={hasWelcome}
             removeAction={removeHeroAction}
             updateAction={updateHeroAction}
+            welcomeRemoveAction={removeWelcomeAction}
+            welcomeUpdateAction={updateWelcomeAction}
           />
 
           <section className="space-y-4">

@@ -17,6 +17,10 @@ const LOGO_TARGET_BYTES = 200 * 1024;
 const LOGO_MIME_TYPE = "image/webp";
 
 async function compressLogo(file: File) {
+  if (file.type === "image/gif") {
+    return file;
+  }
+
   const image = await loadImage(file);
   const canvas = document.createElement("canvas");
   const context = canvas.getContext("2d");

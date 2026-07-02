@@ -79,10 +79,10 @@ export function PortfolioModal({ project, onClose }: PortfolioModalProps) {
 
           <div className="flex min-h-[460px] flex-col justify-between p-6 sm:p-8 lg:min-h-[620px] lg:p-12">
             <div>
-              <p className="text-[11px] font-black uppercase tracking-normal text-black/[0.44]">
+              <p className="text-[11px] font-black uppercase text-black/[0.44]">
                 {project.category} / {project.featured ? "Featured" : "Selected"}
               </p>
-              <h2 className="mt-6 text-[clamp(2.8rem,8vw,6.5rem)] font-black leading-[0.86] tracking-normal text-black">
+              <h2 className="mt-6 text-[clamp(2.8rem,8vw,6.5rem)] font-black leading-[0.86] tracking-tight text-black">
                 {project.title}
               </h2>
               <p className="mt-7 max-w-xl text-[16px] font-medium leading-8 text-black/[0.58] sm:text-[19px] sm:leading-9">
@@ -91,14 +91,14 @@ export function PortfolioModal({ project, onClose }: PortfolioModalProps) {
             </div>
 
             <div className="mt-8 flex flex-col gap-4 sm:mt-10">
-              <p className="text-[12px] font-black uppercase tracking-normal text-black/[0.36]">
+              <p className="text-[12px] font-black uppercase text-black/[0.36]">
                 {new Intl.DateTimeFormat("id-ID", {
                   dateStyle: "medium"
                 }).format(project.createdAt)}
               </p>
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <Link
-                  className="inline-flex w-full justify-center rounded-full bg-black px-6 py-3 text-[13px] font-black uppercase tracking-normal text-white transition hover:bg-black/[0.76] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50 sm:w-auto"
+                  className="inline-flex w-full justify-center rounded-full bg-black px-6 py-3 text-[13px] font-black uppercase text-white transition hover:bg-black/[0.76] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50 sm:w-auto"
                   href={project.url}
                   rel="noreferrer"
                   target="_blank"

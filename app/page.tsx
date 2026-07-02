@@ -1,4 +1,5 @@
 import { HomeShell } from "@/components/portfolio/home-shell";
+import { PopupAnnouncement } from "@/components/portfolio/popup-announcement";
 import { getProjects } from "@/lib/data/projects";
 import { prisma } from "@/lib/prisma";
 
@@ -15,10 +16,13 @@ export default async function HomePage() {
   ]);
 
   return (
-    <HomeShell
-      heroSubtitle={heroSetting?.heroSubtitle}
-      heroTitle={heroSetting?.heroTitle}
-      projects={projects}
-    />
+    <>
+      <PopupAnnouncement />
+      <HomeShell
+        heroSubtitle={heroSetting?.heroSubtitle}
+        heroTitle={heroSetting?.heroTitle}
+        projects={projects}
+      />
+    </>
   );
 }

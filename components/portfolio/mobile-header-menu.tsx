@@ -7,23 +7,13 @@ type MobileHeaderMenuProps = {
     id: string;
     label: string;
   }>;
-  onConsultClick?: () => void;
 };
 
 const menuToggleId = "mobile-header-menu-toggle";
 
-export function MobileHeaderMenu({ active, items, onConsultClick }: MobileHeaderMenuProps) {
+export function MobileHeaderMenu({ active, items }: MobileHeaderMenuProps) {
   return (
     <div className="flex items-center gap-2 md:hidden">
-      {/* CTA: Buat Website — langsung buka modal */}
-      <button
-        className="inline-flex cursor-pointer rounded-full bg-[#2563ff] px-3 py-2 text-[12px] font-bold text-white shadow-[0_16px_38px_rgba(37,99,255,0.24)] transition hover:-translate-y-0.5 hover:bg-[#0f4ff2] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50 sm:px-4 sm:text-[13px]"
-        onClick={onConsultClick}
-        type="button"
-      >
-        Buat Website
-      </button>
-
       {/* Hamburger trigger — buka menu navigasi */}
       <input className="peer sr-only" id={menuToggleId} type="checkbox" />
       <label
@@ -92,13 +82,7 @@ export function MobileHeaderMenu({ active, items, onConsultClick }: MobileHeader
             >
               Sign In
             </Link>
-            <button
-              className="rounded-full bg-[#2563ff] px-4 py-3 text-center text-[13px] font-black text-white shadow-[0_16px_38px_rgba(37,99,255,0.24)] transition hover:-translate-y-0.5 hover:bg-[#0f4ff2] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50"
-              onClick={onConsultClick}
-              type="button"
-            >
-              Buat Website
-            </button>
+
           </div>
         </aside>
       </div>

@@ -35,7 +35,7 @@ export function JournalGrid({ journals }: JournalGridProps) {
             <span className="h-2 w-2 rounded-full bg-[#2563ff] animate-pulse" />
             Latest entries
           </p>
-          <h2 className="mt-2 bg-gradient-to-r from-black via-[#2563ff] to-black bg-[length:200%_auto] bg-clip-text text-[32px] font-black leading-none text-transparent sm:text-[44px]" style={{ animation: "gradientText 4s ease infinite" }}>
+          <h2 className="mt-2 bg-gradient-to-r from-black via-[#2563ff] to-black bg-[length:200%_auto] bg-clip-text text-[32px] font-black leading-none tracking-tight text-transparent sm:text-[44px]" style={{ animation: "gradientText 4s ease infinite" }}>
             Modern journals
           </h2>
         </div>
@@ -89,7 +89,7 @@ export function JournalGrid({ journals }: JournalGridProps) {
                   <p className="text-[12px] font-black uppercase text-[#2563ff]">
                     {formatJournalDate(journal.publishedAt)}
                   </p>
-                  <h3 className="mt-4 text-[28px] font-black leading-none tracking-normal text-black transition-colors duration-300 group-hover:text-[#2563ff] sm:text-[34px]">
+                  <h3 className="mt-4 text-[28px] font-black leading-none tracking-tight text-black transition-colors duration-300 group-hover:text-[#2563ff] sm:text-[34px]">
                     {journal.title}
                   </h3>
                   <p className="mt-4 line-clamp-3 text-[14px] font-medium leading-7 text-black/56">

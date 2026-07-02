@@ -14,6 +14,10 @@ const JOURNAL_PHOTO_TARGET_BYTES = 200 * 1024;
 const JOURNAL_PHOTO_MIME = "image/webp";
 
 async function compressJournalPhoto(file: File) {
+  if (file.type === "image/gif") {
+    return file;
+  }
+
   const image = await loadImage(file);
   const canvas = document.createElement("canvas");
   const context = canvas.getContext("2d");
