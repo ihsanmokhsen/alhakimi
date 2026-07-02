@@ -33,14 +33,14 @@ export function HeaderClock({ light = false }: HeaderClockProps) {
     return () => window.clearInterval(timer);
   }, []);
 
-  const c = light ? "text-white" : "text-black";
+  const c = light ? "text-white" : "text-[color:var(--text)]";
 
   return (
     <div className={`shrink-0 text-center ${c}`}>
       <p className="text-[22px] font-black leading-none tracking-tight">
         {now.time}
       </p>
-      <p className={`mt-2 text-[13px] font-black uppercase tracking-[0.08em] ${light ? "text-white/80" : "text-black/80"}`}>
+      <p className={`mt-2 text-[13px] font-black uppercase tracking-[0.08em] ${light ? "text-white/80" : "text-[color:var(--text)]/80"}`}>
         {now.dateFull}
       </p>
     </div>

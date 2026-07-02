@@ -100,13 +100,13 @@ export function JournalForm({ action }: JournalFormProps) {
   }
 
   return (
-    <section className="rounded-[24px] border border-black/[0.06] bg-white p-4 shadow-[0_20px_70px_rgba(18,22,34,0.09)] sm:p-6">
+    <section className="rounded-[24px] border border-[color:var(--border)] bg-[color:var(--surface)] p-4 shadow-[0_20px_70px_rgba(18,22,34,0.09)] sm:p-6">
       <form action={actionWithCompressedPhoto} className="space-y-4">
         <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_220px]">
           <label className="space-y-1.5">
-            <span className="text-[12px] font-black uppercase text-black/42">Title</span>
+            <span className="text-[12px] font-black uppercase text-[color:var(--text)]/42">Title</span>
             <input
-              className="w-full rounded-[16px] border border-black/[0.08] bg-[#f5f5f7] px-4 py-3 text-[14px] font-semibold text-black outline-none transition placeholder:text-black/30 focus:border-[#2563ff]/45 focus:bg-white"
+              className="w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[14px] font-semibold text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#2563ff]/45 focus:bg-[color:var(--surface)]"
               name="title"
               required
               type="text"
@@ -114,9 +114,9 @@ export function JournalForm({ action }: JournalFormProps) {
           </label>
 
           <label className="space-y-1.5">
-            <span className="text-[12px] font-black uppercase text-black/42">Time</span>
+            <span className="text-[12px] font-black uppercase text-[color:var(--text)]/42">Time</span>
             <input
-              className="w-full rounded-[16px] border border-black/[0.08] bg-[#f5f5f7] px-4 py-3 text-[14px] font-semibold text-black outline-none transition focus:border-[#2563ff]/45 focus:bg-white"
+              className="w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[14px] font-semibold text-[color:var(--text)] outline-none transition focus:border-[#2563ff]/45 focus:bg-[color:var(--surface)]"
               defaultValue={getDefaultDatetimeValue()}
               name="publishedAt"
               required
@@ -126,23 +126,23 @@ export function JournalForm({ action }: JournalFormProps) {
         </div>
 
         <label className="space-y-1.5">
-          <span className="text-[12px] font-black uppercase text-black/42">Writing</span>
+          <span className="text-[12px] font-black uppercase text-[color:var(--text)]/42">Writing</span>
           <textarea
-            className="min-h-32 w-full rounded-[16px] border border-black/[0.08] bg-[#f5f5f7] px-4 py-3 text-[14px] font-semibold leading-6 text-black outline-none transition placeholder:text-black/30 focus:border-[#2563ff]/45 focus:bg-white"
+            className="min-h-32 w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[14px] font-semibold leading-6 text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#2563ff]/45 focus:bg-[color:var(--surface)]"
             name="content"
             required
           />
         </label>
 
         <label className="space-y-1.5">
-          <span className="text-[12px] font-black uppercase text-black/42">Photo (new post only)</span>
+          <span className="text-[12px] font-black uppercase text-[color:var(--text)]/42">Photo (new post only)</span>
           <input
             accept="image/*"
-            className="w-full rounded-[16px] border border-black/[0.08] bg-[#f5f5f7] px-4 py-3 text-[13px] font-semibold text-black outline-none file:mr-3 file:rounded-full file:border-0 file:bg-black file:px-3.5 file:py-1.5 file:text-[12px] file:font-black file:text-white"
+            className="w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[13px] font-semibold text-[color:var(--text)] outline-none file:mr-3 file:rounded-full file:border-0 file:bg-[color:var(--inverse-surface)] file:px-3.5 file:py-1.5 file:text-[12px] file:font-black file:text-white"
             name="photoFile"
             type="file"
           />
-          <p className="text-[12px] font-medium text-black/42">Foto akan otomatis dikompres ke sekitar 200KB.</p>
+          <p className="text-[12px] font-medium text-[color:var(--text)]/42">Foto akan otomatis dikompres ke sekitar 200KB.</p>
         </label>
 
         {state.error ? <p className="rounded-2xl bg-[#2563ff]/10 px-4 py-3 text-sm font-bold text-[#2563ff]">{state.error}</p> : null}

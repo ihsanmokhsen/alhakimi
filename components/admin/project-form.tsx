@@ -87,13 +87,13 @@ export function ProjectForm({ action, project, submitLabel }: ProjectFormProps) 
   }
 
   return (
-    <section className="rounded-[24px] border border-black/[0.06] bg-white p-4 shadow-[0_20px_70px_rgba(18,22,34,0.09)] sm:p-6">
+    <section className="rounded-[24px] border border-[color:var(--border)] bg-[color:var(--surface)] p-4 shadow-[0_20px_70px_rgba(18,22,34,0.09)] sm:p-6">
       <form action={actionWithCompressedLogo} className="space-y-4">
         <div className="grid gap-4 sm:grid-cols-2">
           <label className="space-y-1.5">
-            <span className="text-[12px] font-black uppercase text-black/42">Title</span>
+            <span className="text-[12px] font-black uppercase text-[color:var(--text)]/42">Title</span>
             <input
-              className="w-full rounded-[16px] border border-black/[0.08] bg-[#f5f5f7] px-4 py-3 text-[14px] font-semibold text-black outline-none transition placeholder:text-black/30 focus:border-[#2563ff]/45 focus:bg-white"
+              className="w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[14px] font-semibold text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#2563ff]/45 focus:bg-[color:var(--surface)]"
               defaultValue={project?.title ?? ""}
               name="title"
               required
@@ -102,9 +102,9 @@ export function ProjectForm({ action, project, submitLabel }: ProjectFormProps) 
           </label>
 
           <label className="space-y-1.5">
-            <span className="text-[12px] font-black uppercase text-black/42">Category</span>
+            <span className="text-[12px] font-black uppercase text-[color:var(--text)]/42">Category</span>
             <input
-              className="w-full rounded-[16px] border border-black/[0.08] bg-[#f5f5f7] px-4 py-3 text-[14px] font-semibold text-black outline-none transition placeholder:text-black/30 focus:border-[#2563ff]/45 focus:bg-white"
+              className="w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[14px] font-semibold text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#2563ff]/45 focus:bg-[color:var(--surface)]"
               defaultValue={project?.category ?? "Web App"}
               name="category"
               required
@@ -114,9 +114,9 @@ export function ProjectForm({ action, project, submitLabel }: ProjectFormProps) 
         </div>
 
         <label className="space-y-1.5">
-          <span className="text-[12px] font-black uppercase text-black/42">URL</span>
+          <span className="text-[12px] font-black uppercase text-[color:var(--text)]/42">URL</span>
           <input
-            className="w-full rounded-[16px] border border-black/[0.08] bg-[#f5f5f7] px-4 py-3 text-[14px] font-semibold text-black outline-none transition placeholder:text-black/30 focus:border-[#2563ff]/45 focus:bg-white"
+            className="w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[14px] font-semibold text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#2563ff]/45 focus:bg-[color:var(--surface)]"
             defaultValue={project?.url ?? ""}
             name="url"
             required
@@ -125,30 +125,30 @@ export function ProjectForm({ action, project, submitLabel }: ProjectFormProps) 
         </label>
 
         <label className="space-y-1.5">
-          <span className="text-[12px] font-black uppercase text-black/42">App logo</span>
+          <span className="text-[12px] font-black uppercase text-[color:var(--text)]/42">App logo</span>
           <input
             accept="image/*"
-            className="w-full rounded-[16px] border border-black/[0.08] bg-[#f5f5f7] px-4 py-3 text-[13px] font-semibold text-black outline-none file:mr-3 file:rounded-full file:border-0 file:bg-black file:px-3.5 file:py-1.5 file:text-[12px] file:font-black file:text-white"
+            className="w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[13px] font-semibold text-[color:var(--text)] outline-none file:mr-3 file:rounded-full file:border-0 file:bg-[color:var(--inverse-surface)] file:px-3.5 file:py-1.5 file:text-[12px] file:font-black file:text-white"
             name="logoFile"
             type="file"
           />
           {project ? (
-            <p className="text-[12px] font-medium text-black/42">Kosongkan jika logo tidak diubah.</p>
+            <p className="text-[12px] font-medium text-[color:var(--text)]/42">Kosongkan jika logo tidak diubah.</p>
           ) : null}
-          <p className="text-[12px] font-medium text-black/42">Logo otomatis dikompres ke sekitar 200KB saat upload.</p>
+          <p className="text-[12px] font-medium text-[color:var(--text)]/42">Logo otomatis dikompres ke sekitar 200KB saat upload.</p>
         </label>
 
         <label className="space-y-1.5">
-          <span className="text-[12px] font-black uppercase text-black/42">Description</span>
+          <span className="text-[12px] font-black uppercase text-[color:var(--text)]/42">Description</span>
           <textarea
-            className="min-h-32 w-full rounded-[16px] border border-black/[0.08] bg-[#f5f5f7] px-4 py-3 text-[14px] font-semibold leading-6 text-black outline-none transition placeholder:text-black/30 focus:border-[#2563ff]/45 focus:bg-white"
+            className="min-h-32 w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[14px] font-semibold leading-6 text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#2563ff]/45 focus:bg-[color:var(--surface)]"
             defaultValue={project?.description ?? ""}
             name="description"
             required
           />
         </label>
 
-        <label className="flex items-center gap-3 rounded-[16px] border border-black/[0.08] bg-[#f5f5f7] px-4 py-3 text-[13px] font-bold text-black/58">
+        <label className="flex items-center gap-3 rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[13px] font-bold text-[color:var(--text)]/58">
           <input
             className="h-4 w-4 accent-[#2563ff]"
             defaultChecked={project?.featured ?? false}

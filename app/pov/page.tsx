@@ -31,7 +31,7 @@ export default async function PovPage() {
 
       <section className="mx-auto w-full max-w-md px-4 pb-24 sm:px-6 lg:px-8">
         {videos.length === 0 ? (
-          <div className="rounded-[24px] border border-white/10 bg-white/[0.04] p-10 text-center">
+          <div className="rounded-[24px] border border-[color:var(--border-solid)] bg-[color:var(--surface)]/[0.04] p-10 text-center">
             <p className="text-[15px] font-bold text-white/50">No videos yet. Check back soon.</p>
           </div>
         ) : (
@@ -39,7 +39,7 @@ export default async function PovPage() {
             {videos.map((video) => (
               <article className="w-full space-y-3" key={video.id}>
                 <div
-                  className="relative w-full overflow-hidden rounded-[20px] border border-white/10 bg-white/[0.04] shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
+                  className="relative w-full overflow-hidden rounded-[20px] border border-[color:var(--border-solid)] bg-[color:var(--surface)]/[0.04] shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
                   style={{ aspectRatio: "9 / 16" }}
                 >
                   <iframe

@@ -36,31 +36,31 @@ export default async function AdminPage() {
   const hasWelcome = Boolean(heroSetting?.welcomeImageData);
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-[#f5f5f7] text-[#08080a] [color-scheme:light]">
+    <main className="min-h-screen overflow-x-hidden bg-[color:var(--surface-muted)] text-[color:var(--text)]">
       <MaknaHeader />
 
       <section className="mx-auto w-full max-w-7xl px-4 pb-12 pt-10 sm:px-6 sm:pb-16 sm:pt-14 lg:px-8">
-        <div className="grid gap-6 border-b border-black/10 pb-8 sm:pb-10 lg:grid-cols-[1fr_0.7fr] lg:items-end lg:pb-12">
+        <div className="grid gap-6 border-b border-[color:var(--border-solid)] pb-8 sm:pb-10 lg:grid-cols-[1fr_0.7fr] lg:items-end lg:pb-12">
           <div>
             <p className="text-[12px] font-black uppercase tracking-normal text-[#2563ff]">Admin Dashboard</p>
-            <h1 className="mt-3 max-w-4xl text-[clamp(2.65rem,6.6vw,5.8rem)] font-black leading-[0.88] tracking-normal text-black">
+            <h1 className="mt-3 max-w-4xl text-[clamp(2.65rem,6.6vw,5.8rem)] font-black leading-[0.88] tracking-normal text-[color:var(--text)]">
               Manage meaningful works.
             </h1>
-            <p className="mt-4 max-w-2xl text-[15px] font-medium leading-7 text-black/58 sm:text-[17px]">
-              Signed in as <span className="font-black text-black">{admin.username}</span>. Curate projects, publish
+            <p className="mt-4 max-w-2xl text-[15px] font-medium leading-7 text-[color:var(--text)]/58 sm:text-[17px]">
+              Signed in as <span className="font-black text-[color:var(--text)]">{admin.username}</span>. Curate projects, publish
               stories, and keep the works experience sharp.
             </p>
           </div>
 
           <div className="flex flex-col gap-3 lg:items-end">
             <div className="grid w-full grid-cols-2 gap-3 lg:max-w-sm">
-              <div className="rounded-[20px] border border-black/[0.06] bg-white p-4 shadow-[0_14px_42px_rgba(18,22,34,0.07)]">
-                <p className="text-[11px] font-black uppercase text-black/34">Works</p>
-                <p className="mt-2 text-[30px] font-black leading-none text-black">{projects.length}</p>
+              <div className="rounded-[20px] border border-[color:var(--border)] bg-[color:var(--surface)] p-4 shadow-[0_14px_42px_rgba(18,22,34,0.07)]">
+                <p className="text-[11px] font-black uppercase text-[color:var(--text)]/34">Works</p>
+                <p className="mt-2 text-[30px] font-black leading-none text-[color:var(--text)]">{projects.length}</p>
               </div>
-              <div className="rounded-[20px] border border-black/[0.06] bg-white p-4 shadow-[0_14px_42px_rgba(18,22,34,0.07)]">
-                <p className="text-[11px] font-black uppercase text-black/34">Stories</p>
-                <p className="mt-2 text-[30px] font-black leading-none text-black">{journals.length}</p>
+              <div className="rounded-[20px] border border-[color:var(--border)] bg-[color:var(--surface)] p-4 shadow-[0_14px_42px_rgba(18,22,34,0.07)]">
+                <p className="text-[11px] font-black uppercase text-[color:var(--text)]/34">Stories</p>
+                <p className="mt-2 text-[30px] font-black leading-none text-[color:var(--text)]">{journals.length}</p>
               </div>
             </div>
             <div className="flex w-full flex-wrap gap-3 lg:max-w-sm">
@@ -98,11 +98,11 @@ export default async function AdminPage() {
             <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <p className="text-[12px] font-black uppercase tracking-normal text-[#2563ff]">Works</p>
-                <h2 className="mt-2 text-[36px] font-black leading-none tracking-normal text-black sm:text-[48px]">
+                <h2 className="mt-2 text-[36px] font-black leading-none tracking-normal text-[color:var(--text)] sm:text-[48px]">
                   Project library
                 </h2>
               </div>
-              <p className="max-w-md text-[14px] font-medium leading-6 text-black/52">
+              <p className="max-w-md text-[14px] font-medium leading-6 text-[color:var(--text)]/52">
                 Drag project rows to arrange how they appear on the front page.
               </p>
             </div>
@@ -117,14 +117,14 @@ export default async function AdminPage() {
           </section>
 
           <section className="space-y-4">
-            <div className="grid gap-3 border-t border-black/10 pt-8 sm:pt-10 lg:grid-cols-[0.45fr_1fr]">
+            <div className="grid gap-3 border-t border-[color:var(--border-solid)] pt-8 sm:pt-10 lg:grid-cols-[0.45fr_1fr]">
               <div>
                 <p className="text-[12px] font-black uppercase tracking-normal text-[#2563ff]">Journal</p>
-                <h2 className="mt-2 text-[36px] font-black leading-none tracking-normal text-black sm:text-[48px]">
+                <h2 className="mt-2 text-[36px] font-black leading-none tracking-normal text-[color:var(--text)] sm:text-[48px]">
                   Stories
                 </h2>
               </div>
-              <p className="max-w-2xl text-[15px] font-medium leading-7 text-black/56 sm:text-[17px]">
+              <p className="max-w-2xl text-[15px] font-medium leading-7 text-[color:var(--text)]/56 sm:text-[17px]">
                 Publish concise notes and visual updates with the same calm editorial rhythm as the public site.
               </p>
             </div>
@@ -134,14 +134,14 @@ export default async function AdminPage() {
           </section>
 
           <section className="space-y-4">
-            <div className="grid gap-3 border-t border-black/10 pt-8 sm:pt-10 lg:grid-cols-[0.45fr_1fr]">
+            <div className="grid gap-3 border-t border-[color:var(--border-solid)] pt-8 sm:pt-10 lg:grid-cols-[0.45fr_1fr]">
               <div>
                 <p className="text-[12px] font-black uppercase tracking-normal text-[#2563ff]">POV</p>
-                <h2 className="mt-2 text-[36px] font-black leading-none tracking-normal text-black sm:text-[48px]">
+                <h2 className="mt-2 text-[36px] font-black leading-none tracking-normal text-[color:var(--text)] sm:text-[48px]">
                   Videos
                 </h2>
               </div>
-              <p className="max-w-2xl text-[15px] font-medium leading-7 text-black/56 sm:text-[17px]">
+              <p className="max-w-2xl text-[15px] font-medium leading-7 text-[color:var(--text)]/56 sm:text-[17px]">
                 Manage short vertical videos. Paste a YouTube Shorts URL and it will be displayed in portrait mode.
               </p>
             </div>

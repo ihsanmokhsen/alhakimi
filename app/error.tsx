@@ -10,19 +10,19 @@ export default function GlobalError({
   reset: () => void;
 }) {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-[#f5f5f7] px-4">
+    <main className="flex min-h-screen items-center justify-center bg-[color:var(--surface-muted)] px-4">
       <div className="max-w-md text-center">
         <p className="text-[12px] font-black uppercase tracking-wider text-[#2563ff]">
           Error
         </p>
-        <h1 className="mt-4 text-[48px] font-black leading-none text-black sm:text-[64px]">
+        <h1 className="mt-4 text-[48px] font-black leading-none text-[color:var(--text)] sm:text-[64px]">
           Something went wrong.
         </h1>
-        <p className="mt-6 text-[15px] font-medium leading-7 text-black/56">
+        <p className="mt-6 text-[15px] font-medium leading-7 text-[color:var(--text)]/56">
           An unexpected error occurred. Please try again or go back to the home page.
         </p>
         {error.digest && (
-          <p className="mt-3 text-[12px] font-mono text-black/30">
+          <p className="mt-3 text-[12px] font-mono text-[color:var(--text)]/30">
             Reference: {error.digest}
           </p>
         )}
@@ -35,7 +35,7 @@ export default function GlobalError({
             Try again
           </button>
           <Link
-            className="inline-flex min-w-40 justify-center rounded-full border border-black/10 bg-white px-6 py-3 text-[13px] font-black text-black transition hover:-translate-y-0.5 hover:border-black/18"
+            className="inline-flex min-w-40 justify-center rounded-full border border-[color:var(--border-solid)] bg-[color:var(--surface)] px-6 py-3 text-[13px] font-black text-[color:var(--text)] transition hover:-translate-y-0.5 hover:border-black/18"
             href="/"
           >
             Go home

@@ -100,13 +100,13 @@ export function HeroForm({
   return (
     <div className="space-y-6">
       {/* ── Hero Section ── */}
-      <section className="rounded-[24px] border border-black/[0.06] bg-white p-4 shadow-[0_20px_70px_rgba(18,22,34,0.09)] sm:p-6">
+      <section className="rounded-[24px] border border-[color:var(--border)] bg-[color:var(--surface)] p-4 shadow-[0_20px_70px_rgba(18,22,34,0.09)] sm:p-6">
         <div className="mb-4 flex items-center justify-between">
           <div>
             <p className="text-[12px] font-black uppercase text-[#2563ff]">Appearance</p>
-            <h3 className="mt-1 text-[20px] font-black text-black">Hero settings</h3>
+            <h3 className="mt-1 text-[20px] font-black text-[color:var(--text)]">Hero settings</h3>
           </div>
-          <span className="rounded-full bg-black/5 px-3 py-1 text-[11px] font-bold text-black/50">
+          <span className="rounded-full bg-black/5 px-3 py-1 text-[11px] font-bold text-[color:var(--text)]/50">
             {hasHero ? "Custom" : "Default"}
           </span>
         </div>
@@ -114,9 +114,9 @@ export function HeroForm({
         <form action={submitUpdate} className="space-y-4">
           <div className="grid gap-4 sm:grid-cols-2">
             <label className="space-y-1.5">
-              <span className="text-[12px] font-black uppercase text-black/42">Hero title</span>
+              <span className="text-[12px] font-black uppercase text-[color:var(--text)]/42">Hero title</span>
               <input
-                className="w-full rounded-[16px] border border-black/[0.08] bg-[#f5f5f7] px-4 py-3 text-[14px] font-semibold text-black outline-none transition placeholder:text-black/30 focus:border-[#2563ff]/45 focus:bg-white"
+                className="w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[14px] font-semibold text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#2563ff]/45 focus:bg-[color:var(--surface)]"
                 defaultValue={currentTitle}
                 name="heroTitle"
                 placeholder="works"
@@ -125,9 +125,9 @@ export function HeroForm({
             </label>
 
             <label className="space-y-1.5">
-              <span className="text-[12px] font-black uppercase text-black/42">Hero subtitle</span>
+              <span className="text-[12px] font-black uppercase text-[color:var(--text)]/42">Hero subtitle</span>
               <input
-                className="w-full rounded-[16px] border border-black/[0.08] bg-[#f5f5f7] px-4 py-3 text-[14px] font-semibold text-black outline-none transition placeholder:text-black/30 focus:border-[#2563ff]/45 focus:bg-white"
+                className="w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[14px] font-semibold text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#2563ff]/45 focus:bg-[color:var(--surface)]"
                 defaultValue={currentSubtitle}
                 name="heroSubtitle"
                 placeholder="Beberapa Apps yang dibuat untuk kebutuhan kantor dan pribadi."
@@ -137,22 +137,22 @@ export function HeroForm({
           </div>
 
           <label className="space-y-1.5">
-            <span className="text-[12px] font-black uppercase text-black/42">Upload image or GIF</span>
+            <span className="text-[12px] font-black uppercase text-[color:var(--text)]/42">Upload image or GIF</span>
             <input
               ref={inputRef}
               accept="image/*"
-              className="w-full rounded-[16px] border border-black/[0.08] bg-[#f5f5f7] px-4 py-3 text-[13px] font-semibold text-black outline-none file:mr-3 file:rounded-full file:border-0 file:bg-black file:px-3.5 file:py-1.5 file:text-[12px] file:font-black file:text-white"
+              className="w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[13px] font-semibold text-[color:var(--text)] outline-none file:mr-3 file:rounded-full file:border-0 file:bg-[color:var(--inverse-surface)] file:px-3.5 file:py-1.5 file:text-[12px] file:font-black file:text-white"
               name="heroFile"
               onChange={handleFileChange}
               type="file"
             />
-            <p className="text-[12px] font-medium text-black/42">
+            <p className="text-[12px] font-medium text-[color:var(--text)]/42">
               Supports PNG, JPG, GIF, WebP. Max 8 MB.
             </p>
           </label>
 
           {preview ? (
-            <div className="overflow-hidden rounded-[16px] border border-black/[0.08]">
+            <div className="overflow-hidden rounded-[16px] border border-[color:var(--border-strong)]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 alt="Hero preview"
@@ -180,7 +180,7 @@ export function HeroForm({
 
             {hasHero ? (
               <button
-                className="rounded-full border border-black/10 bg-white px-5 py-3 text-[12px] font-black text-black transition hover:-translate-y-0.5 hover:border-red-300 hover:text-red-600 disabled:translate-y-0 disabled:opacity-60"
+                className="rounded-full border border-[color:var(--border-solid)] bg-[color:var(--surface)] px-5 py-3 text-[12px] font-black text-[color:var(--text)] transition hover:-translate-y-0.5 hover:border-red-300 hover:text-red-600 disabled:translate-y-0 disabled:opacity-60"
                 disabled={removePending}
                 onClick={handleRemove}
                 type="button"
@@ -193,45 +193,45 @@ export function HeroForm({
       </section>
 
       {/* ── Welcome Popup Section ── */}
-      <section className="rounded-[24px] border border-black/[0.06] bg-white p-4 shadow-[0_20px_70px_rgba(18,22,34,0.09)] sm:p-6">
+      <section className="rounded-[24px] border border-[color:var(--border)] bg-[color:var(--surface)] p-4 shadow-[0_20px_70px_rgba(18,22,34,0.09)] sm:p-6">
         <div className="mb-4 flex items-center justify-between">
           <div>
             <p className="text-[12px] font-black uppercase text-[#f59e0b]">Popup</p>
-            <h3 className="mt-1 text-[20px] font-black text-black">Welcome popup image</h3>
+            <h3 className="mt-1 text-[20px] font-black text-[color:var(--text)]">Welcome popup image</h3>
           </div>
-          <span className="rounded-full bg-black/5 px-3 py-1 text-[11px] font-bold text-black/50">
+          <span className="rounded-full bg-black/5 px-3 py-1 text-[11px] font-bold text-[color:var(--text)]/50">
             {hasWelcome ? "Active" : "Off"}
           </span>
         </div>
 
-        <p className="mb-4 text-[13px] font-medium leading-relaxed text-black/[0.48]">
+        <p className="mb-4 text-[13px] font-medium leading-relaxed text-[color:var(--text)]/[0.48]">
           Gambar atau GIF yang muncul sekali di awal kunjungan (popup welcome). Bisa
           dikosongkan — kalau kosong popup tidak akan muncul.
         </p>
 
         <form action={submitWelcomeUpdate} className="space-y-4">
           <label className="space-y-1.5">
-            <span className="text-[12px] font-black uppercase text-black/42">Upload popup image / GIF</span>
+            <span className="text-[12px] font-black uppercase text-[color:var(--text)]/42">Upload popup image / GIF</span>
             <input
               ref={welcomeInputRef}
               accept="image/*"
-              className="w-full rounded-[16px] border border-black/[0.08] bg-[#f5f5f7] px-4 py-3 text-[13px] font-semibold text-black outline-none file:mr-3 file:rounded-full file:border-0 file:bg-[#f59e0b] file:px-3.5 file:py-1.5 file:text-[12px] file:font-black file:text-white"
+              className="w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[13px] font-semibold text-[color:var(--text)] outline-none file:mr-3 file:rounded-full file:border-0 file:bg-[#f59e0b] file:px-3.5 file:py-1.5 file:text-[12px] file:font-black file:text-white"
               name="welcomeFile"
               onChange={handleWelcomeFileChange}
               type="file"
             />
-            <p className="text-[12px] font-medium text-black/42">
+            <p className="text-[12px] font-medium text-[color:var(--text)]/42">
               Supports PNG, JPG, GIF, WebP. Max 8 MB. Ukuran direkomendasikan tidak
               terlalu besar — akan tampil responsif di desktop & HP.
             </p>
           </label>
 
           {welcomePreview ? (
-            <div className="overflow-hidden rounded-[16px] border border-black/[0.08]">
+            <div className="overflow-hidden rounded-[16px] border border-[color:var(--border-strong)]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 alt="Welcome preview"
-                className="max-h-56 w-full object-contain bg-[#f5f5f7]"
+                className="max-h-56 w-full object-contain bg-[color:var(--surface-muted)]"
                 src={welcomePreview}
               />
             </div>
@@ -259,7 +259,7 @@ export function HeroForm({
 
             {hasWelcome ? (
               <button
-                className="rounded-full border border-black/10 bg-white px-5 py-3 text-[12px] font-black text-black transition hover:-translate-y-0.5 hover:border-red-300 hover:text-red-600 disabled:translate-y-0 disabled:opacity-60"
+                className="rounded-full border border-[color:var(--border-solid)] bg-[color:var(--surface)] px-5 py-3 text-[12px] font-black text-[color:var(--text)] transition hover:-translate-y-0.5 hover:border-red-300 hover:text-red-600 disabled:translate-y-0 disabled:opacity-60"
                 disabled={welcomeRemovePending}
                 onClick={handleWelcomeRemove}
                 type="button"

@@ -24,12 +24,12 @@ export default async function JournalDetailPage({ params }: JournalDetailPagePro
   const photoVersion = new Date(journal.updatedAt).getTime();
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-[#f5f5f7] text-[#08080a] [color-scheme:light]">
+    <main className="min-h-screen overflow-x-hidden bg-[color:var(--surface-muted)] text-[color:var(--text)]">
       <MaknaHeader active="stories" />
 
       <article className="mx-auto w-full max-w-7xl px-4 pb-24 pt-12 sm:px-6 sm:pt-20 lg:px-8">
         <Link
-          className="inline-flex border border-black/10 bg-white px-5 py-3 text-[12px] font-black text-black/56 shadow-[0_14px_40px_rgba(18,22,34,0.08)] transition hover:-translate-y-0.5 hover:text-[#2563ff]"
+          className="inline-flex border border-[color:var(--border-solid)] bg-[color:var(--surface)] px-5 py-3 text-[12px] font-black text-[color:var(--text)]/56 shadow-[0_14px_40px_rgba(18,22,34,0.08)] transition hover:-translate-y-0.5 hover:text-[#2563ff]"
           href="/journal"
         >
           Back to Stories
@@ -40,7 +40,7 @@ export default async function JournalDetailPage({ params }: JournalDetailPagePro
             <p className="text-[12px] font-black uppercase text-[#2563ff]">
               {formatJournalDate(journal.publishedAt)}
             </p>
-            <h1 className="mt-5 text-[clamp(3.6rem,8vw,7.5rem)] font-black leading-[0.88] tracking-normal text-black">
+            <h1 className="mt-5 text-[clamp(3.6rem,8vw,7.5rem)] font-black leading-[0.88] tracking-normal text-[color:var(--text)]">
               {journal.title}
             </h1>
             <div className="mt-6">
@@ -48,7 +48,7 @@ export default async function JournalDetailPage({ params }: JournalDetailPagePro
             </div>
           </header>
 
-          <section className="overflow-hidden border border-black/[0.06] bg-white shadow-[0_24px_90px_rgba(18,22,34,0.12)]">
+          <section className="overflow-hidden border border-[color:var(--border)] bg-[color:var(--surface)] shadow-[0_24px_90px_rgba(18,22,34,0.12)]">
             {journal.hasPhoto ? (
               <div className="relative min-h-[320px] overflow-hidden bg-[#ebecef] sm:min-h-[460px]">
                 <Image
@@ -64,7 +64,7 @@ export default async function JournalDetailPage({ params }: JournalDetailPagePro
             ) : null}
 
             <div className="p-6 sm:p-8 lg:p-10">
-              <p className="whitespace-pre-wrap text-[16px] font-medium leading-8 text-black/62 sm:text-[18px] sm:leading-9">
+              <p className="whitespace-pre-wrap text-[16px] font-medium leading-8 text-[color:var(--text)]/62 sm:text-[18px] sm:leading-9">
                 {journal.content}
               </p>
             </div>

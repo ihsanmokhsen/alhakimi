@@ -37,13 +37,13 @@ export function PortfolioGrid({ projects }: PortfolioGridProps) {
     <>
       <div className="mx-auto w-full max-w-7xl">
         <div
-          className="mx-auto mb-10 max-w-3xl rounded-[20px] border border-black/[0.04] bg-white p-1.5 shadow-[0_8px_40px_rgba(18,22,34,0.06)] transition-all duration-500"
+          className="mx-auto mb-10 max-w-3xl rounded-[20px] border border-black/[0.04] bg-[color:var(--surface)] p-1.5 shadow-[0_8px_40px_rgba(18,22,34,0.06)] transition-all duration-500"
           style={{ animation: query ? "borderGlow 3s ease-in-out infinite" : "none" }}
         >
           <div className="relative">
             {/* Search icon */}
             <svg
-              className="pointer-events-none absolute left-5 top-1/2 h-4 w-4 -translate-y-1/2 text-black/25"
+              className="pointer-events-none absolute left-5 top-1/2 h-4 w-4 -translate-y-1/2 text-[color:var(--text)]/25"
               fill="none"
               stroke="currentColor"
               strokeWidth={2}
@@ -54,7 +54,7 @@ export function PortfolioGrid({ projects }: PortfolioGridProps) {
 
             <input
               aria-label="Search works"
-              className="min-h-[3.25rem] w-full rounded-[16px] border border-transparent bg-[#f8f8fa] py-0 pl-12 pr-6 text-[14px] font-semibold text-black outline-none transition-all duration-300 placeholder:text-black/28 hover:bg-[#f3f3f6] focus:border-[#2563ff]/25 focus:bg-white focus:ring-2 focus:ring-[#2563ff]/15 sm:px-7 sm:text-[15px]"
+              className="min-h-[3.25rem] w-full rounded-[16px] border border-transparent bg-[#f8f8fa] py-0 pl-12 pr-6 text-[14px] font-semibold text-[color:var(--text)] outline-none transition-all duration-300 placeholder:text-[color:var(--text)]/28 hover:bg-[#f3f3f6] focus:border-[#2563ff]/25 focus:bg-[color:var(--surface)] focus:ring-2 focus:ring-[#2563ff]/15 sm:px-7 sm:text-[15px]"
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Search works..."
               type="search"
@@ -65,7 +65,7 @@ export function PortfolioGrid({ projects }: PortfolioGridProps) {
             {query ? (
               <button
                 aria-label="Clear search"
-                className="absolute right-4 top-1/2 flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded-full text-black/30 transition-colors hover:bg-black/5 hover:text-black/60"
+                className="absolute right-4 top-1/2 flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded-full text-[color:var(--text)]/30 transition-colors hover:bg-black/5 hover:text-[color:var(--text)]/60"
                 onClick={() => setQuery("")}
                 type="button"
               >
@@ -85,7 +85,7 @@ export function PortfolioGrid({ projects }: PortfolioGridProps) {
               return (
                 <FadeIn delay={index * 80} key={project.id}>
                 <button
-                  className="group relative block w-full overflow-hidden rounded-2xl border border-black/[0.06] bg-white text-left shadow-[0_22px_80px_rgba(18,22,34,0.10)] transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_32px_100px_rgba(18,22,34,0.18),0_0_40px_-4px_rgba(37,99,255,0.15)] hover:border-[#2563ff]/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50 focus-visible:ring-offset-2 aspect-square"
+                  className="group relative block w-full overflow-hidden rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface)] text-left shadow-[var(--shadow-card)] transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_32px_100px_rgba(18,22,34,0.18),0_0_40px_-4px_rgba(37,99,255,0.15)] hover:border-[#2563ff]/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50 focus-visible:ring-offset-2 aspect-square"
                   onClick={() => setActiveProject(project)}
                   style={{ animation: `subtleFloat ${4 + index * 0.6}s ease-in-out infinite` }}
                   type="button"
@@ -109,21 +109,21 @@ export function PortfolioGrid({ projects }: PortfolioGridProps) {
                     <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.04),rgba(0,0,0,0.12)_44%,rgba(0,0,0,0.38))]" />
 
                     <div className="absolute left-2 top-2 flex items-center gap-1 sm:left-3 sm:top-3">
-                      <span className="animate-pulse-badge border border-white/70 bg-white/[0.82] px-2.5 py-1 text-[9px] font-black uppercase tracking-wider text-[#2563ff] shadow-[0_10px_28px_rgba(0,0,0,0.08)] backdrop-blur-xl rounded-full sm:px-3">
+                      <span className="animate-pulse-badge border border-white/70 bg-[color:var(--surface)]/[0.82] px-2.5 py-1 text-[9px] font-black uppercase tracking-wider text-[#2563ff] shadow-[0_10px_28px_rgba(0,0,0,0.08)] backdrop-blur-xl rounded-full sm:px-3">
                         {project.category}
                       </span>
                     </div>
 
                     <div className="absolute inset-x-0 bottom-0 p-2 sm:p-3">
-                      <div className="rounded-xl border border-white/60 bg-white/[0.88] p-2.5 shadow-[0_18px_55px_rgba(0,0,0,0.12)] backdrop-blur-2xl transition-all duration-500 group-hover:bg-white/[0.94] group-hover:border-white/80 sm:p-3">
-                        <h2 className="text-[13px] font-black leading-tight tracking-normal text-black transition-colors duration-300 group-hover:text-[#2563ff] sm:text-[15px]">
+                      <div className="rounded-xl border border-white/60 bg-[color:var(--surface)]/[0.88] p-2.5 shadow-[0_18px_55px_rgba(0,0,0,0.12)] backdrop-blur-2xl transition-all duration-500 group-hover:bg-[color:var(--surface)]/[0.94] group-hover:border-white/80 sm:p-3">
+                        <h2 className="text-[13px] font-black leading-tight tracking-normal text-[color:var(--text)] transition-colors duration-300 group-hover:text-[#2563ff] sm:text-[15px]">
                           {project.title}
                         </h2>
-                        <p className="mt-1 line-clamp-1 text-[10px] font-medium leading-snug text-black/56 sm:mt-1.5 sm:text-[11px]">
+                        <p className="mt-1 line-clamp-1 text-[10px] font-medium leading-snug text-[color:var(--text)]/56 sm:mt-1.5 sm:text-[11px]">
                           {project.description}
                         </p>
                         <div className="mt-2 flex items-center justify-between gap-2 sm:mt-2.5">
-                          <span className="inline-flex items-center gap-1 text-[9px] font-bold text-black/38 sm:text-[10px]">
+                          <span className="inline-flex items-center gap-1 text-[9px] font-bold text-[color:var(--text)]/38 sm:text-[10px]">
                             <span className="h-1.5 w-1.5 rounded-full bg-[#2563ff]/60 inline-block" />
                             {project.featured ? "Featured" : "Selected"}
                           </span>
@@ -143,8 +143,8 @@ export function PortfolioGrid({ projects }: PortfolioGridProps) {
             })}
           </div>
         ) : (
-          <div className="border border-black/[0.06] bg-white p-10 text-center shadow-[0_22px_80px_rgba(18,22,34,0.08)]">
-            <p className="text-[14px] font-bold text-black/52">No works match this search.</p>
+          <div className="border border-[color:var(--border)] bg-[color:var(--surface)] p-10 text-center shadow-[var(--shadow-card)]">
+            <p className="text-[14px] font-bold text-[color:var(--text)]/52">No works match this search.</p>
           </div>
         )}
       </div>

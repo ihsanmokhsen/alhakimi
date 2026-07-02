@@ -20,7 +20,7 @@ export function HomeShell({ projects, heroTitle, heroSubtitle }: HomeShellProps)
     "Beberapa Apps yang dibuat untuk kebutuhan kantor dan pribadi.";
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-white text-[#08080a] [color-scheme:light]">
+    <main className="min-h-screen overflow-x-hidden bg-[color:var(--surface)] text-[color:var(--text)]">
       <WorksHeader overlay />
 
       {/* ─────── HERO SECTION ─────── */}
@@ -82,7 +82,7 @@ export function HomeShell({ projects, heroTitle, heroSubtitle }: HomeShellProps)
               />
             </Link>
             <Link
-              className="group relative inline-flex min-w-44 justify-center overflow-hidden rounded-full border border-white/25 bg-white/10 px-7 py-3.5 text-[14px] font-bold text-white shadow-[0_18px_45px_rgba(0,0,0,0.07)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-white/40 hover:bg-white/20 hover:shadow-[0_24px_55px_rgba(0,0,0,0.14)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+              className="group relative inline-flex min-w-44 justify-center overflow-hidden rounded-full border border-white/25 bg-[color:var(--surface)]/10 px-7 py-3.5 text-[14px] font-bold text-white shadow-[0_18px_45px_rgba(0,0,0,0.07)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-white/40 hover:bg-[color:var(--surface)]/20 hover:shadow-[0_24px_55px_rgba(0,0,0,0.14)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
               href="/journal"
             >
               <span className="relative z-10">Baca Jurnal Harian</span>
@@ -123,7 +123,7 @@ export function HomeShell({ projects, heroTitle, heroSubtitle }: HomeShellProps)
 
       {/* ─────── WORKS SECTION ─────── */}
       <section
-        className="relative scroll-mt-20 bg-white px-4 pb-24 pt-16 sm:px-6 sm:pt-20 lg:px-8"
+        className="relative scroll-mt-20 bg-[color:var(--surface)] px-4 pb-24 pt-16 sm:px-6 sm:pt-20 lg:px-8"
         id="works"
       >
         {/* Section heading with subtle accent */}

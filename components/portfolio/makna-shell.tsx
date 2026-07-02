@@ -31,17 +31,17 @@ export function WorksHeader({ active, overlay = false }: WorksHeaderProps) {
     <header
       className={cn(
         overlay ? "fixed inset-x-0 top-0" : "sticky top-0",
-        "z-50 border-b border-black/[0.06] transition-colors duration-300",
+        "z-50 border-b border-[color:var(--border)] transition-colors duration-300",
         overlay
           ? "bg-black/10 backdrop-blur-xl md:bg-black/5"
-          : "bg-white/80 backdrop-blur-2xl"
+          : "bg-[color:var(--surface)]/80 backdrop-blur-2xl"
       )}
     >
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 sm:h-20 sm:px-6 lg:px-8">
         <Link
           className={cn(
             "text-[18px] font-black leading-none sm:text-[20px] transition-colors",
-            overlay ? "text-white" : "text-black"
+            overlay ? "text-white" : "text-[color:var(--text)]"
           )}
           href="/"
         >
@@ -58,7 +58,7 @@ export function WorksHeader({ active, overlay = false }: WorksHeaderProps) {
                   "text-[13px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50 focus-visible:ring-offset-2",
                   overlay
                     ? isActive ? "text-white" : "text-white/70 hover:text-white"
-                    : isActive ? "text-[#2563ff]" : "text-black/58 hover:text-black"
+                    : isActive ? "text-[#2563ff]" : "text-[color:var(--text)]/58 hover:text-[color:var(--text)]"
                 )}
                 href={item.href}
                 key={item.id}
@@ -75,7 +75,7 @@ export function WorksHeader({ active, overlay = false }: WorksHeaderProps) {
               "hidden px-4 py-2 text-[13px] font-semibold transition sm:inline-flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50",
               overlay
                 ? active === "login" ? "text-white" : "text-white/70 hover:text-white"
-                : active === "login" ? "text-[#2563ff]" : "text-black/62 hover:text-black"
+                : active === "login" ? "text-[#2563ff]" : "text-[color:var(--text)]/62 hover:text-[color:var(--text)]"
             )}
             href="/login"
           >
@@ -106,7 +106,7 @@ export function WorksFooter() {
       <div className="relative mx-auto mt-8 flex max-w-3xl flex-wrap items-center justify-center gap-x-4 gap-y-3 text-[12px] font-bold uppercase text-white/50 sm:mt-10 sm:gap-x-5 sm:text-[13px]">
         {footerLinks.map((item, index) => (
           <div className="flex items-center gap-4 sm:gap-5" key={item.href}>
-            {index > 0 ? <span className="h-1 w-1 rounded-full bg-white/20" /> : null}
+            {index > 0 ? <span className="h-1 w-1 rounded-full bg-[color:var(--surface)]/20" /> : null}
             <a
               className="transition-colors duration-300 hover:text-white"
               href={item.href}

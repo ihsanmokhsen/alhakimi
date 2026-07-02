@@ -85,7 +85,7 @@ export function PopupAnnouncement() {
 
       {/* Popup card — max width terbatas agar tidak terlalu besar */}
       <section
-        className={`relative z-10 w-full max-w-[min(500px,90vw)] overflow-hidden rounded-[24px] bg-white shadow-[0_40px_140px_rgba(10,12,20,0.38)] transition-all duration-500 ${
+        className={`relative z-10 w-full max-w-[min(500px,90vw)] overflow-hidden rounded-[24px] bg-[color:var(--surface)] shadow-[0_40px_140px_rgba(10,12,20,0.38)] transition-all duration-500 ${
           ready
             ? "translate-y-0 scale-100 opacity-100"
             : "translate-y-10 scale-[0.97] opacity-0"
@@ -114,7 +114,7 @@ export function PopupAnnouncement() {
         </button>
 
         {/* Image — ukuran dibatasi untuk desktop & HP */}
-        <div className="flex items-center justify-center bg-[#f5f5f7] p-4 sm:p-6">
+        <div className="flex items-center justify-center bg-[color:var(--surface-muted)] p-4 sm:p-6">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             alt="Welcome"
@@ -124,8 +124,8 @@ export function PopupAnnouncement() {
         </div>
 
         {/* Optional footer hint */}
-        <div className="border-t border-black/[0.06] px-4 py-3 text-center">
-          <p className="text-[11px] font-medium text-black/[0.38]">
+        <div className="border-t border-[color:var(--border)] px-4 py-3 text-center">
+          <p className="text-[11px] font-medium text-[color:var(--text)]/[0.38]">
             Popup ini hanya muncul sekali. Klik ✕ untuk menutup.
           </p>
         </div>

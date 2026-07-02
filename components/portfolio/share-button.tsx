@@ -39,8 +39,8 @@ export function ShareButton({ title, url, variant = "dark" }: ShareButtonProps) 
       aria-label={copied ? "Link copied" : `Share ${title}`}
       className={`inline-flex items-center gap-2 px-4 py-2.5 text-[12px] font-black uppercase tracking-normal transition ${
         isDark
-          ? "border border-black/10 bg-white text-black hover:-translate-y-0.5 hover:border-black/20"
-          : "border border-black/[0.06] bg-white text-black hover:-translate-y-0.5 hover:border-black/14"
+          ? "border border-[color:var(--border-solid)] bg-[color:var(--surface)] text-[color:var(--text)] hover:-translate-y-0.5 hover:border-black/20"
+          : "border border-[color:var(--border)] bg-[color:var(--surface)] text-[color:var(--text)] hover:-translate-y-0.5 hover:border-black/14"
       } ${copied ? "bg-[#2563ff] !text-white" : ""}`}
       onClick={handleShare}
       type="button"

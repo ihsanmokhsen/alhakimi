@@ -20,13 +20,13 @@ export function PovVideoForm({ action }: PovVideoFormProps) {
   }
 
   return (
-    <section className="rounded-[24px] border border-black/[0.06] bg-white p-4 shadow-[0_20px_70px_rgba(18,22,34,0.09)] sm:p-6">
+    <section className="rounded-[24px] border border-[color:var(--border)] bg-[color:var(--surface)] p-4 shadow-[0_20px_70px_rgba(18,22,34,0.09)] sm:p-6">
       <form action={handleSubmit} className="space-y-4">
         <div className="grid gap-4 sm:grid-cols-2">
           <label className="space-y-1.5">
-            <span className="text-[12px] font-black uppercase text-black/42">Title</span>
+            <span className="text-[12px] font-black uppercase text-[color:var(--text)]/42">Title</span>
             <input
-              className="w-full rounded-[16px] border border-black/[0.08] bg-[#f5f5f7] px-4 py-3 text-[14px] font-semibold text-black outline-none transition placeholder:text-black/30 focus:border-[#2563ff]/45 focus:bg-white"
+              className="w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[14px] font-semibold text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#2563ff]/45 focus:bg-[color:var(--surface)]"
               name="title"
               placeholder="e.g. POV: documenting my boring life"
               required
@@ -35,9 +35,9 @@ export function PovVideoForm({ action }: PovVideoFormProps) {
           </label>
 
           <label className="space-y-1.5">
-            <span className="text-[12px] font-black uppercase text-black/42">YouTube URL</span>
+            <span className="text-[12px] font-black uppercase text-[color:var(--text)]/42">YouTube URL</span>
             <input
-              className="w-full rounded-[16px] border border-black/[0.08] bg-[#f5f5f7] px-4 py-3 text-[14px] font-semibold text-black outline-none transition placeholder:text-black/30 focus:border-[#2563ff]/45 focus:bg-white"
+              className="w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[14px] font-semibold text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#2563ff]/45 focus:bg-[color:var(--surface)]"
               name="youtubeUrl"
               placeholder="https://youtube.com/shorts/..."
               required
@@ -46,7 +46,7 @@ export function PovVideoForm({ action }: PovVideoFormProps) {
           </label>
         </div>
 
-        <p className="text-[12px] font-medium text-black/42">
+        <p className="text-[12px] font-medium text-[color:var(--text)]/42">
           Paste any YouTube URL (Shorts, watch, or youtu.be). It will be displayed in portrait mode.
         </p>
 

@@ -21,15 +21,15 @@ const storyHeights = [
 export function JournalGrid({ journals }: JournalGridProps) {
   if (journals.length === 0) {
     return (
-      <div className="mx-auto max-w-7xl border border-black/[0.06] bg-white p-10 text-center shadow-[0_22px_80px_rgba(18,22,34,0.08)]">
-        <p className="text-[14px] font-bold text-black/52">No stories published yet.</p>
+      <div className="mx-auto max-w-7xl border border-[color:var(--border)] bg-[color:var(--surface)] p-10 text-center shadow-[var(--shadow-card)]">
+        <p className="text-[14px] font-bold text-[color:var(--text)]/52">No stories published yet.</p>
       </div>
     );
   }
 
   return (
     <div className="mx-auto w-full max-w-7xl">
-      <div className="mb-10 flex flex-col justify-between gap-4 border-t border-black/[0.08] pt-8 sm:flex-row sm:items-end">
+      <div className="mb-10 flex flex-col justify-between gap-4 border-t border-[color:var(--border-strong)] pt-8 sm:flex-row sm:items-end">
         <div>
           <p className="inline-flex items-center gap-2 text-[12px] font-black uppercase text-[#2563ff]">
             <span className="h-2 w-2 rounded-full bg-[#2563ff] animate-pulse" />
@@ -39,7 +39,7 @@ export function JournalGrid({ journals }: JournalGridProps) {
             Modern journals
           </h2>
         </div>
-        <p className="max-w-sm text-[14px] font-medium leading-6 text-black/50">
+        <p className="max-w-sm text-[14px] font-medium leading-6 text-[color:var(--text)]/50">
           Editorial notes presented with the same calm, intelligent visual language as the main showcase.
         </p>
       </div>
@@ -51,7 +51,7 @@ export function JournalGrid({ journals }: JournalGridProps) {
           return (
             <FadeIn delay={index * 80} key={journal.id}>
             <Link
-              className={`group relative block overflow-hidden rounded-2xl border border-black/[0.06] bg-white shadow-[0_22px_80px_rgba(18,22,34,0.10)] transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_32px_100px_rgba(18,22,34,0.18),0_0_40px_-4px_rgba(37,99,255,0.12)] hover:border-[#2563ff]/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50 focus-visible:ring-offset-2 ${
+              className={`group relative block overflow-hidden rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface)] shadow-[var(--shadow-card)] transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_32px_100px_rgba(18,22,34,0.18),0_0_40px_-4px_rgba(37,99,255,0.12)] hover:border-[#2563ff]/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50 focus-visible:ring-offset-2 ${
                 storyHeights[index % storyHeights.length]
               }`}
               href={`/journal/${journal.id}`}
@@ -89,10 +89,10 @@ export function JournalGrid({ journals }: JournalGridProps) {
                   <p className="text-[12px] font-black uppercase text-[#2563ff]">
                     {formatJournalDate(journal.publishedAt)}
                   </p>
-                  <h3 className="mt-4 text-[28px] font-black leading-none tracking-tight text-black transition-colors duration-300 group-hover:text-[#2563ff] sm:text-[34px]">
+                  <h3 className="mt-4 text-[28px] font-black leading-none tracking-tight text-[color:var(--text)] transition-colors duration-300 group-hover:text-[#2563ff] sm:text-[34px]">
                     {journal.title}
                   </h3>
-                  <p className="mt-4 line-clamp-3 text-[14px] font-medium leading-7 text-black/56">
+                  <p className="mt-4 line-clamp-3 text-[14px] font-medium leading-7 text-[color:var(--text)]/56">
                     {journal.content}
                   </p>
                   <span className="mt-6 inline-flex items-center gap-2 rounded-full bg-black px-4 py-2.5 text-[12px] font-bold text-white transition-all duration-300 group-hover:bg-[#2563ff] group-hover:shadow-[0_8px_24px_rgba(37,99,255,0.35)] group-hover:gap-3">
