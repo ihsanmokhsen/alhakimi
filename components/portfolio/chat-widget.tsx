@@ -1,30 +1,8 @@
 "use client";
 
 import { useChat } from "@ai-sdk/react";
-import type { UIMessage } from "ai";
-import { useCallback, useEffect, useRef, useState } from "react";
-
-// ── Types ──────────────────────────────────────────────
-// The runtime API of useChat returns more properties than the type definitions
-// reflect. We extend the type here to include the familiar helpers.
-type UseChatReturn = {
-  messages: UIMessage[];
-  input: string;
-  handleInputChange: (
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
-  ) => void;
-  handleSubmit: (e?: { preventDefault?: () => void }) => void;
-  isLoading: boolean;
-  append: (message: { role: "user" | "assistant"; content: string }) => void;
-  setMessages: (
-    messages: UIMessage[] | ((prev: UIMessage[]) => UIMessage[])
-  ) => void;
-  error: Error | undefined;
-  stop: () => void;
-  reload: () => void;
-};
+import Image from "next/image";
+import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 
 // ── Constants ─────────────────────────────────────────
 const SUGGESTED_QUESTIONS = [
@@ -33,25 +11,6 @@ const SUGGESTED_QUESTIONS = [
   "Bagaimana cara kerja website ini?",
   "Butuh konsultasi website"
 ];
-
-// ── Icons ──────────────────────────────────────────────
-function SparkleIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.5}
-      viewBox="0 0 24 24"
-    >
-      <path
-        d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
 
 function SendIcon({ className }: { className?: string }) {
   return (
@@ -124,19 +83,13 @@ function renderMessageContent(m: Record<string, unknown>): string | undefined {
 export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [hasOpened, setHasOpened] = useState(false);
+  const [input, setInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
 
-  const chat = useChat() as unknown as UseChatReturn;
-  const {
-    messages,
-    input = "",
-    handleInputChange,
-    handleSubmit,
-    isLoading,
-    append
-  } = chat;
+  const { messages, sendMessage, status, error } = useChat();
+  const isLoading = status === "submitted" || status === "streaming";
 
   // ── Handlers ──────────────────────────────────────
   const open = useCallback(() => {
@@ -153,12 +106,23 @@ export function ChatWidget() {
     (question: string) => {
       if (!hasOpened) setHasOpened(true);
       if (!isOpen) setIsOpen(true);
-      append({ role: "user", content: question });
+      void sendMessage({ text: question });
     },
-    [append, hasOpened, isOpen]
+    [hasOpened, isOpen, sendMessage]
   );
 
+  const handleSubmit = useCallback(
+    (event: FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      const message = input.trim();
 
+      if (!message || isLoading) return;
+
+      setInput("");
+      void sendMessage({ text: message });
+    },
+    [input, isLoading, sendMessage]
+  );
 
   // ── Side effects ──────────────────────────────────
   // Scroll to bottom on new messages
@@ -195,17 +159,24 @@ export function ChatWidget() {
       {/* ─── Floating button ─── */}
       <button
         aria-label={isOpen ? "Tutup chat" : "Buka chat AI"}
-        className={`group fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#2563ff] text-white shadow-[0_8px_32px_rgba(37,99,255,0.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(37,99,255,0.45)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50 focus-visible:ring-offset-2 sm:bottom-6 sm:right-6 sm:h-15 sm:w-15 ${
+        className={`group fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border-2 border-white/80 bg-[#091631] p-0.5 shadow-[0_8px_32px_rgba(15,23,42,0.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(15,23,42,0.45)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ef4444]/50 focus-visible:ring-offset-2 sm:bottom-6 sm:right-6 sm:h-15 sm:w-15 ${
           isOpen ? "scale-0 opacity-0" : "scale-100 opacity-100"
         }`}
         onClick={open}
         type="button"
       >
-        <SparkleIcon className="h-6 w-6 transition-transform duration-300 group-hover:scale-110 sm:h-7 sm:w-7" />
+        <Image
+          alt=""
+          className="relative z-10 h-full w-full rounded-full object-cover transition-transform duration-300 group-hover:scale-105"
+          height={56}
+          src="/assets/assistant-avatar.webp"
+          unoptimized
+          width={56}
+        />
         {/* Pulse ring */}
         <span
           aria-hidden="true"
-          className="absolute inset-0 animate-ping rounded-full bg-[#2563ff]/30"
+          className="absolute inset-0 animate-ping rounded-full bg-[#ef4444]/25"
         />
       </button>
 
@@ -234,8 +205,15 @@ export function ChatWidget() {
         {/* ─── Header ─── */}
         <div className="flex shrink-0 items-center justify-between border-b border-[color:var(--border-strong)] px-4 py-3 sm:px-5 sm:py-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#2563ff]/10">
-              <SparkleIcon className="h-5 w-5 text-[#2563ff]" />
+            <div className="h-9 w-9 overflow-hidden rounded-full border border-[color:var(--border-strong)] bg-[#091631]">
+              <Image
+                alt="Avatar works AI"
+                className="h-full w-full object-cover"
+                height={36}
+                src="/assets/assistant-avatar.webp"
+                unoptimized
+                width={36}
+              />
             </div>
             <div>
               <p className="text-[14px] font-black text-[color:var(--text)]">
@@ -266,8 +244,15 @@ export function ChatWidget() {
         <div className="flex-1 overflow-y-auto px-4 py-4 sm:px-5 sm:py-5">
           {showWelcome ? (
             <div className="flex h-full flex-col items-center justify-center text-center">
-              <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#2563ff] to-violet-500 shadow-[0_8px_24px_rgba(37,99,255,0.25)]">
-                <SparkleIcon className="h-8 w-8 text-white" />
+              <div className="mb-5 h-16 w-16 overflow-hidden rounded-2xl border border-[color:var(--border-strong)] bg-[#091631] shadow-[0_8px_24px_rgba(15,23,42,0.2)]">
+                <Image
+                  alt="Avatar works AI"
+                  className="h-full w-full object-cover"
+                  height={64}
+                  src="/assets/assistant-avatar.webp"
+                  unoptimized
+                  width={64}
+                />
               </div>
               <h3 className="text-[18px] font-black text-[color:var(--text)] sm:text-[20px]">
                 Hai! 👋
@@ -330,6 +315,11 @@ export function ChatWidget() {
 
         {/* ─── Input area ─── */}
         <div className="shrink-0 border-t border-[color:var(--border-strong)] px-4 pb-5 pt-3 sm:px-5 sm:pb-4 sm:pt-3">
+          {error && (
+            <p className="mb-2 text-center text-[11px] font-semibold text-red-600">
+              Pesan gagal dikirim. Silakan coba lagi.
+            </p>
+          )}
           <form className="flex items-end gap-2" onSubmit={handleSubmit}>
             <div className="relative flex-1">
               <input
@@ -339,7 +329,7 @@ export function ChatWidget() {
                 id="chat-input"
                 placeholder="Tanya sesuatu..."
                 value={input}
-                onChange={handleInputChange}
+                onChange={(event) => setInput(event.target.value)}
               />
             </div>
             <button

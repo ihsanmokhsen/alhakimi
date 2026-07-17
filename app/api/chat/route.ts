@@ -1,10 +1,10 @@
 import { google } from "@ai-sdk/google";
-import { streamText } from "ai";
+import { convertToModelMessages, streamText, type UIMessage } from "ai";
 
 export const runtime = "edge";
 
 export async function POST(req: Request) {
-  const { messages } = await req.json();
+  const { messages }: { messages: UIMessage[] } = await req.json();
 
   const result = streamText({
     model: google("gemini-2.0-flash-lite"),
@@ -45,7 +45,7 @@ Your role is to help visitors explore the portfolio, learn about Ihsan's work, a
 - For consultation inquiries, always encourage emailing ihsanmokhsen17@gmail.com.
 - Never make up information about projects or journal entries — suggest the visitor browse the website for the most up-to-date content.
 - Keep responses helpful but not overly verbose.`,
-    messages
+    messages: await convertToModelMessages(messages)
   });
 
   return result.toUIMessageStreamResponse();
