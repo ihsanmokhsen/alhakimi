@@ -1,31 +1,40 @@
+import { unstable_cache } from "next/cache";
 import { NextResponse } from "next/server";
 
+import { parseBase64DataUri } from "@/lib/data-uri";
 import { prisma } from "@/lib/prisma";
 
-export async function GET() {
-  const setting = await prisma.siteSetting.findUnique({
-    where: { id: "hero" },
-    select: { welcomeImageData: true }
-  });
+const getWelcomeImageData = unstable_cache(
+  async () => {
+    const setting = await prisma.siteSetting.findUnique({
+      where: { id: "hero" },
+      select: { welcomeImageData: true }
+    });
 
-  const data = setting?.welcomeImageData;
+    return setting?.welcomeImageData ?? null;
+  },
+  ["welcome-image-data"],
+  { revalidate: 86400, tags: ["welcome-image"] }
+);
+
+export async function GET() {
+  const data = await getWelcomeImageData();
 
   if (!data) {
     return NextResponse.json({ exists: false });
   }
 
-  const match = data.match(/^data:([^;]+);base64,(.+)$/);
+  const parsed = parseBase64DataUri(data);
 
-  if (!match) {
+  if (!parsed) {
     return NextResponse.json({ exists: false });
   }
 
-  const mimeType = match[1];
-  const buffer = Buffer.from(match[2], "base64");
+  const buffer = Buffer.from(parsed.payload, "base64");
 
   return new NextResponse(buffer, {
     headers: {
-      "Content-Type": mimeType,
+      "Content-Type": parsed.mimeType,
       "Cache-Control": "public, max-age=86400, stale-while-revalidate=604800"
     }
   });

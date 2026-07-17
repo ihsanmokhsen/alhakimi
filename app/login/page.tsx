@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 
 import { LoginForm } from "@/components/admin/login-form";
 import { MaknaFooter, MaknaHeader } from "@/components/portfolio/makna-shell";
-import { clearSessionCookie, getCurrentAdmin } from "@/lib/auth";
+import { getCurrentAdmin } from "@/lib/auth";
 
 type LoginPageProps = {
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
@@ -26,7 +26,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
   const resetSuccess = getParam(params.reset).trim() === "success";
 
   if (fresh) {
-    await clearSessionCookie();
+    redirect("/api/auth/clear-session");
   }
 
   const admin = await getCurrentAdmin();

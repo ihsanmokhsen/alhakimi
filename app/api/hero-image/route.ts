@@ -1,34 +1,42 @@
+import { unstable_cache } from "next/cache";
 import { NextResponse } from "next/server";
 
+import { parseBase64DataUri } from "@/lib/data-uri";
 import { prisma } from "@/lib/prisma";
 
 const FALLBACK = "/hero.jpg";
 
-export async function GET(request: Request) {
-  const setting = await prisma.siteSetting.findUnique({
-    where: { id: "hero" },
-    select: { backgroundImageData: true }
-  });
+const getHeroImageData = unstable_cache(
+  async () => {
+    const setting = await prisma.siteSetting.findUnique({
+      where: { id: "hero" },
+      select: { backgroundImageData: true }
+    });
 
-  const data = setting?.backgroundImageData;
+    return setting?.backgroundImageData ?? null;
+  },
+  ["hero-image-data"],
+  { revalidate: 86400, tags: ["hero-image"] }
+);
+
+export async function GET(request: Request) {
+  const data = await getHeroImageData();
 
   if (!data) {
     return NextResponse.redirect(new URL(FALLBACK, request.url));
   }
 
-  /* Data is stored as a data-URI string: "data:<mime>;base64,<payload>" */
-  const match = data.match(/^data:([^;]+);base64,(.+)$/);
+  const parsed = parseBase64DataUri(data);
 
-  if (!match) {
+  if (!parsed) {
     return NextResponse.redirect(new URL(FALLBACK, request.url));
   }
 
-  const mimeType = match[1];
-  const buffer = Buffer.from(match[2], "base64");
+  const buffer = Buffer.from(parsed.payload, "base64");
 
   return new NextResponse(buffer, {
     headers: {
-      "Content-Type": mimeType,
+      "Content-Type": parsed.mimeType,
       "Cache-Control": "public, max-age=86400, stale-while-revalidate=604800"
     }
   });

@@ -51,7 +51,8 @@ export async function loginAction(
   }
 
   const admin = await prisma.adminUser.findUnique({
-    where: { username }
+    where: { username },
+    select: { username: true, passwordHash: true }
   });
 
   if (!admin || !(await bcrypt.compare(password, admin.passwordHash))) {

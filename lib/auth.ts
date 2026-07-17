@@ -2,7 +2,6 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 import { createSessionToken, verifySessionToken } from "@/lib/auth-core";
-import { prisma } from "@/lib/prisma";
 
 const SESSION_COOKIE = "session";
 
@@ -38,9 +37,7 @@ export async function getCurrentAdmin() {
     return null;
   }
 
-  return prisma.adminUser.findUnique({
-    where: { username }
-  });
+  return { username };
 }
 
 export async function requireAdmin() {

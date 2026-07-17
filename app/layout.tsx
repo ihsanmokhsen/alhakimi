@@ -4,6 +4,7 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import "@/app/globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { AccessibilityControlsWrapper } from "@/components/portfolio/accessibility-controls-wrapper";
+import { ChatWidgetWrapper } from "@/components/portfolio/chat-widget-wrapper";
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -56,6 +57,7 @@ export default function RootLayout({
         <ThemeProvider>
           {children}
           <AccessibilityControlsWrapper />
+          <ChatWidgetWrapper />
         </ThemeProvider>
       </body>
     </html>

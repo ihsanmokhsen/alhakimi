@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 import { requireAdmin } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
@@ -45,6 +45,7 @@ export async function updateHeroAction(
 
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidateTag("hero-image");
   return { success: "Hero updated!" };
 }
 
@@ -58,5 +59,6 @@ export async function removeHeroAction(): Promise<HeroFormState> {
 
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidateTag("hero-image");
   return { success: "Hero image removed. Falling back to default." };
 }
