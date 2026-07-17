@@ -1,24 +1,14 @@
-import { unstable_cache } from "next/cache";
 import { NextResponse } from "next/server";
 
 import { parseBase64DataUri } from "@/lib/data-uri";
 import { prisma } from "@/lib/prisma";
 
-const getWelcomeImageData = unstable_cache(
-  async () => {
-    const setting = await prisma.siteSetting.findUnique({
-      where: { id: "hero" },
-      select: { welcomeImageData: true }
-    });
-
-    return setting?.welcomeImageData ?? null;
-  },
-  ["welcome-image-data"],
-  { revalidate: 86400, tags: ["welcome-image"] }
-);
-
 export async function GET() {
-  const data = await getWelcomeImageData();
+  const setting = await prisma.siteSetting.findUnique({
+    where: { id: "hero" },
+    select: { welcomeImageData: true }
+  });
+  const data = setting?.welcomeImageData;
 
   if (!data) {
     return NextResponse.json({ exists: false });

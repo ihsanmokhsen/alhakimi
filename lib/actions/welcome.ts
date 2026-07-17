@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 
 import { requireAdmin } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
@@ -47,7 +47,6 @@ export async function updateWelcomeAction(
 
   revalidatePath("/");
   revalidatePath("/admin");
-  revalidateTag("welcome-image");
   return { success: "Welcome image updated!" };
 }
 
@@ -61,6 +60,5 @@ export async function removeWelcomeAction(): Promise<WelcomeFormState> {
 
   revalidatePath("/");
   revalidatePath("/admin");
-  revalidateTag("welcome-image");
   return { success: "Welcome image removed." };
 }
