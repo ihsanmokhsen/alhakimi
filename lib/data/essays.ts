@@ -11,7 +11,16 @@ const essaySelect = Prisma.validator<Prisma.EssaySelect>()({
   publishedAt: true,
   createdAt: true,
   updatedAt: true,
-  coverMimeType: true
+  coverMimeType: true,
+  inlineImages: {
+    select: {
+      id: true,
+      token: true,
+      alt: true,
+      width: true,
+      height: true
+    }
+  }
 });
 
 type EssayRecord = Prisma.EssayGetPayload<{
@@ -32,6 +41,7 @@ function toEssayView(essay: EssayRecord): EssayView {
     publishedAt: essay.publishedAt,
     createdAt: essay.createdAt,
     updatedAt: essay.updatedAt,
+    inlineImages: essay.inlineImages,
     hasCover: Boolean(essay.coverMimeType)
   };
 }

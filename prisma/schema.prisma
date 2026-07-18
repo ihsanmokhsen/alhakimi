@@ -34,18 +34,35 @@ model Journal {
 }
 
 model Essay {
-  id            String   @id @default(cuid())
+  id            String       @id @default(cuid())
   title         String
-  slug          String   @unique
+  slug          String       @unique
   excerpt       String
   content       String
   publishedAt   DateTime
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
   coverImage    Bytes?
   coverMimeType String?
+  inlineImages  EssayImage[]
 
   @@index([publishedAt])
+}
+
+model EssayImage {
+  id        String   @id @default(cuid())
+  essayId   String
+  token     String
+  alt       String
+  image     Bytes
+  mimeType  String
+  width     Int
+  height    Int
+  createdAt DateTime @default(now())
+  essay     Essay    @relation(fields: [essayId], references: [id], onDelete: Cascade)
+
+  @@unique([essayId, token])
+  @@index([essayId])
 }
 
 model CoffeeConsumption {

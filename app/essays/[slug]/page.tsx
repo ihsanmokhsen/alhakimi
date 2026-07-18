@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { WorksFooter, WorksHeader } from "@/components/portfolio/makna-shell";
 import { StructuredData } from "@/components/seo/structured-data";
 import { getEssayBySlug } from "@/lib/data/essays";
+import { splitEssayContent, stripEssayImageMarkers } from "@/lib/essay-content";
 import { absoluteUrl, breadcrumbJsonLd, SITE_URL } from "@/lib/seo";
 import { formatJournalDate } from "@/lib/utils";
 
@@ -40,7 +41,9 @@ export default async function EssayPage({ params }: EssayPageProps) {
 
   const path = `/essays/${essay.slug}`;
   const url = absoluteUrl(path);
-  const readingMinutes = Math.max(1, Math.ceil(essay.content.trim().split(/\s+/).length / 220));
+  const plainContent = stripEssayImageMarkers(essay.content);
+  const readingMinutes = Math.max(1, Math.ceil(plainContent.split(/\s+/).length / 220));
+  const inlineImageByToken = new Map(essay.inlineImages.map((image) => [image.token, image]));
 
   return (
     <main className="min-h-screen bg-white text-[#111113]">
@@ -52,7 +55,7 @@ export default async function EssayPage({ params }: EssayPageProps) {
           "@id": `${url}#article`,
           headline: essay.title,
           description: essay.excerpt,
-          articleBody: essay.content,
+          articleBody: plainContent,
           datePublished: essay.publishedAt.toISOString(),
           dateModified: essay.updatedAt.toISOString(),
           author: { "@id": `${SITE_URL}/#person` },
@@ -84,9 +87,29 @@ export default async function EssayPage({ params }: EssayPageProps) {
 
         <div className="mx-auto w-full max-w-[760px] px-4 py-14 sm:px-6 sm:py-20">
           <div className="space-y-7">
-            {essay.content.split(/\n\s*\n/).filter(Boolean).map((paragraph, index) => (
-              <p className="whitespace-pre-line text-[17px] font-medium leading-8 text-black/72 sm:text-[19px] sm:leading-9" key={index}>{paragraph.trim()}</p>
-            ))}
+            {splitEssayContent(essay.content).map((block, blockIndex) => {
+              if (block.type === "image") {
+                const image = inlineImageByToken.get(block.token);
+                if (!image) return null;
+
+                return (
+                  <figure className="py-3" key={`image-${image.id}-${blockIndex}`}>
+                    <Image
+                      alt={image.alt}
+                      className="h-auto w-full bg-[#f0f0f0] object-contain"
+                      height={image.height}
+                      sizes="(max-width: 760px) 100vw, 760px"
+                      src={`/api/essay-image/${image.id}`}
+                      width={image.width}
+                    />
+                  </figure>
+                );
+              }
+
+              return block.text.split(/\n\s*\n/).filter(Boolean).map((paragraph, paragraphIndex) => (
+                <p className="whitespace-pre-line text-[17px] font-medium leading-8 text-black/72 sm:text-[19px] sm:leading-9" key={`text-${blockIndex}-${paragraphIndex}`}>{paragraph.trim()}</p>
+              ));
+            })}
           </div>
           <div className="mt-16 border-t border-black/12 pt-8">
             <Link className="inline-flex border-b-2 border-black pb-1 text-[12px] font-black uppercase hover:border-[#2563ff] hover:text-[#2563ff]" href="/essays">Lihat semua essays</Link>
