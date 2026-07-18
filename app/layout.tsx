@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Plus_Jakarta_Sans } from "next/font/google";
 
 import "@/app/globals.css";
@@ -21,6 +22,12 @@ const jakarta = Plus_Jakarta_Sans({
   display: "swap",
   variable: "--font-jakarta"
 });
+
+const configuredGoogleAnalyticsId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim();
+const googleAnalyticsId =
+  configuredGoogleAnalyticsId && /^G-[A-Z0-9]+$/.test(configuredGoogleAnalyticsId)
+    ? configuredGoogleAnalyticsId
+    : null;
 
 export const metadata: Metadata = {
   applicationName: SITE_NAME,
@@ -110,6 +117,7 @@ export default function RootLayout({
           <ChatWidgetWrapper />
         </ThemeProvider>
       </body>
+      {googleAnalyticsId && <GoogleAnalytics gaId={googleAnalyticsId} />}
     </html>
   );
 }
