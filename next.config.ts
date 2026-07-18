@@ -10,6 +10,8 @@ const nextConfig: NextConfig = {
     localPatterns: [
       { pathname: "/api/project-logo/**" },
       { pathname: "/api/journal-photo/**" },
+      { pathname: "/api/essay-cover/**" },
+      { pathname: "/api/essay-image/**" },
       { pathname: "/api/hero-image" },
       { pathname: "/foto.png" },
       { pathname: "/hero.jpg" }
@@ -17,7 +19,7 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     serverActions: {
-      bodySizeLimit: "8mb"
+      bodySizeLimit: "12mb"
     }
   }
 };
