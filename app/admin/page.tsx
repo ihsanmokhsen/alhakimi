@@ -2,12 +2,15 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { HeroForm } from "@/components/admin/hero-form";
+import { EssayForm } from "@/components/admin/essay-form";
+import { EssayList } from "@/components/admin/essay-list";
 import { JournalForm } from "@/components/admin/journal-form";
 import { JournalList } from "@/components/admin/journal-list";
 import { PovVideoForm } from "@/components/admin/pov-video-form";
 import { PovVideoList } from "@/components/admin/pov-video-list";
 import { ProjectList } from "@/components/admin/project-list";
 import { createJournalAction } from "@/lib/actions/journals";
+import { createEssayAction } from "@/lib/actions/essays";
 import { createPovVideoAction } from "@/lib/actions/pov-videos";
 import { logoutAction } from "@/lib/actions/auth";
 import { removeHeroAction, updateHeroAction } from "@/lib/actions/hero";
@@ -15,6 +18,7 @@ import { removeWelcomeAction, updateWelcomeAction } from "@/lib/actions/welcome"
 import { reorderProjectsAction } from "@/lib/actions/projects";
 import { requireAdmin } from "@/lib/auth";
 import { getJournals } from "@/lib/data/journals";
+import { getEssays } from "@/lib/data/essays";
 import { getPovVideos } from "@/lib/data/pov-videos";
 import { getProjects } from "@/lib/data/projects";
 import { prisma } from "@/lib/prisma";
@@ -22,6 +26,7 @@ import { prisma } from "@/lib/prisma";
 const dashboardLinks = [
   { href: "#home", label: "Beranda" },
   { href: "#stories", label: "Stories" },
+  { href: "#essays", label: "Essays" },
   { href: "#works", label: "Works" },
   { href: "#appearance", label: "Tampilan" },
   { href: "#pov", label: "POV" }
@@ -45,6 +50,7 @@ export default async function AdminPage() {
   const admin = await requireAdmin();
   const projects = await getProjects();
   const journals = await getJournals();
+  const essays = await getEssays();
   const povVideos = await getPovVideos();
   const heroSetting = await prisma.siteSetting.findUnique({
     where: { id: "hero" },
@@ -179,15 +185,19 @@ export default async function AdminPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-4 p-5 sm:p-6">
+            <div className="grid grid-cols-2 gap-4 p-5 sm:grid-cols-4 sm:p-6">
               <StatCard label="Works" value={projects.length} />
               <StatCard label="Stories" value={journals.length} />
+              <StatCard label="Essays" value={essays.length} />
               <StatCard label="POV" value={povVideos.length} />
             </div>
 
             <div className="flex flex-wrap gap-3 border-t border-[color:var(--border)] p-4 sm:px-6">
               <a className="bg-[#2563ff] px-4 py-2.5 text-[12px] font-black text-white transition hover:bg-[#0f4ff2]" href="#stories">
                 Buat story
+              </a>
+              <a className="border border-[color:var(--border-solid)] px-4 py-2.5 text-[12px] font-black text-[color:var(--text)]/60" href="#essays">
+                Tulis essay
               </a>
               <Link className="bg-[color:var(--inverse-surface)] px-4 py-2.5 text-[12px] font-black text-[color:var(--inverse-text)]" href="/admin/new">
                 Tambah project
@@ -213,6 +223,18 @@ export default async function AdminPage() {
             </div>
             <JournalForm action={createJournalAction} />
             <JournalList journals={journals} />
+          </section>
+
+          <section className="scroll-mt-24 space-y-4 border-t border-[color:var(--border-solid)] pt-8" id="essays">
+            <div>
+              <p className="text-[11px] font-black uppercase text-[#2563ff]">Tulisan panjang</p>
+              <h2 className="mt-2 text-[30px] font-black leading-none sm:text-[38px]">Essays</h2>
+              <p className="mt-2 text-[13px] font-medium leading-6 text-[color:var(--text)]/48">
+                Terbitkan pemikiran serius dengan ringkasan, sampul, dan halaman baca tersendiri.
+              </p>
+            </div>
+            <EssayForm action={createEssayAction} />
+            <EssayList essays={essays} />
           </section>
 
           <section className="scroll-mt-24 space-y-4 border-t border-[color:var(--border-solid)] pt-8" id="works">
@@ -310,6 +332,9 @@ export default async function AdminPage() {
                 </Link>
                 <Link className="border-b border-[color:var(--border)] py-3 text-[12px] font-bold hover:text-[#2563ff]" href="/journal">
                   Buka halaman stories
+                </Link>
+                <Link className="border-b border-[color:var(--border)] py-3 text-[12px] font-bold hover:text-[#2563ff]" href="/essays">
+                  Buka halaman essays
                 </Link>
                 <Link className="py-3 text-[12px] font-bold hover:text-[#2563ff]" href="/pov">
                   Buka halaman POV

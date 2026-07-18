@@ -17,6 +17,11 @@ export const PRIMARY_PAGES = [
     path: "/journal"
   },
   {
+    name: "Essays",
+    description: "Tulisan panjang dan pemikiran serius Ihsan Mokhsen.",
+    path: "/essays"
+  },
+  {
     name: "POV",
     description: "Dokumentasi video singkat tentang keseharian dan proses kreatif.",
     path: "/pov"

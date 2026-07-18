@@ -45,6 +45,9 @@ export const metadata: Metadata = {
   creator: PERSON_NAME,
   publisher: PERSON_NAME,
   category: "technology",
+  verification: {
+    google: "hEhZ1VhICAwe7oImt0vDWTCc3r8IChSEc04EZtKrRd8"
+  },
   alternates: {
     canonical: "/",
     languages: { "id-ID": "/" }

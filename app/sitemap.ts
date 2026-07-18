@@ -8,6 +8,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "", changeFrequency: "weekly", priority: 1 },
     { path: "/works", changeFrequency: "weekly", priority: 0.9 },
     { path: "/journal", changeFrequency: "weekly", priority: 0.9 },
+    { path: "/essays", changeFrequency: "weekly", priority: 0.9 },
     { path: "/about", changeFrequency: "monthly", priority: 0.8 },
     { path: "/pov", changeFrequency: "weekly", priority: 0.8 }
   ] as const;
@@ -30,6 +31,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         lastModified: journal.updatedAt,
         changeFrequency: "monthly" as const,
         priority: 0.7
+      }))
+    );
+
+    const essays = await prisma.essay.findMany({
+      select: { slug: true, updatedAt: true },
+      orderBy: { publishedAt: "desc" }
+    });
+
+    routes.push(
+      ...essays.map((essay) => ({
+        url: `${SITE_URL}/essays/${encodeURIComponent(essay.slug)}`,
+        lastModified: essay.updatedAt,
+        changeFrequency: "monthly" as const,
+        priority: 0.8
       }))
     );
   } catch {

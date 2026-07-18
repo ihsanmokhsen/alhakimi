@@ -33,6 +33,21 @@ model Journal {
   photoMimeType String?
 }
 
+model Essay {
+  id            String   @id @default(cuid())
+  title         String
+  slug          String   @unique
+  excerpt       String
+  content       String
+  publishedAt   DateTime
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  coverImage    Bytes?
+  coverMimeType String?
+
+  @@index([publishedAt])
+}
+
 model CoffeeConsumption {
   id         String   @id @default(cuid())
   brand      String
