@@ -1,10 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { JournalShare } from "@/components/portfolio/journal-share";
 import { MaknaFooter, MaknaHeader } from "@/components/portfolio/makna-shell";
+import { StructuredData } from "@/components/seo/structured-data";
 import { getJournalById } from "@/lib/data/journals";
+import { absoluteUrl, breadcrumbJsonLd, SITE_URL } from "@/lib/seo";
 import { formatJournalDate } from "@/lib/utils";
 
 type JournalDetailPageProps = {
@@ -12,6 +15,35 @@ type JournalDetailPageProps = {
     id: string;
   }>;
 };
+
+export async function generateMetadata({ params }: JournalDetailPageProps): Promise<Metadata> {
+  const { id } = await params;
+  const journal = await getJournalById(id);
+
+  if (!journal) {
+    return { title: "Story tidak ditemukan", robots: { index: false, follow: false } };
+  }
+
+  const description = journal.content.replace(/\s+/g, " ").trim().slice(0, 160);
+  const path = `/journal/${encodeURIComponent(journal.id)}`;
+  const image = journal.hasPhoto ? `/api/journal-photo/${encodeURIComponent(journal.id)}` : "/hero.jpg";
+
+  return {
+    title: journal.title,
+    description,
+    alternates: { canonical: path },
+    openGraph: {
+      title: journal.title,
+      description,
+      url: path,
+      type: "article",
+      publishedTime: journal.publishedAt.toISOString(),
+      modifiedTime: journal.updatedAt.toISOString(),
+      authors: ["Muhammad Ihsanul Hakim Mokhsen"],
+      images: [{ url: image, alt: journal.title }]
+    }
+  };
+}
 
 export default async function JournalDetailPage({ params }: JournalDetailPageProps) {
   const { id } = await params;
@@ -22,9 +54,37 @@ export default async function JournalDetailPage({ params }: JournalDetailPagePro
   }
 
   const photoVersion = new Date(journal.updatedAt).getTime();
+  const journalPath = `/journal/${encodeURIComponent(journal.id)}`;
+  const journalUrl = absoluteUrl(journalPath);
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-[color:var(--surface-muted)] text-[color:var(--text)]">
+      <StructuredData
+        data={[
+          breadcrumbJsonLd([
+            { name: "Beranda", path: "/" },
+            { name: "Stories", path: "/journal" },
+            { name: journal.title, path: journalPath }
+          ]),
+          {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "@id": `${journalUrl}#article`,
+            headline: journal.title,
+            description: journal.content.replace(/\s+/g, " ").trim().slice(0, 160),
+            articleBody: journal.content,
+            datePublished: journal.publishedAt.toISOString(),
+            dateModified: journal.updatedAt.toISOString(),
+            author: { "@id": `${SITE_URL}/#person` },
+            publisher: { "@id": `${SITE_URL}/#person` },
+            image: journal.hasPhoto
+              ? absoluteUrl(`/api/journal-photo/${encodeURIComponent(journal.id)}`)
+              : absoluteUrl("/hero.jpg"),
+            mainEntityOfPage: journalUrl,
+            inLanguage: "id-ID"
+          }
+        ]}
+      />
       <MaknaHeader active="stories" />
 
       <article className="mx-auto w-full max-w-7xl px-4 pb-24 pt-12 sm:px-6 sm:pt-20 lg:px-8">

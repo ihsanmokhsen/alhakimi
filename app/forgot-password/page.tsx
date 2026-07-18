@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
+
 import { ForgotPasswordForm } from "@/components/admin/forgot-password-form";
 import { WorksFooter, WorksHeader } from "@/components/portfolio/makna-shell";
+
+export const metadata: Metadata = {
+  title: "Pemulihan Akun Admin",
+  robots: { index: false, follow: false }
+};
 
 export default function ForgotPasswordPage() {
   return (

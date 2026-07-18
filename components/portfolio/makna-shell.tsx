@@ -13,10 +13,17 @@ type WorksHeaderProps = {
 const navItems = [
   { href: "/#explore", id: "explore", label: "Explore" },
   { href: "/journal", id: "stories", label: "Stories" },
-  { href: "/#works", id: "works", label: "Works" },
+  { href: "/works", id: "works", label: "Works" },
   { href: "/pov", id: "pov", label: "POV" },
   { href: "/about", id: "about", label: "About" },
   { href: "/kopitrack/index.html", id: "kopitrack", label: "KopiTrack" }
+] as const;
+
+const primaryFooterLinks = [
+  { href: "/works", label: "Works" },
+  { href: "/journal", label: "Stories" },
+  { href: "/pov", label: "POV" },
+  { href: "/about", label: "About" }
 ] as const;
 
 const footerLinks = [
@@ -103,6 +110,17 @@ export function WorksFooter() {
           <span className="block text-white/40">.com</span>
         </p>
       </div>
+      <nav aria-label="Footer" className="relative mx-auto mt-8 flex max-w-3xl flex-wrap justify-center gap-x-6 gap-y-3 sm:mt-10">
+        {primaryFooterLinks.map((item) => (
+          <Link
+            className="text-[12px] font-bold uppercase text-white/70 transition-colors hover:text-white sm:text-[13px]"
+            href={item.href}
+            key={item.href}
+          >
+            {item.label}
+          </Link>
+        ))}
+      </nav>
       <div className="relative mx-auto mt-8 flex max-w-3xl flex-wrap items-center justify-center gap-x-4 gap-y-3 text-[12px] font-bold uppercase text-white/50 sm:mt-10 sm:gap-x-5 sm:text-[13px]">
         {footerLinks.map((item, index) => (
           <div className="flex items-center gap-4 sm:gap-5" key={item.href}>

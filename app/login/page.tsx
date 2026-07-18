@@ -1,8 +1,14 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 
 import { LoginForm } from "@/components/admin/login-form";
 import { MaknaFooter, MaknaHeader } from "@/components/portfolio/makna-shell";
 import { getCurrentAdmin } from "@/lib/auth";
+
+export const metadata: Metadata = {
+  title: "Admin Login",
+  robots: { index: false, follow: false }
+};
 
 type LoginPageProps = {
   searchParams?: Promise<Record<string, string | string[] | undefined>>;

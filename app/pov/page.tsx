@@ -1,13 +1,22 @@
 import type { Metadata } from "next";
 
 import { WorksFooter, WorksHeader } from "@/components/portfolio/makna-shell";
+import { StructuredData } from "@/components/seo/structured-data";
 import { getPovVideos } from "@/lib/data/pov-videos";
+import { breadcrumbJsonLd, SITE_URL } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "POV — works",
-  description: "Short vertical videos documenting everyday moments. Watch in portrait mode."
+  title: "POV — Video Keseharian",
+  description: "POV Ihsan Mokhsen: video vertikal singkat yang mendokumentasikan keseharian, perjalanan, dan momen kreatif.",
+  alternates: { canonical: "/pov" },
+  openGraph: {
+    title: "POV — Video Keseharian Ihsan Mokhsen",
+    description: "Video singkat tentang keseharian, perjalanan, dan momen kreatif Ihsan Mokhsen.",
+    url: "/pov",
+    type: "website"
+  }
 };
 
 export default async function PovPage() {
@@ -15,6 +24,24 @@ export default async function PovPage() {
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-black text-white [color-scheme:dark]">
+      <StructuredData
+        data={[
+          breadcrumbJsonLd([
+            { name: "Beranda", path: "/" },
+            { name: "POV", path: "/pov" }
+          ]),
+          {
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            "@id": `${SITE_URL}/pov#collection`,
+            url: `${SITE_URL}/pov`,
+            name: "POV — Video Keseharian Ihsan Mokhsen",
+            isPartOf: { "@id": `${SITE_URL}/#website` },
+            author: { "@id": `${SITE_URL}/#person` },
+            inLanguage: "id-ID"
+          }
+        ]}
+      />
       <WorksHeader active="pov" />
 
       <section className="mx-auto w-full max-w-7xl px-4 pb-14 pt-16 sm:px-6 sm:pb-20 sm:pt-24 lg:px-8">

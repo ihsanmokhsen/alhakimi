@@ -72,7 +72,7 @@ export function HomeShell({ projects, heroTitle, heroSubtitle }: HomeShellProps)
           >
             <Link
               className="group relative inline-flex min-w-44 justify-center overflow-hidden rounded-full bg-[#2563ff] px-7 py-3.5 text-[14px] font-bold text-white shadow-[0_20px_45px_rgba(37,99,255,0.26)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#0f4ff2] hover:shadow-[0_28px_60px_rgba(37,99,255,0.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
-              href="#works"
+              href="/works"
             >
               <span className="relative z-10">Explore Works</span>
               {/* Shine effect on hover */}

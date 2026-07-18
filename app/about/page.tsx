@@ -1,10 +1,21 @@
 import type { Metadata } from "next";
 
 import { MaknaFooter, WorksHeader } from "@/components/portfolio/makna-shell";
+import { StructuredData } from "@/components/seo/structured-data";
+import { breadcrumbJsonLd, SITE_URL } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "About — works",
-  description: "Government IT practitioner and graduate researcher building practical security awareness and human-centered cyber resilience."
+  title: "Tentang Ihsan Mokhsen",
+  description:
+    "Profil Muhammad Ihsanul Hakim Mokhsen: Pranata Komputer, peneliti Digital Forensics & Information Security, publikasi HAIS-Q, dan fokus keamanan siber.",
+  alternates: { canonical: "/about" },
+  openGraph: {
+    title: "Tentang Muhammad Ihsanul Hakim Mokhsen",
+    description:
+      "Profil, riset, publikasi, dan fokus profesional Ihsan Mokhsen dalam keamanan informasi.",
+    url: "/about",
+    type: "profile"
+  }
 };
 
 const focusItems = [
@@ -22,6 +33,40 @@ const contactLinks = [
 export default function AboutPage() {
   return (
     <main className="min-h-screen overflow-x-hidden bg-[color:var(--surface-muted)] text-[color:var(--text)]">
+      <StructuredData
+        data={[
+          breadcrumbJsonLd([
+            { name: "Beranda", path: "/" },
+            { name: "Tentang", path: "/about" }
+          ]),
+          {
+            "@context": "https://schema.org",
+            "@type": "ProfilePage",
+            "@id": `${SITE_URL}/about#profile`,
+            url: `${SITE_URL}/about`,
+            name: "Tentang Muhammad Ihsanul Hakim Mokhsen",
+            mainEntity: { "@id": `${SITE_URL}/#person` },
+            inLanguage: "id-ID"
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "ScholarlyArticle",
+            headline:
+              "Adaptation and Validation of HAIS-Q for Measuring Information Security Awareness in Indonesian Government Institutions",
+            author: [
+              { "@id": `${SITE_URL}/#person` },
+              { "@type": "Person", name: "Rio Guntur Utomo" }
+            ],
+            datePublished: "2025",
+            identifier: "https://doi.org/10.1109/ICoCICs68032.2025.11383985",
+            sameAs: "https://doi.org/10.1109/ICoCICs68032.2025.11383985",
+            isPartOf: {
+              "@type": "PublicationIssue",
+              name: "2025 IEEE 2nd International Conference on Cryptography, Informatics, and Cybersecurity (ICoCICs)"
+            }
+          }
+        ]}
+      />
       <WorksHeader active="about" />
 
       <section className="mx-auto w-full max-w-7xl px-4 pb-24 pt-14 sm:px-6 sm:pt-24 lg:px-8">

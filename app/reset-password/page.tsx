@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
+
 import { ResetPasswordForm } from "@/components/admin/reset-password-form";
 import { WorksFooter, WorksHeader } from "@/components/portfolio/makna-shell";
+
+export const metadata: Metadata = {
+  title: "Reset Password Admin",
+  robots: { index: false, follow: false }
+};
 
 type ResetPasswordPageProps = {
   searchParams: Promise<Record<string, string | string[] | undefined>>;

@@ -1,13 +1,23 @@
 import { WorksFooter, WorksHeader } from "@/components/portfolio/makna-shell";
 import { JournalGrid } from "@/components/portfolio/journal-grid";
+import { StructuredData } from "@/components/seo/structured-data";
 import { getJournals } from "@/lib/data/journals";
+import { breadcrumbJsonLd, SITE_URL } from "@/lib/seo";
 import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Stories — works",
-  description: "Notes, reflections, product thinking, and meaningful digital experiments from works."
+  title: "Stories & Catatan",
+  description:
+    "Stories Ihsan Mokhsen berisi catatan, refleksi, proses kreatif, pemikiran produk, dan eksperimen digital.",
+  alternates: { canonical: "/journal" },
+  openGraph: {
+    title: "Stories & Catatan Ihsan Mokhsen",
+    description: "Catatan, refleksi, proses kreatif, dan eksperimen digital dari Ihsan Mokhsen.",
+    url: "/journal",
+    type: "website"
+  }
 };
 
 export default async function JournalPage() {
@@ -15,6 +25,25 @@ export default async function JournalPage() {
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-[color:var(--surface-muted)] text-[color:var(--text)]">
+      <StructuredData
+        data={[
+          breadcrumbJsonLd([
+            { name: "Beranda", path: "/" },
+            { name: "Stories", path: "/journal" }
+          ]),
+          {
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            "@id": `${SITE_URL}/journal#collection`,
+            url: `${SITE_URL}/journal`,
+            name: "Stories & Catatan Ihsan Mokhsen",
+            description: "Catatan, refleksi, proses kreatif, dan eksperimen digital dari Ihsan Mokhsen.",
+            isPartOf: { "@id": `${SITE_URL}/#website` },
+            author: { "@id": `${SITE_URL}/#person` },
+            inLanguage: "id-ID"
+          }
+        ]}
+      />
       <WorksHeader active="stories" />
 
       <section className="mx-auto w-full max-w-7xl px-4 pb-14 pt-16 sm:px-6 sm:pb-20 sm:pt-24 lg:px-8">
