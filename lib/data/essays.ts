@@ -63,3 +63,12 @@ export async function getEssayBySlug(slug: string) {
 
   return essay ? toEssayView(essay) : null;
 }
+
+export async function getEssayById(id: string) {
+  const essay = await prisma.essay.findUnique({
+    select: essaySelect,
+    where: { id }
+  });
+
+  return essay ? toEssayView(essay) : null;
+}

@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 
-import { isValidProjectUrl, moveItem } from "@/lib/utils";
+import {
+  formatMakassarDateTimeInput,
+  isValidProjectUrl,
+  moveItem,
+  parseMakassarDateTimeInput
+} from "@/lib/utils";
 
 describe("isValidProjectUrl", () => {
   it("accepts https portfolio project links", () => {
@@ -15,5 +20,16 @@ describe("isValidProjectUrl", () => {
 describe("moveItem", () => {
   it("moves an item to a new index without losing order", () => {
     expect(moveItem(["a", "b", "c", "d"], 0, 2)).toEqual(["b", "c", "a", "d"]);
+  });
+});
+
+describe("Makassar date-time input", () => {
+  it("formats UTC dates for a datetime-local input", () => {
+    expect(formatMakassarDateTimeInput(new Date("2026-07-19T07:21:00.000Z"))).toBe("2026-07-19T15:21");
+  });
+
+  it("round-trips a Makassar datetime-local value", () => {
+    const value = "2026-07-19T15:21";
+    expect(formatMakassarDateTimeInput(parseMakassarDateTimeInput(value)!)).toBe(value);
   });
 });

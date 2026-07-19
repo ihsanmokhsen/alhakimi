@@ -27,9 +27,17 @@ export function EssayList({ essays }: { essays: EssayView[] }) {
               <p className="mt-2 line-clamp-2 text-[13px] font-medium leading-6 text-[color:var(--text)]/52">{essay.excerpt}</p>
               <Link className="mt-3 inline-flex text-[12px] font-black text-[#2563ff]" href={`/essays/${essay.slug}`} target="_blank">Lihat essay</Link>
             </div>
-            <form action={deleteAction} className="shrink-0">
-              <button className="border border-[color:var(--border-solid)] px-3 py-2 text-[12px] font-black text-[color:var(--text)]/52 hover:text-red-500" type="submit">Hapus</button>
-            </form>
+            <div className="flex shrink-0 flex-col gap-2">
+              <Link
+                className="bg-black px-3 py-2 text-center text-[12px] font-black text-white transition hover:bg-[#2563ff]"
+                href={`/admin/essays/${essay.id}/edit`}
+              >
+                Edit
+              </Link>
+              <form action={deleteAction}>
+                <button className="w-full border border-[color:var(--border-solid)] px-3 py-2 text-[12px] font-black text-[color:var(--text)]/52 hover:text-red-500" type="submit">Hapus</button>
+              </form>
+            </div>
           </article>
         );
       })}

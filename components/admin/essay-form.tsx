@@ -4,11 +4,14 @@ import Image from "next/image";
 import { startTransition, useActionState, useEffect, useRef, useState, type ChangeEvent } from "react";
 
 import type { EssayFormState } from "@/lib/actions/essays";
+import type { EssayView } from "@/lib/data/essays";
 import { createEssayImageMarker } from "@/lib/essay-content";
-import { canvasToBlob, loadImage, renameFileToWebp } from "@/lib/utils";
+import { canvasToBlob, formatMakassarDateTimeInput, loadImage, renameFileToWebp } from "@/lib/utils";
 
 type EssayFormProps = {
   action: (state: EssayFormState, formData: FormData) => Promise<EssayFormState>;
+  essay?: EssayView | null;
+  submitLabel?: string;
 };
 
 const initialState: EssayFormState = {};
@@ -17,15 +20,17 @@ const MAX_INLINE_IMAGES_TOTAL_SIZE = 5 * 1024 * 1024;
 
 type PreparedInlineImage = {
   token: string;
-  file: File;
+  file?: File;
   previewUrl: string;
   alt: string;
   width: number;
   height: number;
 };
 
-function getDefaultDatetimeValue() {
-  return new Date(Date.now() - new Date().getTimezoneOffset() * 60_000).toISOString().slice(0, 16);
+function getDatetimeValue(value?: Date | string) {
+  return value
+    ? formatMakassarDateTimeInput(value)
+    : formatMakassarDateTimeInput(new Date());
 }
 
 async function compressCover(file: File) {
@@ -107,10 +112,27 @@ function insertImageMarkers(content: string, position: number, tokens: string[])
   };
 }
 
-export function EssayForm({ action }: EssayFormProps) {
+function getExistingInlineImages(essay?: EssayView | null): PreparedInlineImage[] {
+  if (!essay) return [];
+
+  return essay.inlineImages
+    .map((image) => ({
+      token: image.token,
+      previewUrl: `/api/essay-image/${image.id}`,
+      alt: image.alt,
+      width: image.width,
+      height: image.height
+    }))
+    .sort((a, b) => (
+      essay.content.indexOf(createEssayImageMarker(a.token))
+      - essay.content.indexOf(createEssayImageMarker(b.token))
+    ));
+}
+
+export function EssayForm({ action, essay, submitLabel = "Terbitkan essay" }: EssayFormProps) {
   const [state, formAction, pending] = useActionState(action, initialState);
-  const [content, setContent] = useState("");
-  const [inlineImages, setInlineImages] = useState<PreparedInlineImage[]>([]);
+  const [content, setContent] = useState(essay?.content ?? "");
+  const [inlineImages, setInlineImages] = useState<PreparedInlineImage[]>(() => getExistingInlineImages(essay));
   const [preparingImages, setPreparingImages] = useState(false);
   const [localError, setLocalError] = useState<string>();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -124,7 +146,9 @@ export function EssayForm({ action }: EssayFormProps) {
   }, [inlineImages]);
 
   useEffect(() => () => {
-    for (const image of inlineImagesRef.current) URL.revokeObjectURL(image.previewUrl);
+    for (const image of inlineImagesRef.current) {
+      if (image.file) URL.revokeObjectURL(image.previewUrl);
+    }
   }, []);
 
   async function actionWithCompressedCover(formData: FormData) {
@@ -146,13 +170,19 @@ export function EssayForm({ action }: EssayFormProps) {
 
     const submittedContent = String(formData.get("content") ?? "");
     const activeImages = inlineImages.filter(({ token }) => submittedContent.includes(createEssayImageMarker(token)));
-    formData.set("inlineImageManifest", JSON.stringify(activeImages.map(({ token, alt, width, height }) => ({
+    const uploadedImages = activeImages.filter((image): image is PreparedInlineImage & { file: File } => image.file instanceof File);
+    const existingImages = activeImages.filter((image) => !image.file);
+    formData.set("inlineImageManifest", JSON.stringify(uploadedImages.map(({ token, alt, width, height }) => ({
       token,
       alt: alt.trim(),
       width,
       height
     }))));
-    for (const image of activeImages) {
+    formData.set("existingInlineImageManifest", JSON.stringify(existingImages.map(({ token, alt }) => ({
+      token,
+      alt: alt.trim()
+    }))));
+    for (const image of uploadedImages) {
       formData.append("inlineImageFiles", image.file, image.file.name);
     }
 
@@ -179,7 +209,7 @@ export function EssayForm({ action }: EssayFormProps) {
     setPreparingImages(true);
     setLocalError(undefined);
     const prepared: PreparedInlineImage[] = [];
-    let totalSize = inlineImagesRef.current.reduce((sum, image) => sum + image.file.size, 0);
+    let totalSize = inlineImagesRef.current.reduce((sum, image) => sum + (image.file?.size ?? 0), 0);
 
     try {
       for (const selectedFile of selectedFiles) {
@@ -225,7 +255,7 @@ export function EssayForm({ action }: EssayFormProps) {
 
   function removeInlineImage(token: string) {
     const image = inlineImagesRef.current.find((item) => item.token === token);
-    if (image) URL.revokeObjectURL(image.previewUrl);
+    if (image?.file) URL.revokeObjectURL(image.previewUrl);
     setInlineImages((current) => current.filter((item) => item.token !== token));
     const updatedContent = contentRef.current
       .split(createEssayImageMarker(token)).join("")
@@ -242,17 +272,17 @@ export function EssayForm({ action }: EssayFormProps) {
         <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_220px]">
           <label className="space-y-1.5">
             <span className="text-[12px] font-black uppercase text-[color:var(--text)]/42">Judul</span>
-            <input className={inputClass} name="title" placeholder="Judul essay" required type="text" />
+            <input className={inputClass} defaultValue={essay?.title ?? ""} name="title" placeholder="Judul essay" required type="text" />
           </label>
           <label className="space-y-1.5">
             <span className="text-[12px] font-black uppercase text-[color:var(--text)]/42">Tanggal terbit</span>
-            <input className={inputClass} defaultValue={getDefaultDatetimeValue()} name="publishedAt" required type="datetime-local" />
+            <input className={inputClass} defaultValue={getDatetimeValue(essay?.publishedAt)} name="publishedAt" required type="datetime-local" />
           </label>
         </div>
 
         <label className="space-y-1.5">
           <span className="text-[12px] font-black uppercase text-[color:var(--text)]/42">Ringkasan</span>
-          <textarea className={`${inputClass} min-h-24 leading-6`} maxLength={300} name="excerpt" placeholder="Gagasan utama dalam 1-3 kalimat" required />
+          <textarea className={`${inputClass} min-h-24 leading-6`} defaultValue={essay?.excerpt ?? ""} maxLength={300} name="excerpt" placeholder="Gagasan utama dalam 1-3 kalimat" required />
         </label>
 
         <div className="space-y-1.5">
@@ -313,6 +343,23 @@ export function EssayForm({ action }: EssayFormProps) {
         <label className="space-y-1.5">
           <span className="text-[12px] font-black uppercase text-[color:var(--text)]/42">Sampul opsional</span>
           <input accept="image/*" className={`${inputClass} text-[13px] file:mr-3 file:border-0 file:bg-black file:px-3.5 file:py-1.5 file:text-[12px] file:font-black file:text-white`} name="coverFile" type="file" />
+          {essay?.hasCover ? (
+            <div className="flex flex-col gap-3 border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] p-3 sm:flex-row sm:items-center">
+              <Image
+                alt={`Sampul ${essay.title}`}
+                className="h-24 w-36 object-cover"
+                height={96}
+                src={`/api/essay-cover/${essay.id}?v=${new Date(essay.updatedAt).getTime()}`}
+                unoptimized
+                width={144}
+              />
+              <label className="flex items-center gap-2 text-[12px] font-bold text-[color:var(--text)]/58">
+                <input className="h-4 w-4 accent-red-500" name="removeCover" type="checkbox" />
+                Hapus sampul saat menyimpan
+              </label>
+            </div>
+          ) : null}
+          {essay ? <p className="text-[12px] font-medium text-[color:var(--text)]/42">Kosongkan jika sampul tidak diubah.</p> : null}
           <p className="text-[12px] font-medium text-[color:var(--text)]/42">Gambar otomatis diubah ke WebP sekitar 350KB.</p>
         </label>
 
@@ -320,7 +367,7 @@ export function EssayForm({ action }: EssayFormProps) {
         {state.success ? <p className="bg-emerald-500/10 px-4 py-3 text-sm font-bold text-emerald-600">Essay berhasil diterbitkan.</p> : null}
 
         <button className="bg-black px-5 py-3 text-[12px] font-black text-white transition hover:bg-[#2563ff] disabled:opacity-60" disabled={pending || preparingImages} type="submit">
-          {pending ? "Menerbitkan..." : preparingImages ? "Menyiapkan foto..." : "Terbitkan essay"}
+          {pending ? "Menyimpan..." : preparingImages ? "Menyiapkan foto..." : submitLabel}
         </button>
       </form>
     </section>

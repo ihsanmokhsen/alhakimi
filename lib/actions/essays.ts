@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { z } from "zod";
 
 import { requireAdmin } from "@/lib/auth";
@@ -36,6 +37,20 @@ const inlineImageManifestSchema = z.array(z.object({
   width: z.number().int().min(1).max(10_000),
   height: z.number().int().min(1).max(10_000)
 })).max(MAX_INLINE_IMAGES);
+
+const existingInlineImageManifestSchema = z.array(z.object({
+  token: z.string().regex(/^[a-zA-Z0-9_-]{8,80}$/),
+  alt: z.string().trim().max(120)
+})).max(MAX_INLINE_IMAGES);
+
+function parseEssayInput(formData: FormData) {
+  return essaySchema.safeParse({
+    title: String(formData.get("title") ?? "").trim(),
+    excerpt: String(formData.get("excerpt") ?? "").trim(),
+    content: String(formData.get("content") ?? "").trim(),
+    publishedAt: String(formData.get("publishedAt") ?? "").trim()
+  });
+}
 
 function toSlug(value: string) {
   return value
@@ -75,18 +90,28 @@ async function parseCover(formData: FormData) {
   };
 }
 
-async function parseInlineImages(formData: FormData, content: string) {
+async function parseInlineImages(
+  formData: FormData,
+  content: string,
+  allowedExistingTokens = new Set<string>()
+) {
   let manifestValue: unknown;
+  let existingManifestValue: unknown;
   try {
     manifestValue = JSON.parse(String(formData.get("inlineImageManifest") ?? "[]"));
+    existingManifestValue = JSON.parse(String(formData.get("existingInlineImageManifest") ?? "[]"));
   } catch {
     throw new Error("Data foto sisipan tidak valid.");
   }
 
   const parsedManifest = inlineImageManifestSchema.safeParse(manifestValue);
-  if (!parsedManifest.success) throw new Error("Data foto sisipan tidak valid.");
+  const parsedExistingManifest = existingInlineImageManifestSchema.safeParse(existingManifestValue);
+  if (!parsedManifest.success || !parsedExistingManifest.success) {
+    throw new Error("Data foto sisipan tidak valid.");
+  }
 
   const manifest = parsedManifest.data;
+  const existingManifest = parsedExistingManifest.data;
   const files = formData.getAll("inlineImageFiles");
   if (files.length !== manifest.length || files.some((file) => !(file instanceof File))) {
     throw new Error("Sebagian foto sisipan tidak berhasil dikirim.");
@@ -95,16 +120,30 @@ async function parseInlineImages(formData: FormData, content: string) {
   const manifestTokens = new Set(manifest.map(({ token }) => token));
   if (manifestTokens.size !== manifest.length) throw new Error("Penanda foto sisipan terduplikasi.");
 
+  const existingTokens = new Set(existingManifest.map(({ token }) => token));
+  if (existingTokens.size !== existingManifest.length) throw new Error("Penanda foto sisipan terduplikasi.");
+  if ([...existingTokens].some((token) => !allowedExistingTokens.has(token))) {
+    throw new Error("Ada foto lama yang tidak dikenali.");
+  }
+
+  const submittedTokens = new Set([...manifestTokens, ...existingTokens]);
+  if (submittedTokens.size !== manifest.length + existingManifest.length) {
+    throw new Error("Penanda foto sisipan terduplikasi.");
+  }
+  if (submittedTokens.size > MAX_INLINE_IMAGES) {
+    throw new Error(`Maksimal ${MAX_INLINE_IMAGES} foto sisipan dalam satu essay.`);
+  }
+
   const contentTokens = new Set(extractEssayImageTokens(content));
-  if ([...contentTokens].some((token) => !manifestTokens.has(token))) {
+  if ([...contentTokens].some((token) => !submittedTokens.has(token))) {
     throw new Error("Ada penanda foto tanpa berkas. Hapus penandanya atau sisipkan ulang foto.");
   }
-  if ([...manifestTokens].some((token) => !contentTokens.has(token))) {
+  if ([...submittedTokens].some((token) => !contentTokens.has(token))) {
     throw new Error("Ada foto yang belum ditempatkan di dalam tulisan.");
   }
 
   let totalSize = 0;
-  const images = [];
+  const uploadedImages = [];
   for (let index = 0; index < manifest.length; index += 1) {
     const file = files[index] as File;
     if (!ALLOWED_INLINE_IMAGE_TYPES.has(file.type)) {
@@ -119,7 +158,7 @@ async function parseInlineImages(formData: FormData, content: string) {
       throw new Error("Total foto sisipan terlalu besar. Maksimal 5MB.");
     }
 
-    images.push({
+    uploadedImages.push({
       ...manifest[index],
       alt: manifest[index].alt || "Foto dalam essay",
       image: new Uint8Array(await file.arrayBuffer()) as PrismaBytes,
@@ -127,7 +166,13 @@ async function parseInlineImages(formData: FormData, content: string) {
     });
   }
 
-  return images;
+  return {
+    uploadedImages,
+    existingImages: existingManifest.map((image) => ({
+      ...image,
+      alt: image.alt || "Foto dalam essay"
+    }))
+  };
 }
 
 export async function createEssayAction(
@@ -136,12 +181,7 @@ export async function createEssayAction(
 ): Promise<EssayFormState> {
   await requireAdmin();
 
-  const parsed = essaySchema.safeParse({
-    title: String(formData.get("title") ?? "").trim(),
-    excerpt: String(formData.get("excerpt") ?? "").trim(),
-    content: String(formData.get("content") ?? "").trim(),
-    publishedAt: String(formData.get("publishedAt") ?? "").trim()
-  });
+  const parsed = parseEssayInput(formData);
 
   if (!parsed.success) {
     return { error: parsed.error.issues[0]?.message ?? "Data essay belum lengkap." };
@@ -152,10 +192,10 @@ export async function createEssayAction(
   }
 
   let coverData: { coverImage: PrismaBytes; coverMimeType: string } | null = null;
-  let inlineImages: Awaited<ReturnType<typeof parseInlineImages>> = [];
+  let inlineImages: Awaited<ReturnType<typeof parseInlineImages>>["uploadedImages"] = [];
   try {
     coverData = await parseCover(formData);
-    inlineImages = await parseInlineImages(formData, parsed.data.content);
+    inlineImages = (await parseInlineImages(formData, parsed.data.content)).uploadedImages;
   } catch (error) {
     return { error: error instanceof Error ? error.message : "Upload gambar gagal." };
   }
@@ -178,6 +218,73 @@ export async function createEssayAction(
   revalidatePath("/admin");
   revalidatePath("/essays");
   return { success: true };
+}
+
+export async function updateEssayAction(
+  id: string,
+  _previousState: EssayFormState,
+  formData: FormData
+): Promise<EssayFormState> {
+  await requireAdmin();
+
+  const parsed = parseEssayInput(formData);
+  if (!parsed.success) {
+    return { error: parsed.error.issues[0]?.message ?? "Perubahan essay belum lengkap." };
+  }
+  if (stripEssayImageMarkers(parsed.data.content).length < 50) {
+    return { error: "Isi essay minimal 50 karakter di luar penanda foto." };
+  }
+
+  const current = await prisma.essay.findUnique({
+    where: { id },
+    select: {
+      slug: true,
+      inlineImages: { select: { token: true } }
+    }
+  });
+  if (!current) return { error: "Essay tidak ditemukan." };
+
+  let coverData: { coverImage: PrismaBytes; coverMimeType: string } | null = null;
+  let imageData: Awaited<ReturnType<typeof parseInlineImages>>;
+  try {
+    coverData = await parseCover(formData);
+    imageData = await parseInlineImages(
+      formData,
+      parsed.data.content,
+      new Set(current.inlineImages.map(({ token }) => token))
+    );
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : "Upload gambar gagal." };
+  }
+
+  const activeExistingTokens = imageData.existingImages.map(({ token }) => token);
+  const removeCover = formData.get("removeCover") === "on";
+
+  await prisma.essay.update({
+    where: { id },
+    data: {
+      title: parsed.data.title,
+      excerpt: parsed.data.excerpt,
+      content: parsed.data.content,
+      publishedAt: parseMakassarDateTimeInput(parsed.data.publishedAt) ?? new Date(parsed.data.publishedAt),
+      ...(coverData ?? (removeCover ? { coverImage: null, coverMimeType: null } : {})),
+      inlineImages: {
+        deleteMany: activeExistingTokens.length > 0
+          ? { token: { notIn: activeExistingTokens } }
+          : {},
+        updateMany: imageData.existingImages.map(({ token, alt }) => ({
+          where: { token },
+          data: { alt }
+        })),
+        create: imageData.uploadedImages
+      }
+    }
+  });
+
+  revalidatePath("/admin");
+  revalidatePath("/essays");
+  revalidatePath(`/essays/${current.slug}`);
+  redirect("/admin#essays");
 }
 
 export async function deleteEssayAction(id: string) {
