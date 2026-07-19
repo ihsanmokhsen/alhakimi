@@ -56,13 +56,13 @@ export default async function PovPage() {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-md px-4 pb-24 sm:px-6 lg:px-8">
+      <section className="mx-auto w-full max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
         {videos.length === 0 ? (
           <div className="rounded-[24px] border border-[color:var(--border-solid)] bg-[color:var(--surface)]/[0.04] p-10 text-center">
             <p className="text-[15px] font-bold text-white/50">No videos yet. Check back soon.</p>
           </div>
         ) : (
-          <div className="flex flex-col items-center gap-8">
+          <div className="grid grid-cols-1 gap-x-5 gap-y-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {videos.map((video) => (
               <article className="w-full space-y-3" key={video.id}>
                 <div

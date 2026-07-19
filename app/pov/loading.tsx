@@ -9,9 +9,9 @@ export default function PovLoading() {
       </section>
 
       {/* Video skeleton */}
-      <section className="mx-auto w-full max-w-md px-4 pb-24 sm:px-6 lg:px-8">
-        <div className="flex flex-col items-center gap-8">
-          {Array.from({ length: 3 }).map((_, i) => (
+      <section className="mx-auto w-full max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-x-5 gap-y-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {Array.from({ length: 4 }).map((_, i) => (
             <div className="w-full space-y-3" key={i}>
               <div
                 className="w-full animate-pulse overflow-hidden rounded-[20px] border border-white/10 bg-white/[0.04]"
