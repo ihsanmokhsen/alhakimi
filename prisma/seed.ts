@@ -66,8 +66,7 @@ async function main() {
     where: { id: "hero" },
     update: {},
     create: {
-      id: "hero",
-      kopitrackPasscode: process.env.KOPITRACK_PASSCODE || "820037"
+      id: "hero"
     }
   });
 }

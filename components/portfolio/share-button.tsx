@@ -17,8 +17,8 @@ export function ShareButton({ title, url, variant = "dark" }: ShareButtonProps) 
       try {
         await navigator.share({ title, url });
         return;
-      } catch {
-        // User cancelled — fall through to copy
+      } catch (error) {
+        if (error instanceof DOMException && error.name === "AbortError") return;
       }
     }
 
@@ -36,7 +36,7 @@ export function ShareButton({ title, url, variant = "dark" }: ShareButtonProps) 
 
   return (
     <button
-      aria-label={copied ? "Link copied" : `Share ${title}`}
+      aria-label={copied ? "Tautan disalin" : `Bagikan ${title}`}
       className={`inline-flex items-center gap-2 px-4 py-2.5 text-[12px] font-black uppercase tracking-normal transition ${
         isDark
           ? "border border-[color:var(--border-solid)] bg-[color:var(--surface)] text-[color:var(--text)] hover:-translate-y-0.5 hover:border-black/20"
@@ -50,7 +50,7 @@ export function ShareButton({ title, url, variant = "dark" }: ShareButtonProps) 
           <svg aria-hidden="true" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
             <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-          Copied
+          Disalin
         </>
       ) : (
         <>
@@ -60,7 +60,7 @@ export function ShareButton({ title, url, variant = "dark" }: ShareButtonProps) 
             <circle cx="18" cy="19" r="3" />
             <path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98" strokeLinecap="round" />
           </svg>
-          Share
+          Bagikan
         </>
       )}
     </button>

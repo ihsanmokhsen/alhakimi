@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { WorksFooter, WorksHeader } from "@/components/portfolio/makna-shell";
+import { ShareButton } from "@/components/portfolio/share-button";
 import { StructuredData } from "@/components/seo/structured-data";
 import { getEssayBySlug } from "@/lib/data/essays";
 import { splitEssayContent, stripEssayImageMarkers } from "@/lib/essay-content";
@@ -17,7 +18,11 @@ export async function generateMetadata({ params }: EssayPageProps): Promise<Meta
   if (!essay) return { title: "Essay tidak ditemukan", robots: { index: false, follow: false } };
 
   const path = `/essays/${essay.slug}`;
-  const image = essay.hasCover ? `/api/essay-cover/${essay.id}` : "/hero.jpg";
+  const imagePath = essay.hasCover
+    ? `/api/essay-cover/${essay.id}?v=${essay.updatedAt.getTime()}`
+    : "/hero.jpg";
+  const imageUrl = absoluteUrl(imagePath);
+
   return {
     title: essay.title,
     description: essay.excerpt,
@@ -30,7 +35,13 @@ export async function generateMetadata({ params }: EssayPageProps): Promise<Meta
       publishedTime: essay.publishedAt.toISOString(),
       modifiedTime: essay.updatedAt.toISOString(),
       authors: ["Muhammad Ihsanul Hakim Mokhsen"],
-      images: [{ url: image, alt: essay.title }]
+      images: [{ url: imageUrl, alt: `Sampul ${essay.title}` }]
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: essay.title,
+      description: essay.excerpt,
+      images: [imageUrl]
     }
   };
 }
@@ -76,6 +87,9 @@ export default async function EssayPage({ params }: EssayPageProps) {
             <span>{formatJournalDate(essay.publishedAt)}</span>
             <span>{readingMinutes} menit membaca</span>
             <span>Ihsan Mokhsen</span>
+          </div>
+          <div className="mt-6">
+            <ShareButton title={essay.title} url={url} variant="light" />
           </div>
         </header>
 

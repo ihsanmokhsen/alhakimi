@@ -65,19 +65,6 @@ model EssayImage {
   @@index([essayId])
 }
 
-model CoffeeConsumption {
-  id         String   @id @default(cuid())
-  brand      String
-  variant    String
-  price      Int
-  consumedAt DateTime
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-
-  @@index([consumedAt])
-  @@index([brand])
-}
-
 model AdminUser {
   id                  String               @id @default(cuid())
   username            String               @unique
@@ -93,7 +80,6 @@ model SiteSetting {
   heroTitle           String?
   heroSubtitle        String?
   welcomeImageData    String?
-  kopitrackPasscode   String?
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
 }
