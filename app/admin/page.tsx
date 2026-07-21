@@ -21,6 +21,7 @@ import { getJournals } from "@/lib/data/journals";
 import { getEssays } from "@/lib/data/essays";
 import { getPovVideos } from "@/lib/data/pov-videos";
 import { getProjects } from "@/lib/data/projects";
+import { getSiteVisitCount } from "@/lib/data/site-visits";
 import { prisma } from "@/lib/prisma";
 
 const dashboardLinks = [
@@ -52,6 +53,10 @@ export default async function AdminPage() {
   const journals = await getJournals();
   const essays = await getEssays();
   const povVideos = await getPovVideos();
+  const visitCount = await getSiteVisitCount().catch((error) => {
+    console.error("Failed to load website visit count", error);
+    return 0;
+  });
   const heroSetting = await prisma.siteSetting.findUnique({
     where: { id: "hero" },
     select: { backgroundImageData: true, heroTitle: true, heroSubtitle: true, welcomeImageData: true }
@@ -185,7 +190,8 @@ export default async function AdminPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 p-5 sm:grid-cols-4 sm:p-6">
+            <div className="grid grid-cols-2 gap-4 p-5 sm:grid-cols-5 sm:p-6">
+              <StatCard label="Kunjungan" value={visitCount} />
               <StatCard label="Works" value={projects.length} />
               <StatCard label="Stories" value={journals.length} />
               <StatCard label="Essays" value={essays.length} />

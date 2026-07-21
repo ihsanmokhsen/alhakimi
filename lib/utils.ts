@@ -62,6 +62,13 @@ export function formatMakassarDateTimeInput(value: Date | string) {
   return new Date(localTimestamp).toISOString().slice(0, 16);
 }
 
+export function formatMakassarDateKey(value: Date | string = new Date()) {
+  const date = typeof value === "string" ? new Date(value) : value;
+  const localTimestamp = date.getTime() + MAKASSAR_OFFSET_HOURS * 60 * 60 * 1000;
+
+  return new Date(localTimestamp).toISOString().slice(0, 10);
+}
+
 /* ---- Image compression helpers ---- */
 
 export function renameFileToWebp(name: string) {

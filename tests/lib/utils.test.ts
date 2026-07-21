@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  formatMakassarDateKey,
   formatMakassarDateTimeInput,
   isValidProjectUrl,
   moveItem,
@@ -31,5 +32,9 @@ describe("Makassar date-time input", () => {
   it("round-trips a Makassar datetime-local value", () => {
     const value = "2026-07-19T15:21";
     expect(formatMakassarDateTimeInput(parseMakassarDateTimeInput(value)!)).toBe(value);
+  });
+
+  it("uses the Makassar calendar day for visit counting", () => {
+    expect(formatMakassarDateKey("2026-07-20T17:00:00.000Z")).toBe("2026-07-21");
   });
 });

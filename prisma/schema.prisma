@@ -84,6 +84,13 @@ model SiteSetting {
   updatedAt           DateTime @updatedAt
 }
 
+model SiteVisitCounter {
+  id        String   @id
+  total     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model PasswordResetToken {
   id          String    @id @default(cuid())
   tokenHash   String    @unique

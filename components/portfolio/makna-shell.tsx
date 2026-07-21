@@ -3,6 +3,7 @@
 import Link from "next/link";
 
 import { MobileHeaderMenu } from "@/components/portfolio/mobile-header-menu";
+import { VisitCounter } from "@/components/portfolio/visit-counter";
 import { cn } from "@/lib/utils";
 
 type WorksHeaderProps = {
@@ -136,6 +137,10 @@ export function WorksFooter() {
             </a>
           </div>
         ))}
+      </div>
+      <div className="relative mx-auto mt-8 flex w-fit items-center gap-2 border border-white/10 bg-white/[0.04] px-4 py-2 text-[11px] font-bold uppercase text-white/45">
+        <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.75)]" />
+        <VisitCounter />
       </div>
     </footer>
   );
