@@ -159,7 +159,7 @@ export function ChatWidget() {
       {/* ─── Floating button ─── */}
       <button
         aria-label={isOpen ? "Tutup chat" : "Buka chat AI"}
-        className={`group fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border-2 border-white/80 bg-[#091631] p-0.5 shadow-[0_8px_32px_rgba(15,23,42,0.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(15,23,42,0.45)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ef4444]/50 focus-visible:ring-offset-2 sm:bottom-6 sm:right-6 sm:h-15 sm:w-15 ${
+        className={`group fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border-2 border-white/80 bg-[#151918] p-0.5 shadow-[0_8px_32px_rgba(21,25,24,0.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(21,25,24,0.45)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ef4444]/50 focus-visible:ring-offset-2 sm:bottom-6 sm:right-6 sm:h-15 sm:w-15 ${
           isOpen ? "scale-0 opacity-0" : "scale-100 opacity-100"
         }`}
         onClick={open}
@@ -205,7 +205,7 @@ export function ChatWidget() {
         {/* ─── Header ─── */}
         <div className="flex shrink-0 items-center justify-between border-b border-[color:var(--border-strong)] px-4 py-3 sm:px-5 sm:py-4">
           <div className="flex items-center gap-3">
-            <div className="h-9 w-9 overflow-hidden rounded-full border border-[color:var(--border-strong)] bg-[#091631]">
+            <div className="h-9 w-9 overflow-hidden rounded-full border border-[color:var(--border-strong)] bg-[#151918]">
               <Image
                 alt="Avatar works AI"
                 className="h-full w-full object-cover"
@@ -232,7 +232,7 @@ export function ChatWidget() {
           </div>
           <button
             aria-label="Tutup chat"
-            className="flex h-8 w-8 items-center justify-center rounded-full text-[color:var(--text-44)] transition-colors hover:bg-[color:var(--bg-chip)] hover:text-[color:var(--text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50"
+            className="flex h-8 w-8 items-center justify-center rounded-full text-[color:var(--text-44)] transition-colors hover:bg-[color:var(--bg-chip)] hover:text-[color:var(--text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff4f0a]/50"
             onClick={close}
             type="button"
           >
@@ -244,7 +244,7 @@ export function ChatWidget() {
         <div className="flex-1 overflow-y-auto px-4 py-4 sm:px-5 sm:py-5">
           {showWelcome ? (
             <div className="flex h-full flex-col items-center justify-center text-center">
-              <div className="mb-5 h-16 w-16 overflow-hidden rounded-2xl border border-[color:var(--border-strong)] bg-[#091631] shadow-[0_8px_24px_rgba(15,23,42,0.2)]">
+              <div className="mb-5 h-16 w-16 overflow-hidden rounded-2xl border border-[color:var(--border-strong)] bg-[#151918] shadow-[0_8px_24px_rgba(21,25,24,0.2)]">
                 <Image
                   alt="Avatar works AI"
                   className="h-full w-full object-cover"
@@ -272,7 +272,7 @@ export function ChatWidget() {
                   <div
                     className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-[14px] leading-6 sm:px-5 sm:py-3 ${
                       m.role === "user"
-                        ? "bg-[#2563ff] text-white"
+                        ? "bg-[#ff4f0a] text-white"
                         : "bg-[color:var(--bg-chip)] text-[color:var(--text)]"
                     }`}
                   >
@@ -301,7 +301,7 @@ export function ChatWidget() {
             <div className="mt-6 grid grid-cols-2 gap-2">
               {SUGGESTED_QUESTIONS.map((q) => (
                 <button
-                  className="rounded-xl border border-[color:var(--border-strong)] px-3 py-2.5 text-left text-[12px] font-semibold leading-snug text-[color:var(--text-62)] transition-all hover:border-[#2563ff]/30 hover:bg-[#2563ff]/5 hover:text-[#2563ff] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50 sm:text-[13px]"
+                  className="rounded-xl border border-[color:var(--border-strong)] px-3 py-2.5 text-left text-[12px] font-semibold leading-snug text-[color:var(--text-62)] transition-all hover:border-[#ff4f0a]/30 hover:bg-[#ff4f0a]/5 hover:text-[#ff4f0a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff4f0a]/50 sm:text-[13px]"
                   key={q}
                   onClick={() => submitQuestion(q)}
                   type="button"
@@ -324,7 +324,7 @@ export function ChatWidget() {
             <div className="relative flex-1">
               <input
                 ref={inputRef}
-                className="w-full rounded-xl border border-[color:var(--border-solid)] bg-[color:var(--surface-muted)] px-4 py-2.5 pr-10 text-[14px] text-[color:var(--text)] placeholder:text-[color:var(--text-34)] transition-colors focus:border-[#2563ff]/40 focus:outline-none focus:ring-2 focus:ring-[#2563ff]/15"
+                className="w-full rounded-xl border border-[color:var(--border-solid)] bg-[color:var(--surface-muted)] px-4 py-2.5 pr-10 text-[14px] text-[color:var(--text)] placeholder:text-[color:var(--text-34)] transition-colors focus:border-[#ff4f0a]/40 focus:outline-none focus:ring-2 focus:ring-[#ff4f0a]/15"
                 disabled={isLoading}
                 id="chat-input"
                 placeholder="Tanya sesuatu..."
@@ -334,7 +334,7 @@ export function ChatWidget() {
             </div>
             <button
               aria-label="Kirim pesan"
-              className="flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-xl bg-[#2563ff] text-white transition-all hover:bg-[#0f4ff2] disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50"
+              className="flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-xl bg-[#ff4f0a] text-white transition-all hover:bg-[#e54100] disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff4f0a]/50"
               disabled={!input.trim() || isLoading}
               type="submit"
             >

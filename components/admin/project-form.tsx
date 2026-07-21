@@ -93,7 +93,7 @@ export function ProjectForm({ action, project, submitLabel }: ProjectFormProps) 
           <label className="space-y-1.5">
             <span className="text-[12px] font-black uppercase text-[color:var(--text)]/42">Title</span>
             <input
-              className="w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[14px] font-semibold text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#2563ff]/45 focus:bg-[color:var(--surface)]"
+              className="w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[14px] font-semibold text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#ff4f0a]/45 focus:bg-[color:var(--surface)]"
               defaultValue={project?.title ?? ""}
               name="title"
               required
@@ -104,7 +104,7 @@ export function ProjectForm({ action, project, submitLabel }: ProjectFormProps) 
           <label className="space-y-1.5">
             <span className="text-[12px] font-black uppercase text-[color:var(--text)]/42">Category</span>
             <input
-              className="w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[14px] font-semibold text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#2563ff]/45 focus:bg-[color:var(--surface)]"
+              className="w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[14px] font-semibold text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#ff4f0a]/45 focus:bg-[color:var(--surface)]"
               defaultValue={project?.category ?? "Web App"}
               name="category"
               required
@@ -116,7 +116,7 @@ export function ProjectForm({ action, project, submitLabel }: ProjectFormProps) 
         <label className="space-y-1.5">
           <span className="text-[12px] font-black uppercase text-[color:var(--text)]/42">URL</span>
           <input
-            className="w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[14px] font-semibold text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#2563ff]/45 focus:bg-[color:var(--surface)]"
+            className="w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[14px] font-semibold text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#ff4f0a]/45 focus:bg-[color:var(--surface)]"
             defaultValue={project?.url ?? ""}
             name="url"
             required
@@ -141,7 +141,7 @@ export function ProjectForm({ action, project, submitLabel }: ProjectFormProps) 
         <label className="space-y-1.5">
           <span className="text-[12px] font-black uppercase text-[color:var(--text)]/42">Description</span>
           <textarea
-            className="min-h-32 w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[14px] font-semibold leading-6 text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#2563ff]/45 focus:bg-[color:var(--surface)]"
+            className="min-h-32 w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[14px] font-semibold leading-6 text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#ff4f0a]/45 focus:bg-[color:var(--surface)]"
             defaultValue={project?.description ?? ""}
             name="description"
             required
@@ -150,7 +150,7 @@ export function ProjectForm({ action, project, submitLabel }: ProjectFormProps) 
 
         <label className="flex items-center gap-3 rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[13px] font-bold text-[color:var(--text)]/58">
           <input
-            className="h-4 w-4 accent-[#2563ff]"
+            className="h-4 w-4 accent-[#ff4f0a]"
             defaultChecked={project?.featured ?? false}
             name="featured"
             type="checkbox"
@@ -158,10 +158,10 @@ export function ProjectForm({ action, project, submitLabel }: ProjectFormProps) 
           Show as a featured project
         </label>
 
-        {state.error ? <p className="rounded-2xl bg-[#2563ff]/10 px-4 py-3 text-sm font-bold text-[#2563ff]">{state.error}</p> : null}
+        {state.error ? <p className="rounded-2xl bg-[#ff4f0a]/10 px-4 py-3 text-sm font-bold text-[#ff4f0a]">{state.error}</p> : null}
 
         <button
-          className="rounded-full bg-black px-5 py-3 text-[12px] font-black text-white shadow-[0_14px_34px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5 hover:bg-[#2563ff] disabled:translate-y-0 disabled:opacity-60"
+          className="rounded-full bg-black px-5 py-3 text-[12px] font-black text-white shadow-[0_14px_34px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5 hover:bg-[#ff4f0a] disabled:translate-y-0 disabled:opacity-60"
           disabled={pending}
           type="submit"
         >

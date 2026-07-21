@@ -1,6 +1,6 @@
 export default function JournalLoading() {
   return (
-    <main className="min-h-screen overflow-x-hidden bg-[#f5f5f7]">
+    <main className="min-h-screen overflow-x-hidden bg-[#ecefed]">
       {/* Header skeleton */}
       <section className="mx-auto w-full max-w-7xl px-4 pb-14 pt-16 sm:px-6 sm:pb-20 sm:pt-24 lg:px-8">
         <div className="h-3 w-16 animate-pulse rounded bg-black/10" />
@@ -16,7 +16,7 @@ export default function JournalLoading() {
               className="overflow-hidden rounded border border-black/[0.06] bg-white"
               key={i}
             >
-              <div className="h-56 animate-pulse bg-[#ebecef]" />
+              <div className="h-56 animate-pulse bg-[#e1e5e3]" />
               <div className="space-y-3 p-5 sm:p-6">
                 <div className="h-3 w-20 animate-pulse rounded bg-black/8" />
                 <div className="h-8 w-3/4 animate-pulse rounded bg-black/6" />

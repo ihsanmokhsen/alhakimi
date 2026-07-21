@@ -109,7 +109,7 @@ export default function AboutPage() {
               Profil diri
             </p>
             <div>
-              <p className="text-[13px] font-black uppercase text-[#2563ff]">
+              <p className="text-[13px] font-black uppercase text-[#ff4f0a]">
                 Muhammad Ihsanul Hakim Mokhsen, S.Kom., M.S.F
               </p>
               <h2 className="mt-5 max-w-4xl text-[34px] font-black leading-none tracking-tight text-[color:var(--text)] sm:text-[58px]">
@@ -161,7 +161,7 @@ export default function AboutPage() {
                   <span className="mt-2 block text-[color:var(--text)]">
                     Halaman 1-6, DOI{" "}
                     <a
-                      className="font-black text-[#2563ff] transition hover:text-[color:var(--text)]"
+                      className="font-black text-[#ff4f0a] transition hover:text-[color:var(--text)]"
                       href="https://doi.org/10.1109/ICoCICs68032.2025.11383985"
                       rel="noreferrer"
                       target="_blank"
@@ -200,7 +200,7 @@ export default function AboutPage() {
             <div className="divide-y divide-[color:var(--border-solid)] border-y border-[color:var(--border-solid)]">
               {recentWorkItems.map((item, index) => (
                 <article className="grid gap-4 py-7 sm:grid-cols-[4rem_1fr] sm:gap-6 sm:py-9" key={item.title}>
-                  <p className="text-[12px] font-black text-[#2563ff]">0{index + 1}</p>
+                  <p className="text-[12px] font-black text-[#ff4f0a]">0{index + 1}</p>
                   <div>
                     <h2 className="text-[28px] font-black leading-none tracking-tight text-[color:var(--text)] sm:text-[42px]">
                       {item.title}
@@ -237,7 +237,7 @@ export default function AboutPage() {
             <div className="flex flex-col gap-4 text-[26px] font-black leading-none tracking-tight text-[color:var(--text)] sm:text-[42px]">
               {contactLinks.map((item) => (
                 <a
-                  className="w-fit transition hover:text-[#2563ff]"
+                  className="w-fit transition hover:text-[#ff4f0a]"
                   href={item.href}
                   key={item.href}
                   rel="noreferrer"

@@ -204,7 +204,7 @@ function ToggleSwitch({
     <button
       aria-checked={checked}
       className={`relative h-6 w-10 rounded-full transition-colors ${
-        checked ? "bg-[#2563ff]" : "bg-black/15"
+        checked ? "bg-[#ff4f0a]" : "bg-black/15"
       }`}
       onClick={(e) => {
         e.preventDefault();

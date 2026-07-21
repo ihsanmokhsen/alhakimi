@@ -106,7 +106,7 @@ export function JournalForm({ action }: JournalFormProps) {
           <label className="space-y-1.5">
             <span className="text-[12px] font-black uppercase text-[color:var(--text)]/42">Title</span>
             <input
-              className="w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[14px] font-semibold text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#2563ff]/45 focus:bg-[color:var(--surface)]"
+              className="w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[14px] font-semibold text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#ff4f0a]/45 focus:bg-[color:var(--surface)]"
               name="title"
               required
               type="text"
@@ -116,7 +116,7 @@ export function JournalForm({ action }: JournalFormProps) {
           <label className="space-y-1.5">
             <span className="text-[12px] font-black uppercase text-[color:var(--text)]/42">Time</span>
             <input
-              className="w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[14px] font-semibold text-[color:var(--text)] outline-none transition focus:border-[#2563ff]/45 focus:bg-[color:var(--surface)]"
+              className="w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[14px] font-semibold text-[color:var(--text)] outline-none transition focus:border-[#ff4f0a]/45 focus:bg-[color:var(--surface)]"
               defaultValue={getDefaultDatetimeValue()}
               name="publishedAt"
               required
@@ -128,7 +128,7 @@ export function JournalForm({ action }: JournalFormProps) {
         <label className="space-y-1.5">
           <span className="text-[12px] font-black uppercase text-[color:var(--text)]/42">Writing</span>
           <textarea
-            className="min-h-32 w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[14px] font-semibold leading-6 text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#2563ff]/45 focus:bg-[color:var(--surface)]"
+            className="min-h-32 w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[14px] font-semibold leading-6 text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#ff4f0a]/45 focus:bg-[color:var(--surface)]"
             name="content"
             required
           />
@@ -145,10 +145,10 @@ export function JournalForm({ action }: JournalFormProps) {
           <p className="text-[12px] font-medium text-[color:var(--text)]/42">Foto akan otomatis dikompres ke sekitar 200KB.</p>
         </label>
 
-        {state.error ? <p className="rounded-2xl bg-[#2563ff]/10 px-4 py-3 text-sm font-bold text-[#2563ff]">{state.error}</p> : null}
+        {state.error ? <p className="rounded-2xl bg-[#ff4f0a]/10 px-4 py-3 text-sm font-bold text-[#ff4f0a]">{state.error}</p> : null}
 
         <button
-          className="rounded-full bg-black px-5 py-3 text-[12px] font-black text-white shadow-[0_14px_34px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5 hover:bg-[#2563ff] disabled:translate-y-0 disabled:opacity-60"
+          className="rounded-full bg-black px-5 py-3 text-[12px] font-black text-white shadow-[0_14px_34px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5 hover:bg-[#ff4f0a] disabled:translate-y-0 disabled:opacity-60"
           disabled={pending}
           type="submit"
         >

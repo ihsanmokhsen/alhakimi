@@ -36,7 +36,7 @@ export default async function WorksPage() {
       <WorksHeader active="works" />
 
       <section className="mx-auto w-full max-w-7xl px-4 pb-12 pt-16 sm:px-6 sm:pb-16 sm:pt-24 lg:px-8">
-        <p className="text-[12px] font-black uppercase text-[#2563ff]">Works</p>
+        <p className="text-[12px] font-black uppercase text-[#ff4f0a]">Works</p>
         <h1 className="mt-5 max-w-5xl text-[clamp(3.2rem,8vw,7rem)] font-black leading-[0.9] tracking-normal text-[color:var(--text)]">
           Aplikasi dan karya digital.
         </h1>

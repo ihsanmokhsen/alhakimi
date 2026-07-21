@@ -17,7 +17,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
   return (
     <section className="mx-auto w-full max-w-md rounded-[28px] border border-[color:var(--border)] bg-[color:var(--surface)] p-6 shadow-[0_24px_90px_rgba(18,22,34,0.12)] sm:p-8">
       <div className="mb-8">
-        <p className="text-[12px] font-black uppercase text-[#2563ff]">Secure update</p>
+        <p className="text-[12px] font-black uppercase text-[#ff4f0a]">Secure update</p>
         <h2 className="mt-3 text-[34px] font-black leading-none tracking-normal text-[color:var(--text)]">Reset Password</h2>
       </div>
 
@@ -29,7 +29,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
             New password
           </label>
           <input
-            className="w-full rounded-[18px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-5 py-4 text-[15px] font-semibold text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#2563ff]/45 focus:bg-[color:var(--surface)]"
+            className="w-full rounded-[18px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-5 py-4 text-[15px] font-semibold text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#ff4f0a]/45 focus:bg-[color:var(--surface)]"
             id="password"
             name="password"
             placeholder="At least 8 characters"
@@ -43,7 +43,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
             Confirm password
           </label>
           <input
-            className="w-full rounded-[18px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-5 py-4 text-[15px] font-semibold text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#2563ff]/45 focus:bg-[color:var(--surface)]"
+            className="w-full rounded-[18px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-5 py-4 text-[15px] font-semibold text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#ff4f0a]/45 focus:bg-[color:var(--surface)]"
             id="confirmPassword"
             name="confirmPassword"
             placeholder="Repeat new password"
@@ -55,7 +55,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
         {state.error ? <p className="rounded-2xl bg-red-500/10 px-4 py-3 text-sm font-bold text-red-600">{state.error}</p> : null}
 
         <button
-          className="w-full rounded-full bg-black px-6 py-4 text-[14px] font-black text-white shadow-[0_20px_45px_rgba(0,0,0,0.18)] transition hover:-translate-y-0.5 hover:bg-[#2563ff] disabled:translate-y-0 disabled:opacity-60"
+          className="w-full rounded-full bg-black px-6 py-4 text-[14px] font-black text-white shadow-[0_20px_45px_rgba(0,0,0,0.18)] transition hover:-translate-y-0.5 hover:bg-[#ff4f0a] disabled:translate-y-0 disabled:opacity-60"
           disabled={pending}
           type="submit"
         >
@@ -64,7 +64,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
       </form>
 
       <div className="mt-5 text-center">
-        <Link className="text-xs font-bold text-[#2563ff] hover:underline" href="/login">
+        <Link className="text-xs font-bold text-[#ff4f0a] hover:underline" href="/login">
           Back to sign in
         </Link>
       </div>

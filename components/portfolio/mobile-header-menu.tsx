@@ -61,7 +61,7 @@ export function MobileHeaderMenu({ active, items }: MobileHeaderMenuProps) {
                 return (
                   <Link
                     className={`py-4 text-[26px] font-black leading-none transition ${
-                      isActive ? "text-[#2563ff]" : "text-[color:var(--text)] hover:text-[#2563ff]"
+                      isActive ? "text-[#ff4f0a]" : "text-[color:var(--text)] hover:text-[#ff4f0a]"
                     }`}
                     href={item.href}
                     key={item.id}
@@ -76,7 +76,7 @@ export function MobileHeaderMenu({ active, items }: MobileHeaderMenuProps) {
           <div className="grid gap-3 border-t border-[color:var(--border-strong)] pt-5">
             <Link
               className={`text-[13px] font-black transition ${
-                active === "login" ? "text-[#2563ff]" : "text-[color:var(--text)]/[0.58] hover:text-[color:var(--text)]"
+                active === "login" ? "text-[#ff4f0a]" : "text-[color:var(--text)]/[0.58] hover:text-[color:var(--text)]"
               }`}
               href="/login"
             >

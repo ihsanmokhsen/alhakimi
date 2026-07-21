@@ -3,7 +3,6 @@
 import Link from "next/link";
 
 import { MobileHeaderMenu } from "@/components/portfolio/mobile-header-menu";
-import { VisitCounter } from "@/components/portfolio/visit-counter";
 import { cn } from "@/lib/utils";
 
 type WorksHeaderProps = {
@@ -64,10 +63,10 @@ export function WorksHeader({ active, overlay = false }: WorksHeaderProps) {
             return (
               <Link
                 className={cn(
-                  "text-[13px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50 focus-visible:ring-offset-2",
+                  "text-[13px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff4f0a]/50 focus-visible:ring-offset-2",
                   overlay
                     ? isActive ? "text-white" : "text-white/70 hover:text-white"
-                    : isActive ? "text-[#2563ff]" : "text-[color:var(--text)]/58 hover:text-[color:var(--text)]"
+                    : isActive ? "text-[#ff4f0a]" : "text-[color:var(--text)]/58 hover:text-[color:var(--text)]"
                 )}
                 href={item.href}
                 key={item.id}
@@ -81,10 +80,10 @@ export function WorksHeader({ active, overlay = false }: WorksHeaderProps) {
         <div className="flex items-center gap-2 sm:gap-3">
           <Link
             className={cn(
-              "hidden px-4 py-2 text-[13px] font-semibold transition sm:inline-flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50",
+              "hidden px-4 py-2 text-[13px] font-semibold transition sm:inline-flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff4f0a]/50",
               overlay
                 ? active === "login" ? "text-white" : "text-white/70 hover:text-white"
-                : active === "login" ? "text-[#2563ff]" : "text-[color:var(--text)]/62 hover:text-[color:var(--text)]"
+                : active === "login" ? "text-[#ff4f0a]" : "text-[color:var(--text)]/62 hover:text-[color:var(--text)]"
             )}
             href="/login"
           >
@@ -100,15 +99,15 @@ export function WorksHeader({ active, overlay = false }: WorksHeaderProps) {
 
 export function WorksFooter() {
   return (
-    <footer className="relative overflow-hidden bg-gradient-to-br from-[#08080a] via-[#0f172a] to-[#08080a] bg-[length:200%_200%] px-4 py-14 text-center text-white sm:px-6 sm:py-20 lg:px-8" style={{ animation: "gradientShift 8s ease infinite" }}>
+    <footer className="relative overflow-hidden bg-gradient-to-br from-[#08080a] via-[#1a201e] to-[#08080a] bg-[length:200%_200%] px-4 py-14 text-center text-white sm:px-6 sm:py-20 lg:px-8" style={{ animation: "gradientShift 8s ease infinite" }}>
       {/* Background subtle glow orbs */}
-      <div aria-hidden="true" className="pointer-events-none absolute -top-40 right-1/4 h-80 w-80 rounded-full bg-[#2563ff]/10 blur-[100px]" />
-      <div aria-hidden="true" className="pointer-events-none absolute -bottom-40 left-1/4 h-80 w-80 rounded-full bg-violet-600/8 blur-[100px]" />
+      <div aria-hidden="true" className="pointer-events-none absolute -top-40 right-1/4 h-80 w-80 rounded-full bg-[#ff4f0a]/10 blur-[100px]" />
+      <div aria-hidden="true" className="pointer-events-none absolute -bottom-40 left-1/4 h-80 w-80 rounded-full bg-orange-500/8 blur-[100px]" />
 
       <div className="relative mx-auto max-w-7xl border-y border-white/12 py-8 sm:py-12">
         <p className="text-[clamp(2.05rem,9vw,10.5rem)] font-black lowercase leading-[0.82] tracking-tight">
           <span className="block bg-gradient-to-r from-white via-white to-white/70 bg-clip-text text-transparent">works.</span>
-          <span className="block bg-gradient-to-r from-white/90 via-blue-300 to-white/90 bg-clip-text text-transparent">ihsanmokhsen</span>
+          <span className="block bg-gradient-to-r from-white/90 via-orange-300 to-white/90 bg-clip-text text-transparent">ihsanmokhsen</span>
           <span className="block text-white/40">.com</span>
         </p>
       </div>
@@ -137,10 +136,6 @@ export function WorksFooter() {
             </a>
           </div>
         ))}
-      </div>
-      <div className="relative mx-auto mt-8 flex w-fit items-center gap-2 border border-white/10 bg-white/[0.04] px-4 py-2 text-[11px] font-bold uppercase text-white/45">
-        <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.75)]" />
-        <VisitCounter />
       </div>
     </footer>
   );

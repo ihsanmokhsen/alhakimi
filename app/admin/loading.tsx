@@ -1,6 +1,6 @@
 export default function AdminLoading() {
   return (
-    <main className="min-h-screen overflow-x-hidden bg-[#f5f5f7]">
+    <main className="min-h-screen overflow-x-hidden bg-[#ecefed]">
       <section className="mx-auto w-full max-w-7xl px-4 pb-12 pt-10 sm:px-6 sm:pb-16 sm:pt-14 lg:px-8">
         {/* Header */}
         <div className="grid gap-6 border-b border-black/10 pb-8 sm:pb-10 lg:grid-cols-[1fr_0.7fr] lg:items-end lg:pb-12">

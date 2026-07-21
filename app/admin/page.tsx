@@ -94,7 +94,7 @@ export default async function AdminPage() {
 
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
             <Link
-              className="hidden border border-[color:var(--border-solid)] bg-[color:var(--surface)] px-4 py-2 text-[12px] font-black transition hover:border-[#2563ff]/30 hover:text-[#2563ff] sm:inline-flex"
+              className="hidden border border-[color:var(--border-solid)] bg-[color:var(--surface)] px-4 py-2 text-[12px] font-black transition hover:border-[#ff4f0a]/30 hover:text-[#ff4f0a] sm:inline-flex"
               href="/"
               target="_blank"
             >
@@ -124,7 +124,7 @@ export default async function AdminPage() {
               {dashboardLinks.map((item, index) => (
                 <a
                   className={`flex min-h-11 items-center gap-3 px-3 text-[13px] font-bold transition hover:bg-[color:var(--surface)] ${
-                    index === 0 ? "bg-[color:var(--surface)] text-[#2563ff] shadow-[0_10px_35px_rgba(18,22,34,0.06)]" : "text-[color:var(--text)]/60"
+                    index === 0 ? "bg-[color:var(--surface)] text-[#ff4f0a] shadow-[0_10px_35px_rgba(18,22,34,0.06)]" : "text-[color:var(--text)]/60"
                   }`}
                   href={item.href}
                   key={item.href}
@@ -139,7 +139,7 @@ export default async function AdminPage() {
 
             <div className="border-t border-[color:var(--border-solid)] pt-4">
               <Link
-                className="flex min-h-11 items-center px-3 text-[13px] font-bold text-[color:var(--text)]/60 transition hover:bg-[color:var(--surface)] hover:text-[#2563ff]"
+                className="flex min-h-11 items-center px-3 text-[13px] font-bold text-[color:var(--text)]/60 transition hover:bg-[color:var(--surface)] hover:text-[#ff4f0a]"
                 href="/admin/new"
               >
                 Tambah project
@@ -162,7 +162,7 @@ export default async function AdminPage() {
               <a
                 className={`shrink-0 rounded-full border px-4 py-2 text-[12px] font-bold ${
                   index === 0
-                    ? "border-[#2563ff] bg-[#2563ff] text-white"
+                    ? "border-[#ff4f0a] bg-[#ff4f0a] text-white"
                     : "border-[color:var(--border-solid)] bg-[color:var(--surface)] text-[color:var(--text)]/60"
                 }`}
                 href={item.href}
@@ -199,7 +199,7 @@ export default async function AdminPage() {
             </div>
 
             <div className="flex flex-wrap gap-3 border-t border-[color:var(--border)] p-4 sm:px-6">
-              <a className="bg-[#2563ff] px-4 py-2.5 text-[12px] font-black text-white transition hover:bg-[#0f4ff2]" href="#stories">
+              <a className="bg-[#ff4f0a] px-4 py-2.5 text-[12px] font-black text-white transition hover:bg-[#e54100]" href="#stories">
                 Buat story
               </a>
               <a className="border border-[color:var(--border-solid)] px-4 py-2.5 text-[12px] font-black text-[color:var(--text)]/60" href="#essays">
@@ -221,7 +221,7 @@ export default async function AdminPage() {
 
           <section className="scroll-mt-24 space-y-4" id="stories">
             <div>
-              <p className="text-[11px] font-black uppercase text-[#2563ff]">Buat postingan</p>
+              <p className="text-[11px] font-black uppercase text-[#ff4f0a]">Buat postingan</p>
               <h2 className="mt-2 text-[30px] font-black leading-none sm:text-[38px]">Stories</h2>
               <p className="mt-2 text-[13px] font-medium leading-6 text-[color:var(--text)]/48">
                 Tulis pembaruan seperti membuat postingan di beranda.
@@ -233,7 +233,7 @@ export default async function AdminPage() {
 
           <section className="scroll-mt-24 space-y-4 border-t border-[color:var(--border-solid)] pt-8" id="essays">
             <div>
-              <p className="text-[11px] font-black uppercase text-[#2563ff]">Tulisan panjang</p>
+              <p className="text-[11px] font-black uppercase text-[#ff4f0a]">Tulisan panjang</p>
               <h2 className="mt-2 text-[30px] font-black leading-none sm:text-[38px]">Essays</h2>
               <p className="mt-2 text-[13px] font-medium leading-6 text-[color:var(--text)]/48">
                 Terbitkan pemikiran serius dengan ringkasan, sampul, dan halaman baca tersendiri.
@@ -246,7 +246,7 @@ export default async function AdminPage() {
           <section className="scroll-mt-24 space-y-4 border-t border-[color:var(--border-solid)] pt-8" id="works">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="text-[11px] font-black uppercase text-[#2563ff]">Koleksi</p>
+                <p className="text-[11px] font-black uppercase text-[#ff4f0a]">Koleksi</p>
                 <h2 className="mt-2 text-[30px] font-black leading-none sm:text-[38px]">Works</h2>
                 <p className="mt-2 text-[13px] font-medium leading-6 text-[color:var(--text)]/48">
                   Susun ulang, edit, atau hapus project yang tampil di halaman depan.
@@ -264,7 +264,7 @@ export default async function AdminPage() {
 
           <section className="scroll-mt-24 space-y-4 border-t border-[color:var(--border-solid)] pt-8" id="appearance">
             <div>
-              <p className="text-[11px] font-black uppercase text-[#2563ff]">Halaman depan</p>
+              <p className="text-[11px] font-black uppercase text-[#ff4f0a]">Halaman depan</p>
               <h2 className="mt-2 text-[30px] font-black leading-none sm:text-[38px]">Tampilan</h2>
               <p className="mt-2 text-[13px] font-medium leading-6 text-[color:var(--text)]/48">
                 Perbarui hero dan welcome popup dari dashboard yang sama.
@@ -284,7 +284,7 @@ export default async function AdminPage() {
 
           <section className="scroll-mt-24 space-y-4 border-t border-[color:var(--border-solid)] pt-8" id="pov">
             <div>
-              <p className="text-[11px] font-black uppercase text-[#2563ff]">Video singkat</p>
+              <p className="text-[11px] font-black uppercase text-[#ff4f0a]">Video singkat</p>
               <h2 className="mt-2 text-[30px] font-black leading-none sm:text-[38px]">POV</h2>
               <p className="mt-2 text-[13px] font-medium leading-6 text-[color:var(--text)]/48">
                 Tambahkan video vertikal dan kelola urutan konten POV.
@@ -304,7 +304,7 @@ export default async function AdminPage() {
                 </div>
                 <div className="min-w-0">
                   <p className="truncate text-[14px] font-black">{admin.username}</p>
-                  <p className="mt-0.5 text-[11px] font-semibold text-[#2563ff]">Online sebagai admin</p>
+                  <p className="mt-0.5 text-[11px] font-semibold text-[#ff4f0a]">Online sebagai admin</p>
                 </div>
               </div>
               <p className="mt-4 border-t border-[color:var(--border)] pt-4 text-[12px] font-medium leading-5 text-[color:var(--text)]/48">
@@ -333,16 +333,16 @@ export default async function AdminPage() {
             <section className="border border-[color:var(--border)] bg-[color:var(--surface)] p-5 shadow-[0_16px_50px_rgba(18,22,34,0.06)]">
               <p className="text-[11px] font-black uppercase text-[color:var(--text)]/36">Akses cepat</p>
               <div className="mt-3 flex flex-col">
-                <Link className="border-b border-[color:var(--border)] py-3 text-[12px] font-bold hover:text-[#2563ff]" href="/">
+                <Link className="border-b border-[color:var(--border)] py-3 text-[12px] font-bold hover:text-[#ff4f0a]" href="/">
                   Buka beranda publik
                 </Link>
-                <Link className="border-b border-[color:var(--border)] py-3 text-[12px] font-bold hover:text-[#2563ff]" href="/journal">
+                <Link className="border-b border-[color:var(--border)] py-3 text-[12px] font-bold hover:text-[#ff4f0a]" href="/journal">
                   Buka halaman stories
                 </Link>
-                <Link className="border-b border-[color:var(--border)] py-3 text-[12px] font-bold hover:text-[#2563ff]" href="/essays">
+                <Link className="border-b border-[color:var(--border)] py-3 text-[12px] font-bold hover:text-[#ff4f0a]" href="/essays">
                   Buka halaman essays
                 </Link>
-                <Link className="py-3 text-[12px] font-bold hover:text-[#2563ff]" href="/pov">
+                <Link className="py-3 text-[12px] font-bold hover:text-[#ff4f0a]" href="/pov">
                   Buka halaman POV
                 </Link>
               </div>

@@ -12,7 +12,7 @@ const ThemeContext = createContext<ThemeContextValue | null>(null);
 function getPreferred(): Theme {
   if (typeof window === "undefined") return "light";
   try {
-    const stored = localStorage.getItem(STORAGE_KEY);
+    const stored = localStorage.getItem(STORAGE_KEY)?.replaceAll('"', "");
     if (stored === "dark" || stored === "light") return stored;
   } catch {}
   return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
@@ -50,7 +50,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const toggle = useCallback(() => {
     setTheme((prev) => {
       const next = prev === "dark" ? "light" : "dark";
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+      localStorage.setItem(STORAGE_KEY, next);
       apply(next);
       return next;
     });
@@ -58,7 +58,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   const set = useCallback((t: Theme) => {
     setTheme(t);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(t));
+    localStorage.setItem(STORAGE_KEY, t);
     apply(t);
   }, []);
 

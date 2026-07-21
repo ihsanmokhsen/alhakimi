@@ -57,7 +57,7 @@ export function PortfolioModal({ project, onClose }: PortfolioModalProps) {
         }`}
       >
         <button
-          className="absolute right-4 top-4 z-10 rounded-full border border-[color:var(--border-stronger)] bg-[color:var(--surface)] px-4 py-2 text-[12px] font-black uppercase text-[color:var(--text)]/[0.62] transition hover:text-[color:var(--text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50"
+          className="absolute right-4 top-4 z-10 rounded-full border border-[color:var(--border-stronger)] bg-[color:var(--surface)] px-4 py-2 text-[12px] font-black uppercase text-[color:var(--text)]/[0.62] transition hover:text-[color:var(--text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff4f0a]/50"
           onClick={onClose}
           type="button"
         >
@@ -65,7 +65,7 @@ export function PortfolioModal({ project, onClose }: PortfolioModalProps) {
         </button>
 
         <div className="grid lg:grid-cols-[1.08fr_0.92fr]">
-          <div className="relative min-h-[320px] overflow-hidden bg-[#e8e8e8] sm:min-h-[440px] lg:min-h-[620px]">
+          <div className="relative min-h-[320px] overflow-hidden bg-[#e5e8e6] sm:min-h-[440px] lg:min-h-[620px]">
             <Image
               alt={`${project.title} visual`}
               className="object-cover"
@@ -98,7 +98,7 @@ export function PortfolioModal({ project, onClose }: PortfolioModalProps) {
               </p>
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <Link
-                  className="inline-flex w-full justify-center rounded-full bg-black px-6 py-3 text-[13px] font-black uppercase text-white transition hover:bg-black/[0.76] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50 sm:w-auto"
+                  className="inline-flex w-full justify-center rounded-full bg-black px-6 py-3 text-[13px] font-black uppercase text-white transition hover:bg-black/[0.76] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff4f0a]/50 sm:w-auto"
                   href={project.url}
                   rel="noreferrer"
                   target="_blank"

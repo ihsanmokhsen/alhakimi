@@ -57,7 +57,7 @@ export default async function EssayPage({ params }: EssayPageProps) {
   const inlineImageByToken = new Map(essay.inlineImages.map((image) => [image.token, image]));
 
   return (
-    <main className="min-h-screen bg-white text-[#111113]">
+    <main className="min-h-screen bg-white text-[#101211]">
       <StructuredData data={[
         breadcrumbJsonLd([{ name: "Beranda", path: "/" }, { name: "Essays", path: "/essays" }, { name: essay.title, path }]),
         {
@@ -80,7 +80,7 @@ export default async function EssayPage({ params }: EssayPageProps) {
 
       <article>
         <header className="mx-auto w-full max-w-5xl px-4 pb-12 pt-16 sm:px-6 sm:pb-16 sm:pt-24">
-          <Link className="text-[12px] font-black uppercase text-[#2563ff]" href="/essays">Essays</Link>
+          <Link className="text-[12px] font-black uppercase text-[#ff4f0a]" href="/essays">Essays</Link>
           <h1 className="mt-6 max-w-5xl text-[clamp(3rem,8vw,7rem)] font-black leading-[0.9] tracking-normal">{essay.title}</h1>
           <p className="mt-7 max-w-3xl text-[18px] font-medium leading-8 text-black/55 sm:text-[22px] sm:leading-9">{essay.excerpt}</p>
           <div className="mt-8 flex flex-wrap gap-x-5 gap-y-2 border-t border-black/12 pt-5 text-[12px] font-bold uppercase text-black/42">
@@ -94,7 +94,7 @@ export default async function EssayPage({ params }: EssayPageProps) {
         </header>
 
         {essay.hasCover ? (
-          <div className="relative mx-auto aspect-[16/8] w-full max-w-7xl overflow-hidden bg-[#f0f0f0]">
+          <div className="relative mx-auto aspect-[16/8] w-full max-w-7xl overflow-hidden bg-[#e9eceb]">
             <Image alt={`Sampul ${essay.title}`} className="object-cover" fill priority sizes="100vw" src={`/api/essay-cover/${essay.id}?v=${new Date(essay.updatedAt).getTime()}`} />
           </div>
         ) : null}
@@ -110,7 +110,7 @@ export default async function EssayPage({ params }: EssayPageProps) {
                   <figure className="py-3" key={`image-${image.id}-${blockIndex}`}>
                     <Image
                       alt={image.alt}
-                      className="h-auto w-full bg-[#f0f0f0] object-contain"
+                      className="h-auto w-full bg-[#e9eceb] object-contain"
                       height={image.height}
                       sizes="(max-width: 760px) 100vw, 760px"
                       src={`/api/essay-image/${image.id}`}
@@ -126,7 +126,7 @@ export default async function EssayPage({ params }: EssayPageProps) {
             })}
           </div>
           <div className="mt-16 border-t border-black/12 pt-8">
-            <Link className="inline-flex border-b-2 border-black pb-1 text-[12px] font-black uppercase hover:border-[#2563ff] hover:text-[#2563ff]" href="/essays">Lihat semua essays</Link>
+            <Link className="inline-flex border-b-2 border-black pb-1 text-[12px] font-black uppercase hover:border-[#ff4f0a] hover:text-[#ff4f0a]" href="/essays">Lihat semua essays</Link>
           </div>
         </div>
       </article>

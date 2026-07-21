@@ -6,6 +6,7 @@ import "@/app/globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { AccessibilityControlsWrapper } from "@/components/portfolio/accessibility-controls-wrapper";
 import { ChatWidgetWrapper } from "@/components/portfolio/chat-widget-wrapper";
+import { VisitTracker } from "@/components/portfolio/visit-tracker";
 import { StructuredData } from "@/components/seo/structured-data";
 import {
   PERSON_JSON_LD,
@@ -112,6 +113,7 @@ export default function RootLayout({
           }}
         />
         <ThemeProvider>
+          <VisitTracker />
           {children}
           <AccessibilityControlsWrapper />
           <ChatWidgetWrapper />

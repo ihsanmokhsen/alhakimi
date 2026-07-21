@@ -60,13 +60,13 @@ export function ConsultationModal({ open, onClose }: ConsultationModalProps) {
         {/* Accent gradient bar */}
         <div
           aria-hidden="true"
-          className="h-1.5 w-full bg-gradient-to-r from-[#2563ff] via-violet-500 to-[#2563ff] bg-[length:200%_100%]"
+          className="h-1.5 w-full bg-gradient-to-r from-[#ff4f0a] via-orange-300 to-[#ff4f0a] bg-[length:200%_100%]"
           style={{ animation: "gradientShift 4s ease infinite" }}
         />
 
         {/* Close button */}
         <button
-          className="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-full border border-black/[0.10] bg-white text-black/[0.52] transition hover:border-black/[0.20] hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50"
+          className="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-full border border-black/[0.10] bg-white text-black/[0.52] transition hover:border-black/[0.20] hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff4f0a]/50"
           onClick={onClose}
           type="button"
           aria-label="Tutup"
@@ -88,12 +88,12 @@ export function ConsultationModal({ open, onClose }: ConsultationModalProps) {
 
         <div className="px-6 pb-8 pt-5 sm:px-8 sm:pb-10 sm:pt-6">
           {/* Badge */}
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#2563ff]/15 bg-[#2563ff]/5 px-4 py-1.5">
+          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#ff4f0a]/15 bg-[#ff4f0a]/5 px-4 py-1.5">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
             </span>
-            <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-[#2563ff]">
+            <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-[#ff4f0a]">
               Tersedia untuk Proyek
             </span>
           </div>
@@ -102,7 +102,7 @@ export function ConsultationModal({ open, onClose }: ConsultationModalProps) {
           <h2 className="text-[clamp(2rem,7vw,2.8rem)] font-black leading-[1.05] tracking-tight text-black">
             Butuh Website atau
             <br />
-            <span className="bg-gradient-to-r from-[#2563ff] via-violet-500 to-[#2563ff] bg-[length:200%_100%] bg-clip-text text-transparent" style={{ animation: "gradientShift 4s ease infinite" }}>
+            <span className="bg-gradient-to-r from-[#ff4f0a] via-orange-300 to-[#ff4f0a] bg-[length:200%_100%] bg-clip-text text-transparent" style={{ animation: "gradientShift 4s ease infinite" }}>
               Konsultasi?
             </span>
           </h2>
@@ -113,12 +113,12 @@ export function ConsultationModal({ open, onClose }: ConsultationModalProps) {
           </p>
 
           {/* Contact card */}
-          <div className="mt-7 rounded-2xl border border-black/[0.08] bg-[#f6f7fa] p-5 sm:p-6">
+          <div className="mt-7 rounded-2xl border border-black/[0.08] bg-[#f2f4f3] p-5 sm:p-6">
             <p className="text-[12px] font-bold uppercase tracking-[0.12em] text-black/[0.40]">
               Hubungi via Email
             </p>
             <a
-              className="mt-2 block text-[clamp(1.05rem,3vw,1.2rem)] font-bold leading-snug text-[#2563ff] transition hover:text-[#0f4ff2] focus-visible:outline-none focus-visible:underline"
+              className="mt-2 block text-[clamp(1.05rem,3vw,1.2rem)] font-bold leading-snug text-[#ff4f0a] transition hover:text-[#e54100] focus-visible:outline-none focus-visible:underline"
               href="mailto:ihsanmokhsen17@gmail.com?subject=Konsultasi%20Website%20%2F%20Project"
             >
               ihsanmokhsen17@gmail.com
@@ -132,7 +132,7 @@ export function ConsultationModal({ open, onClose }: ConsultationModalProps) {
           {/* Action buttons */}
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
             <a
-              className="group relative inline-flex flex-1 items-center justify-center gap-2 overflow-hidden rounded-full bg-[#2563ff] px-6 py-3.5 text-[14px] font-bold text-white shadow-[0_18px_40px_rgba(37,99,255,0.28)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#0f4ff2] hover:shadow-[0_24px_55px_rgba(37,99,255,0.38)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50"
+              className="group relative inline-flex flex-1 items-center justify-center gap-2 overflow-hidden rounded-full bg-[#ff4f0a] px-6 py-3.5 text-[14px] font-bold text-white shadow-[0_18px_40px_rgba(255,79,10,0.28)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#e54100] hover:shadow-[0_24px_55px_rgba(255,79,10,0.38)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff4f0a]/50"
               href="mailto:ihsanmokhsen17@gmail.com?subject=Konsultasi%20Website%20%2F%20Project"
             >
               <svg
@@ -155,7 +155,7 @@ export function ConsultationModal({ open, onClose }: ConsultationModalProps) {
               />
             </a>
             <button
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-black/[0.12] bg-white px-6 py-3.5 text-[14px] font-bold text-black/[0.64] transition-all duration-300 hover:-translate-y-0.5 hover:border-black/[0.22] hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50"
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-black/[0.12] bg-white px-6 py-3.5 text-[14px] font-bold text-black/[0.64] transition-all duration-300 hover:-translate-y-0.5 hover:border-black/[0.22] hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff4f0a]/50"
               onClick={onClose}
               type="button"
             >

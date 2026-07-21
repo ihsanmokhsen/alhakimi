@@ -2,12 +2,12 @@ export default function HomeLoading() {
   return (
     <main className="min-h-screen bg-[color:var(--surface)]">
       {/* Hero skeleton */}
-      <section className="flex min-h-screen items-center justify-center bg-[#1a1a1e] px-4">
+      <section className="flex min-h-screen items-center justify-center bg-[#171a19] px-4">
         <div className="flex flex-col items-center gap-6">
           <div className="h-16 w-48 animate-pulse rounded-lg bg-[color:var(--surface)]/10 sm:h-24 sm:w-72" />
           <div className="h-4 w-72 animate-pulse rounded bg-[color:var(--surface)]/8 sm:h-5 sm:w-96" />
           <div className="mt-4 flex gap-3">
-            <div className="h-12 w-40 animate-pulse rounded bg-[#2563ff]/30" />
+            <div className="h-12 w-40 animate-pulse rounded bg-[#ff4f0a]/30" />
             <div className="h-12 w-40 animate-pulse rounded bg-[color:var(--surface)]/10" />
           </div>
         </div>

@@ -71,7 +71,7 @@ export function HomeShell({ projects, heroTitle, heroSubtitle }: HomeShellProps)
             style={{ animationDelay: "0.55s" }}
           >
             <Link
-              className="group relative inline-flex min-w-44 justify-center overflow-hidden rounded-full bg-[#2563ff] px-7 py-3.5 text-[14px] font-bold text-white shadow-[0_20px_45px_rgba(37,99,255,0.26)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#0f4ff2] hover:shadow-[0_28px_60px_rgba(37,99,255,0.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+              className="group relative inline-flex min-w-44 justify-center overflow-hidden rounded-full bg-[#ff4f0a] px-7 py-3.5 text-[14px] font-bold text-white shadow-[0_20px_45px_rgba(255,79,10,0.26)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#e54100] hover:shadow-[0_28px_60px_rgba(255,79,10,0.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
               href="/works"
             >
               <span className="relative z-10">Explore Works</span>
@@ -128,7 +128,7 @@ export function HomeShell({ projects, heroTitle, heroSubtitle }: HomeShellProps)
       >
         {/* Section heading with subtle accent */}
         <div className="mx-auto mb-10 max-w-7xl text-center">
-          <span className="inline-block rounded-full border border-[#2563ff]/15 bg-[#2563ff]/5 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-[#2563ff] sm:text-[12px]">
+          <span className="inline-block rounded-full border border-[#ff4f0a]/15 bg-[#ff4f0a]/5 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-[#ff4f0a] sm:text-[12px]">
             Portfolio
           </span>
         </div>

@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 
-import { getSiteVisitCount, incrementSiteVisitCount } from "@/lib/data/site-visits";
+import { incrementSiteVisitCount } from "@/lib/data/site-visits";
 import { formatMakassarDateKey } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
@@ -19,11 +19,9 @@ export async function POST(request: NextRequest) {
     const isAdmin = Boolean(request.cookies.get("session")?.value);
     const isBot = BOT_USER_AGENT.test(request.headers.get("user-agent") ?? "");
     const shouldIncrement = !wasCountedToday && !isAdmin && !isBot;
-    const total = shouldIncrement
-      ? await incrementSiteVisitCount()
-      : await getSiteVisitCount();
+    if (shouldIncrement) await incrementSiteVisitCount();
 
-    const response = NextResponse.json({ total }, { headers: NO_STORE_HEADERS });
+    const response = NextResponse.json({ ok: true }, { headers: NO_STORE_HEADERS });
 
     if (shouldIncrement) {
       response.cookies.set(VISIT_COOKIE, today, {

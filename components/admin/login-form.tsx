@@ -17,7 +17,7 @@ export function LoginForm({ notice }: LoginFormProps) {
   return (
     <section className="mx-auto w-full max-w-md rounded-[28px] border border-[color:var(--border)] bg-[color:var(--surface)] p-6 shadow-[0_24px_90px_rgba(18,22,34,0.12)] sm:p-8">
       <div className="mb-8">
-        <p className="text-[12px] font-black uppercase text-[#2563ff]">Welcome back</p>
+        <p className="text-[12px] font-black uppercase text-[#ff4f0a]">Welcome back</p>
         <h2 className="mt-3 text-[34px] font-black leading-none tracking-normal text-[color:var(--text)]">Sign In</h2>
       </div>
 
@@ -27,7 +27,7 @@ export function LoginForm({ notice }: LoginFormProps) {
             Username
           </label>
           <input
-            className="w-full rounded-[18px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-5 py-4 text-[15px] font-semibold text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#2563ff]/45 focus:bg-[color:var(--surface)]"
+            className="w-full rounded-[18px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-5 py-4 text-[15px] font-semibold text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#ff4f0a]/45 focus:bg-[color:var(--surface)]"
             id="username"
             name="username"
             placeholder="admin"
@@ -41,7 +41,7 @@ export function LoginForm({ notice }: LoginFormProps) {
             Password
           </label>
           <input
-            className="w-full rounded-[18px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-5 py-4 text-[15px] font-semibold text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#2563ff]/45 focus:bg-[color:var(--surface)]"
+            className="w-full rounded-[18px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-5 py-4 text-[15px] font-semibold text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#ff4f0a]/45 focus:bg-[color:var(--surface)]"
             id="password"
             name="password"
             placeholder="••••••••"
@@ -51,16 +51,16 @@ export function LoginForm({ notice }: LoginFormProps) {
         </div>
 
         <div className="flex justify-end">
-          <Link className="text-xs font-bold text-[#2563ff] hover:underline" href="/forgot-password">
+          <Link className="text-xs font-bold text-[#ff4f0a] hover:underline" href="/forgot-password">
             Forgot password?
           </Link>
         </div>
 
         {notice ? <p className="rounded-2xl bg-emerald-500/10 px-4 py-3 text-sm font-bold text-emerald-700">{notice}</p> : null}
-        {state.error ? <p className="rounded-2xl bg-[#2563ff]/10 px-4 py-3 text-sm font-bold text-[#2563ff]">{state.error}</p> : null}
+        {state.error ? <p className="rounded-2xl bg-[#ff4f0a]/10 px-4 py-3 text-sm font-bold text-[#ff4f0a]">{state.error}</p> : null}
 
         <button
-          className="w-full rounded-full bg-black px-6 py-4 text-[14px] font-black text-white shadow-[0_20px_45px_rgba(0,0,0,0.18)] transition hover:-translate-y-0.5 hover:bg-[#2563ff] disabled:translate-y-0 disabled:opacity-60"
+          className="w-full rounded-full bg-black px-6 py-4 text-[14px] font-black text-white shadow-[0_20px_45px_rgba(0,0,0,0.18)] transition hover:-translate-y-0.5 hover:bg-[#ff4f0a] disabled:translate-y-0 disabled:opacity-60"
           disabled={pending}
           type="submit"
         >

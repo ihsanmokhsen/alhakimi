@@ -26,7 +26,7 @@ export default async function EssaysPage() {
   const essays = await getEssays();
 
   return (
-    <main className="min-h-screen bg-white text-[#111113]">
+    <main className="min-h-screen bg-white text-[#101211]">
       <StructuredData data={[
         breadcrumbJsonLd([{ name: "Beranda", path: "/" }, { name: "Essays", path: "/essays" }]),
         {
@@ -43,7 +43,7 @@ export default async function EssaysPage() {
       <WorksHeader active="essays" />
 
       <header className="mx-auto w-full max-w-5xl px-4 pb-14 pt-20 sm:px-6 sm:pb-20 sm:pt-28">
-        <p className="text-[12px] font-black uppercase text-[#2563ff]">Essays</p>
+        <p className="text-[12px] font-black uppercase text-[#ff4f0a]">Essays</p>
         <h1 className="mt-5 max-w-4xl text-[clamp(3.7rem,10vw,8rem)] font-black leading-[0.88] tracking-normal">
           Gagasan yang diberi waktu.
         </h1>
@@ -59,18 +59,18 @@ export default async function EssaysPage() {
           essays.map((essay, index) => (
             <article className="grid gap-7 border-b border-black/12 py-10 sm:py-14 lg:grid-cols-[190px_minmax(0,1fr)_220px]" key={essay.id}>
               <div>
-                <p className="text-[11px] font-black uppercase text-[#2563ff]">{String(index + 1).padStart(2, "0")}</p>
+                <p className="text-[11px] font-black uppercase text-[#ff4f0a]">{String(index + 1).padStart(2, "0")}</p>
                 <p className="mt-2 text-[12px] font-bold text-black/42">{formatJournalDate(essay.publishedAt)}</p>
               </div>
               <div>
                 <h2 className="text-[clamp(2rem,5vw,4rem)] font-black leading-[0.98] tracking-normal">
-                  <Link className="transition hover:text-[#2563ff]" href={`/essays/${essay.slug}`}>{essay.title}</Link>
+                  <Link className="transition hover:text-[#ff4f0a]" href={`/essays/${essay.slug}`}>{essay.title}</Link>
                 </h2>
                 <p className="mt-5 max-w-2xl text-[15px] font-medium leading-7 text-black/55 sm:text-[17px]">{essay.excerpt}</p>
-                <Link className="mt-6 inline-flex border-b-2 border-black pb-1 text-[12px] font-black uppercase transition hover:border-[#2563ff] hover:text-[#2563ff]" href={`/essays/${essay.slug}`}>Baca essay</Link>
+                <Link className="mt-6 inline-flex border-b-2 border-black pb-1 text-[12px] font-black uppercase transition hover:border-[#ff4f0a] hover:text-[#ff4f0a]" href={`/essays/${essay.slug}`}>Baca essay</Link>
               </div>
               {essay.hasCover ? (
-                <Link className="relative aspect-[4/3] overflow-hidden bg-[#f0f0f0]" href={`/essays/${essay.slug}`}>
+                <Link className="relative aspect-[4/3] overflow-hidden bg-[#e9eceb]" href={`/essays/${essay.slug}`}>
                   <Image alt={`Sampul ${essay.title}`} className="object-cover transition duration-500 hover:scale-[1.03]" fill sizes="(max-width: 1024px) 100vw, 220px" src={`/api/essay-cover/${essay.id}?v=${new Date(essay.updatedAt).getTime()}`} />
                 </Link>
               ) : null}

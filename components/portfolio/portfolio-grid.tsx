@@ -65,7 +65,7 @@ export function PortfolioGrid({ projects }: PortfolioGridProps) {
             <div className="relative">
               <input
                 aria-label="Search works"
-                className="min-h-[3.25rem] w-full rounded-[16px] border border-transparent bg-[#f8f8fa] px-5 pr-12 text-[14px] font-semibold text-[color:var(--text)] outline-none transition duration-300 placeholder:text-[color:var(--text)]/28 hover:bg-[#f3f3f6] focus:border-[#2563ff]/25 focus:bg-[color:var(--surface)] focus:ring-2 focus:ring-[#2563ff]/15 sm:text-[15px]"
+                className="min-h-[3.25rem] w-full rounded-[16px] border border-transparent bg-[#f4f5f4] px-5 pr-12 text-[14px] font-semibold text-[color:var(--text)] outline-none transition duration-300 placeholder:text-[color:var(--text)]/28 hover:bg-[#e8ebe9] focus:border-[#ff4f0a]/25 focus:bg-[color:var(--surface)] focus:ring-2 focus:ring-[#ff4f0a]/15 sm:text-[15px]"
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder="Search works..."
                 type="search"
@@ -94,7 +94,7 @@ export function PortfolioGrid({ projects }: PortfolioGridProps) {
               aria-pressed={viewMode === "grid"}
               className={`inline-flex min-h-10 items-center gap-2 rounded-[10px] px-3.5 text-[12px] font-black transition ${
                 viewMode === "grid"
-                  ? "bg-[#2563ff] text-white shadow-[0_8px_20px_rgba(37,99,255,0.22)]"
+                  ? "bg-[#ff4f0a] text-white shadow-[0_8px_20px_rgba(255,79,10,0.22)]"
                   : "text-[color:var(--text)]/48 hover:bg-[color:var(--bg-chip)] hover:text-[color:var(--text)]"
               }`}
               onClick={() => setViewMode("grid")}
@@ -107,7 +107,7 @@ export function PortfolioGrid({ projects }: PortfolioGridProps) {
               aria-pressed={viewMode === "list"}
               className={`inline-flex min-h-10 items-center gap-2 rounded-[10px] px-3.5 text-[12px] font-black transition ${
                 viewMode === "list"
-                  ? "bg-[#2563ff] text-white shadow-[0_8px_20px_rgba(37,99,255,0.22)]"
+                  ? "bg-[#ff4f0a] text-white shadow-[0_8px_20px_rgba(255,79,10,0.22)]"
                   : "text-[color:var(--text)]/48 hover:bg-[color:var(--bg-chip)] hover:text-[color:var(--text)]"
               }`}
               onClick={() => setViewMode("list")}
@@ -127,7 +127,7 @@ export function PortfolioGrid({ projects }: PortfolioGridProps) {
               return (
                 <FadeIn delay={Math.min(index * 60, 360)} key={project.id}>
                   <button
-                    className="group relative block aspect-square w-full overflow-hidden rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface)] text-left shadow-[var(--shadow-card)] transition duration-300 hover:-translate-y-1 hover:border-[#2563ff]/20 hover:shadow-[var(--shadow-card-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50 focus-visible:ring-offset-2"
+                    className="group relative block aspect-square w-full overflow-hidden rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface)] text-left shadow-[var(--shadow-card)] transition duration-300 hover:-translate-y-1 hover:border-[#ff4f0a]/20 hover:shadow-[var(--shadow-card-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff4f0a]/50 focus-visible:ring-offset-2"
                     onClick={() => setActiveProject(project)}
                     type="button"
                   >
@@ -142,13 +142,13 @@ export function PortfolioGrid({ projects }: PortfolioGridProps) {
                       />
                       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.03),rgba(0,0,0,0.12)_44%,rgba(0,0,0,0.38))]" />
 
-                      <span className="absolute left-2 top-2 rounded-full border border-white/70 bg-white/85 px-2.5 py-1 text-[9px] font-black uppercase text-[#2563ff] shadow-[0_10px_28px_rgba(0,0,0,0.08)] backdrop-blur-xl sm:left-3 sm:top-3 sm:px-3">
+                      <span className="absolute left-2 top-2 rounded-full border border-white/70 bg-white/85 px-2.5 py-1 text-[9px] font-black uppercase text-[#ff4f0a] shadow-[0_10px_28px_rgba(0,0,0,0.08)] backdrop-blur-xl sm:left-3 sm:top-3 sm:px-3">
                         {project.category}
                       </span>
 
                       <div className="absolute inset-x-0 bottom-0 p-2 sm:p-3">
                         <div className="rounded-xl border border-white/60 bg-white/90 p-2.5 shadow-[0_18px_55px_rgba(0,0,0,0.12)] backdrop-blur-2xl sm:p-3">
-                          <h2 className="text-[13px] font-black leading-tight text-black transition group-hover:text-[#2563ff] sm:text-[15px]">
+                          <h2 className="text-[13px] font-black leading-tight text-black transition group-hover:text-[#ff4f0a] sm:text-[15px]">
                             {project.title}
                           </h2>
                           <p className="mt-1 line-clamp-1 text-[10px] font-medium leading-snug text-black/56 sm:text-[11px]">
@@ -158,7 +158,7 @@ export function PortfolioGrid({ projects }: PortfolioGridProps) {
                             <span className="text-[9px] font-bold text-black/38 sm:text-[10px]">
                               {project.featured ? "Featured" : "Selected"}
                             </span>
-                            <span className="rounded-lg bg-black px-2.5 py-1 text-[9px] font-bold text-white transition group-hover:bg-[#2563ff] sm:px-3 sm:text-[10px]">
+                            <span className="rounded-lg bg-black px-2.5 py-1 text-[9px] font-bold text-white transition group-hover:bg-[#ff4f0a] sm:px-3 sm:text-[10px]">
                               Buka
                             </span>
                           </div>
@@ -180,7 +180,7 @@ export function PortfolioGrid({ projects }: PortfolioGridProps) {
               return (
                 <FadeIn delay={Math.min(index * 45, 270)} key={project.id}>
                   <button
-                    className="group flex min-h-28 w-full items-center gap-4 overflow-hidden rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface)] p-3 text-left shadow-[0_12px_45px_rgba(18,22,34,0.06)] transition duration-300 hover:-translate-y-0.5 hover:border-[#2563ff]/20 hover:shadow-[0_18px_60px_rgba(18,22,34,0.10)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563ff]/50 sm:gap-5 sm:p-4"
+                    className="group flex min-h-28 w-full items-center gap-4 overflow-hidden rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface)] p-3 text-left shadow-[0_12px_45px_rgba(18,22,34,0.06)] transition duration-300 hover:-translate-y-0.5 hover:border-[#ff4f0a]/20 hover:shadow-[0_18px_60px_rgba(18,22,34,0.10)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff4f0a]/50 sm:gap-5 sm:p-4"
                     onClick={() => setActiveProject(project)}
                     type="button"
                   >
@@ -196,10 +196,10 @@ export function PortfolioGrid({ projects }: PortfolioGridProps) {
                     </div>
 
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-[10px] font-black uppercase text-[#2563ff] sm:text-[11px]">
+                      <p className="truncate text-[10px] font-black uppercase text-[#ff4f0a] sm:text-[11px]">
                         {project.category}
                       </p>
-                      <h2 className="mt-1 truncate text-[17px] font-black leading-tight text-[color:var(--text)] transition group-hover:text-[#2563ff] sm:text-[21px]">
+                      <h2 className="mt-1 truncate text-[17px] font-black leading-tight text-[color:var(--text)] transition group-hover:text-[#ff4f0a] sm:text-[21px]">
                         {project.title}
                       </h2>
                       <p className="mt-1.5 line-clamp-2 text-[11px] font-medium leading-5 text-[color:var(--text)]/52 sm:text-[13px] sm:leading-6">
@@ -207,7 +207,7 @@ export function PortfolioGrid({ projects }: PortfolioGridProps) {
                       </p>
                     </div>
 
-                    <span className="hidden shrink-0 bg-[color:var(--inverse-surface)] px-4 py-2.5 text-[11px] font-black text-[color:var(--inverse-text)] transition group-hover:bg-[#2563ff] group-hover:text-white sm:inline-flex">
+                    <span className="hidden shrink-0 bg-[color:var(--inverse-surface)] px-4 py-2.5 text-[11px] font-black text-[color:var(--inverse-text)] transition group-hover:bg-[#ff4f0a] group-hover:text-white sm:inline-flex">
                       Buka aplikasi
                     </span>
                   </button>

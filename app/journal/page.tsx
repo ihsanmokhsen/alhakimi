@@ -48,7 +48,7 @@ export default async function JournalPage() {
 
       <section className="mx-auto w-full max-w-7xl px-4 pb-14 pt-16 sm:px-6 sm:pb-20 sm:pt-24 lg:px-8">
         <div className="max-w-4xl">
-          <p className="text-[12px] font-black uppercase text-[#2563ff]">Stories</p>
+          <p className="text-[12px] font-black uppercase text-[#ff4f0a]">Stories</p>
           <h1 className="mt-5 text-[clamp(3.8rem,10vw,8.5rem)] font-black leading-[0.86] tracking-tight text-[color:var(--text)]">
             Ideas with quiet depth.
           </h1>

@@ -41,7 +41,7 @@ export function ShareButton({ title, url, variant = "dark" }: ShareButtonProps) 
         isDark
           ? "border border-[color:var(--border-solid)] bg-[color:var(--surface)] text-[color:var(--text)] hover:-translate-y-0.5 hover:border-black/20"
           : "border border-[color:var(--border)] bg-[color:var(--surface)] text-[color:var(--text)] hover:-translate-y-0.5 hover:border-black/14"
-      } ${copied ? "bg-[#2563ff] !text-white" : ""}`}
+      } ${copied ? "bg-[#ff4f0a] !text-white" : ""}`}
       onClick={handleShare}
       type="button"
     >

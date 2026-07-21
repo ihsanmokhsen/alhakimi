@@ -39,7 +39,7 @@ export function PovVideoList({ videos }: PovVideoListProps) {
 
             <form action={deleteAction} className="shrink-0">
               <button
-                className="rounded-full border border-[color:var(--border-solid)] bg-[color:var(--surface-muted)] px-3.5 py-2 text-[12px] font-black text-[color:var(--text)]/52 transition hover:border-[#2563ff]/30 hover:text-[#2563ff]"
+                className="rounded-full border border-[color:var(--border-solid)] bg-[color:var(--surface-muted)] px-3.5 py-2 text-[12px] font-black text-[color:var(--text)]/52 transition hover:border-[#ff4f0a]/30 hover:text-[#ff4f0a]"
                 type="submit"
               >
                 Delete

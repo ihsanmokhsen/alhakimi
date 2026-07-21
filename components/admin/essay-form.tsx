@@ -264,7 +264,7 @@ export function EssayForm({ action, essay, submitLabel = "Terbitkan essay" }: Es
     setContent(updatedContent);
   }
 
-  const inputClass = "w-full border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[14px] font-semibold text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#2563ff]/45 focus:bg-[color:var(--surface)]";
+  const inputClass = "w-full border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[14px] font-semibold text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#ff4f0a]/45 focus:bg-[color:var(--surface)]";
 
   return (
     <section className="border border-[color:var(--border)] bg-[color:var(--surface)] p-4 shadow-[0_20px_70px_rgba(18,22,34,0.09)] sm:p-6">
@@ -289,7 +289,7 @@ export function EssayForm({ action, essay, submitLabel = "Terbitkan essay" }: Es
           <div className="flex flex-wrap items-end justify-between gap-2">
             <label className="text-[12px] font-black uppercase text-[color:var(--text)]/42" htmlFor="essay-content">Tulisan lengkap</label>
             <button
-              className="border border-[#2563ff]/25 bg-[#2563ff]/5 px-3 py-2 text-[11px] font-black text-[#2563ff] transition hover:bg-[#2563ff] hover:text-white disabled:opacity-50"
+              className="border border-[#ff4f0a]/25 bg-[#ff4f0a]/5 px-3 py-2 text-[11px] font-black text-[#ff4f0a] transition hover:bg-[#ff4f0a] hover:text-white disabled:opacity-50"
               disabled={preparingImages || inlineImages.length >= MAX_INLINE_IMAGES}
               onClick={openImagePicker}
               type="button"
@@ -328,7 +328,7 @@ export function EssayForm({ action, essay, submitLabel = "Terbitkan essay" }: Es
                 <label className="min-w-0 flex-1 space-y-1">
                   <span className="text-[10px] font-black uppercase text-[color:var(--text)]/36">Teks alternatif foto {index + 1}</span>
                   <input
-                    className="w-full border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-3 py-2 text-[12px] font-semibold outline-none focus:border-[#2563ff]/45"
+                    className="w-full border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-3 py-2 text-[12px] font-semibold outline-none focus:border-[#ff4f0a]/45"
                     maxLength={120}
                     onChange={(event) => updateImageAlt(image.token, event.target.value)}
                     value={image.alt}
@@ -366,7 +366,7 @@ export function EssayForm({ action, essay, submitLabel = "Terbitkan essay" }: Es
         {localError || state.error ? <p className="bg-red-500/10 px-4 py-3 text-sm font-bold text-red-600">{localError ?? state.error}</p> : null}
         {state.success ? <p className="bg-emerald-500/10 px-4 py-3 text-sm font-bold text-emerald-600">Essay berhasil diterbitkan.</p> : null}
 
-        <button className="bg-black px-5 py-3 text-[12px] font-black text-white transition hover:bg-[#2563ff] disabled:opacity-60" disabled={pending || preparingImages} type="submit">
+        <button className="bg-black px-5 py-3 text-[12px] font-black text-white transition hover:bg-[#ff4f0a] disabled:opacity-60" disabled={pending || preparingImages} type="submit">
           {pending ? "Menyimpan..." : preparingImages ? "Menyiapkan foto..." : submitLabel}
         </button>
       </form>

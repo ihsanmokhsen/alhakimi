@@ -103,7 +103,7 @@ export function HeroForm({
       <section className="rounded-[24px] border border-[color:var(--border)] bg-[color:var(--surface)] p-4 shadow-[0_20px_70px_rgba(18,22,34,0.09)] sm:p-6">
         <div className="mb-4 flex items-center justify-between">
           <div>
-            <p className="text-[12px] font-black uppercase text-[#2563ff]">Appearance</p>
+            <p className="text-[12px] font-black uppercase text-[#ff4f0a]">Appearance</p>
             <h3 className="mt-1 text-[20px] font-black text-[color:var(--text)]">Hero settings</h3>
           </div>
           <span className="rounded-full bg-black/5 px-3 py-1 text-[11px] font-bold text-[color:var(--text)]/50">
@@ -116,7 +116,7 @@ export function HeroForm({
             <label className="space-y-1.5">
               <span className="text-[12px] font-black uppercase text-[color:var(--text)]/42">Hero title</span>
               <input
-                className="w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[14px] font-semibold text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#2563ff]/45 focus:bg-[color:var(--surface)]"
+                className="w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[14px] font-semibold text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#ff4f0a]/45 focus:bg-[color:var(--surface)]"
                 defaultValue={currentTitle}
                 name="heroTitle"
                 placeholder="works"
@@ -127,7 +127,7 @@ export function HeroForm({
             <label className="space-y-1.5">
               <span className="text-[12px] font-black uppercase text-[color:var(--text)]/42">Hero subtitle</span>
               <input
-                className="w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[14px] font-semibold text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#2563ff]/45 focus:bg-[color:var(--surface)]"
+                className="w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[14px] font-semibold text-[color:var(--text)] outline-none transition placeholder:text-[color:var(--text)]/30 focus:border-[#ff4f0a]/45 focus:bg-[color:var(--surface)]"
                 defaultValue={currentSubtitle}
                 name="heroSubtitle"
                 placeholder="Beberapa Apps yang dibuat untuk kebutuhan kantor dan pribadi."
@@ -171,7 +171,7 @@ export function HeroForm({
 
           <div className="flex flex-wrap gap-3">
             <button
-              className="rounded-full bg-black px-5 py-3 text-[12px] font-black text-white shadow-[0_14px_34px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5 hover:bg-[#2563ff] disabled:translate-y-0 disabled:opacity-60"
+              className="rounded-full bg-black px-5 py-3 text-[12px] font-black text-white shadow-[0_14px_34px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5 hover:bg-[#ff4f0a] disabled:translate-y-0 disabled:opacity-60"
               disabled={updatePending}
               type="submit"
             >
@@ -196,7 +196,7 @@ export function HeroForm({
       <section className="rounded-[24px] border border-[color:var(--border)] bg-[color:var(--surface)] p-4 shadow-[0_20px_70px_rgba(18,22,34,0.09)] sm:p-6">
         <div className="mb-4 flex items-center justify-between">
           <div>
-            <p className="text-[12px] font-black uppercase text-[#f59e0b]">Popup</p>
+            <p className="text-[12px] font-black uppercase text-[#ff4f0a]">Popup</p>
             <h3 className="mt-1 text-[20px] font-black text-[color:var(--text)]">Welcome popup image</h3>
           </div>
           <span className="rounded-full bg-black/5 px-3 py-1 text-[11px] font-bold text-[color:var(--text)]/50">
@@ -215,7 +215,7 @@ export function HeroForm({
             <input
               ref={welcomeInputRef}
               accept="image/*"
-              className="w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[13px] font-semibold text-[color:var(--text)] outline-none file:mr-3 file:rounded-full file:border-0 file:bg-[#f59e0b] file:px-3.5 file:py-1.5 file:text-[12px] file:font-black file:text-white"
+              className="w-full rounded-[16px] border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] px-4 py-3 text-[13px] font-semibold text-[color:var(--text)] outline-none file:mr-3 file:rounded-full file:border-0 file:bg-[#ff4f0a] file:px-3.5 file:py-1.5 file:text-[12px] file:font-black file:text-white"
               name="welcomeFile"
               onChange={handleWelcomeFileChange}
               type="file"
@@ -250,7 +250,7 @@ export function HeroForm({
 
           <div className="flex flex-wrap gap-3">
             <button
-              className="rounded-full bg-[#f59e0b] px-5 py-3 text-[12px] font-black text-white shadow-[0_14px_34px_rgba(245,158,11,0.24)] transition hover:-translate-y-0.5 hover:bg-[#d88c0a] disabled:translate-y-0 disabled:opacity-60"
+              className="rounded-full bg-[#ff4f0a] px-5 py-3 text-[12px] font-black text-white shadow-[0_14px_34px_rgba(255,79,10,0.24)] transition hover:-translate-y-0.5 hover:bg-[#e54100] disabled:translate-y-0 disabled:opacity-60"
               disabled={welcomePending}
               type="submit"
             >

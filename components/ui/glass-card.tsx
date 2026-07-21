@@ -12,7 +12,7 @@ export function GlassCard({ className, hoverable, ...props }: GlassCardProps) {
       className={cn(
         "rounded-2xl border border-[color:var(--ui-border)] bg-[image:var(--ui-card)] shadow-glass backdrop-blur-2xl",
         hoverable
-          ? "transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_32px_100px_rgba(18,22,34,0.16),0_0_40px_-4px_rgba(37,99,255,0.1)] hover:border-[#2563ff]/20"
+          ? "transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_32px_100px_rgba(18,22,34,0.16),0_0_40px_-4px_rgba(255,79,10,0.1)] hover:border-[#ff4f0a]/20"
           : null,
         className
       )}

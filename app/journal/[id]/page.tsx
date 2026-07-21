@@ -89,7 +89,7 @@ export default async function JournalDetailPage({ params }: JournalDetailPagePro
 
       <article className="mx-auto w-full max-w-7xl px-4 pb-24 pt-12 sm:px-6 sm:pt-20 lg:px-8">
         <Link
-          className="inline-flex border border-[color:var(--border-solid)] bg-[color:var(--surface)] px-5 py-3 text-[12px] font-black text-[color:var(--text)]/56 shadow-[0_14px_40px_rgba(18,22,34,0.08)] transition hover:-translate-y-0.5 hover:text-[#2563ff]"
+          className="inline-flex border border-[color:var(--border-solid)] bg-[color:var(--surface)] px-5 py-3 text-[12px] font-black text-[color:var(--text)]/56 shadow-[0_14px_40px_rgba(18,22,34,0.08)] transition hover:-translate-y-0.5 hover:text-[#ff4f0a]"
           href="/journal"
         >
           Back to Stories
@@ -97,7 +97,7 @@ export default async function JournalDetailPage({ params }: JournalDetailPagePro
 
         <div className="mt-10 grid gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-start">
           <header>
-            <p className="text-[12px] font-black uppercase text-[#2563ff]">
+            <p className="text-[12px] font-black uppercase text-[#ff4f0a]">
               {formatJournalDate(journal.publishedAt)}
             </p>
             <h1 className="mt-5 text-[clamp(3.6rem,8vw,7.5rem)] font-black leading-[0.88] tracking-normal text-[color:var(--text)]">
@@ -110,7 +110,7 @@ export default async function JournalDetailPage({ params }: JournalDetailPagePro
 
           <section className="overflow-hidden border border-[color:var(--border)] bg-[color:var(--surface)] shadow-[0_24px_90px_rgba(18,22,34,0.12)]">
             {journal.hasPhoto ? (
-              <div className="relative min-h-[320px] overflow-hidden bg-[#ebecef] sm:min-h-[460px]">
+              <div className="relative min-h-[320px] overflow-hidden bg-[#e1e5e3] sm:min-h-[460px]">
                 <Image
                   alt={`Foto untuk ${journal.title}`}
                   className="object-cover"

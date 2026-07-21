@@ -34,7 +34,7 @@ export default async function ResetPasswordPage({ searchParams }: ResetPasswordP
 
       <section className="mx-auto grid min-h-[calc(100svh-5rem)] w-full max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8">
         <div>
-          <p className="text-[12px] font-black uppercase text-[#2563ff]">Security reset</p>
+          <p className="text-[12px] font-black uppercase text-[#ff4f0a]">Security reset</p>
           <h1 className="mt-5 text-[clamp(4rem,10vw,8.5rem)] font-black leading-[0.86] tracking-normal text-[color:var(--text)]">
             Set a new password.
           </h1>
