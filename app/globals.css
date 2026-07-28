@@ -84,101 +84,9 @@
   --inverse-surface: #000000;
 }
 
-[data-theme="dark"] {
-  --background: #080a09;
-  --foreground: #eef1ef;
-  --warm-1: rgba(255, 79, 10, 0.11);
-  --warm-2: rgba(115, 132, 126, 0.1);
-  --warm-3: rgba(255, 255, 255, 0.045);
-  --ui-strong: rgba(239, 243, 241, 0.9);
-  --ui-muted: rgba(224, 230, 227, 0.68);
-  --ui-soft: rgba(210, 218, 214, 0.48);
-  --ui-border: rgba(255, 255, 255, 0.10);
-  --ui-card: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03));
-  --ui-card-hover: rgba(255, 255, 255, 0.08);
-  --ui-chip: rgba(255, 255, 255, 0.08);
-  --public-text-strong: rgba(255, 255, 255, 0.92);
-  --public-text-muted: rgba(255, 255, 255, 0.78);
-  --public-text-soft: rgba(255, 255, 255, 0.56);
-  --public-text-faint: rgba(255, 255, 255, 0.4);
-  --public-surface: rgba(255, 255, 255, 0.06);
-  --public-surface-strong: rgba(255, 255, 255, 0.04);
-  --public-border: rgba(255, 255, 255, 0.12);
-
-  /* ── Semantic theme tokens (dark) ── */
-  --surface: #0d100f;
-  --surface-muted: #151918;
-  --surface-card: #1a1e1c;
-  --surface-elevated: #222825;
-  --surface-overlay: rgba(0, 0, 0, 0.60);
-  --text: #f0f2f1;
-  --text-90: rgba(240, 242, 241, 0.90);
-  --text-80: rgba(240, 242, 241, 0.80);
-  --text-70: rgba(240, 242, 241, 0.70);
-  --text-62: rgba(240, 242, 241, 0.62);
-  --text-60: rgba(240, 242, 241, 0.60);
-  --text-58: rgba(240, 242, 241, 0.58);
-  --text-56: rgba(240, 242, 241, 0.56);
-  --text-54: rgba(240, 242, 241, 0.54);
-  --text-52: rgba(240, 242, 241, 0.52);
-  --text-50: rgba(240, 242, 241, 0.50);
-  --text-44: rgba(240, 242, 241, 0.44);
-  --text-42: rgba(240, 242, 241, 0.42);
-  --text-40: rgba(240, 242, 241, 0.40);
-  --text-38: rgba(240, 242, 241, 0.38);
-  --text-36: rgba(240, 242, 241, 0.36);
-  --text-34: rgba(240, 242, 241, 0.34);
-  --text-32: rgba(240, 242, 241, 0.32);
-  --text-30: rgba(240, 242, 241, 0.30);
-  --text-28: rgba(240, 242, 241, 0.28);
-  --text-25: rgba(240, 242, 241, 0.25);
-  --text-24: rgba(240, 242, 241, 0.24);
-  --text-20: rgba(240, 242, 241, 0.20);
-  --text-18: rgba(240, 242, 241, 0.18);
-  --text-15: rgba(240, 242, 241, 0.15);
-  --text-12: rgba(240, 242, 241, 0.12);
-  --text-10: rgba(240, 242, 241, 0.10);
-  --text-08: rgba(240, 242, 241, 0.08);
-  --text-06: rgba(240, 242, 241, 0.06);
-  --text-05: rgba(240, 242, 241, 0.05);
-  --text-04: rgba(240, 242, 241, 0.04);
-  --text-02: rgba(240, 242, 241, 0.02);
-  --border: rgba(255, 255, 255, 0.06);
-  --border-strong: rgba(255, 255, 255, 0.08);
-  --border-solid: rgba(255, 255, 255, 0.10);
-  --border-stronger: rgba(255, 255, 255, 0.12);
-  --shadow-card: 0 22px 80px rgba(0, 0, 0, 0.40);
-  --shadow-card-hover: 0 32px 100px rgba(0, 0, 0, 0.55);
-  --bg-card-hover: rgba(255, 255, 255, 0.04);
-  --bg-chip: rgba(255, 255, 255, 0.06);
-  --accent-bg: rgba(255, 79, 10, 0.12);
-  --accent-border: rgba(255, 79, 10, 0.24);
-  --accent-ring: rgba(255, 79, 10, 0.52);
-  --inverse-text: #0b0d0c;
-  --inverse-surface: #f3f5f4;
-}
-
 html {
   scroll-behavior: smooth;
   color-scheme: light;
-}
-
-html[data-theme="dark"] {
-  color-scheme: dark;
-}
-
-html[data-a11y-font-color="black"] {
-  --public-text-strong: rgba(18, 18, 18, 0.92);
-  --public-text-muted: rgba(20, 20, 20, 0.78);
-  --public-text-soft: rgba(26, 26, 26, 0.62);
-  --public-text-faint: rgba(26, 26, 26, 0.48);
-  --public-surface: rgba(255, 255, 255, 0.78);
-  --public-surface-strong: rgba(255, 255, 255, 0.72);
-  --public-border: rgba(255, 255, 255, 0.38);
-}
-
-html[data-a11y-font-size="large"] {
-  font-size: 112.5%;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -188,15 +96,6 @@ html[data-a11y-font-size="large"] {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-}
-
-html[data-a11y-reduce-motion="true"] *,
-html[data-a11y-reduce-motion="true"] *::before,
-html[data-a11y-reduce-motion="true"] *::after {
-  animation-duration: 0.01ms !important;
-  animation-iteration-count: 1 !important;
-  transition-duration: 0.01ms !important;
-  scroll-behavior: auto !important;
 }
 
 body {
@@ -574,14 +473,4 @@ textarea {
   .animate-pulse-badge {
     animation: none !important;
   }
-}
-
-html[data-a11y-reduce-motion="true"] .hero-orb,
-html[data-a11y-reduce-motion="true"] .floating-particle,
-html[data-a11y-reduce-motion="true"] .animate-float-up-stagger,
-html[data-a11y-reduce-motion="true"] .animate-reveal-text,
-html[data-a11y-reduce-motion="true"] .card-shine-overlay,
-html[data-a11y-reduce-motion="true"] .animate-scroll-bounce,
-html[data-a11y-reduce-motion="true"] .animate-pulse-badge {
-  animation: none !important;
 }

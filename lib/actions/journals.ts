@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 import { requireAdmin } from "@/lib/auth";
+import { convertImageToWebp } from "@/lib/image-processing";
 import { prisma } from "@/lib/prisma";
 import { parseMakassarDateTimeInput } from "@/lib/utils";
 
@@ -46,11 +47,15 @@ async function parseJournalPhoto(formData: FormData) {
     throw new Error("Foto jurnal terlalu besar. Maksimal 5MB.");
   }
 
-  const rawBuffer = await uploaded.arrayBuffer();
-  const bytes = new Uint8Array(rawBuffer) as PrismaBytes;
+  const converted = await convertImageToWebp(await uploaded.arrayBuffer(), {
+    maxWidth: 1920,
+    maxHeight: 1920,
+    quality: 80
+  });
+
   return {
-    photoImage: bytes,
-    photoMimeType: uploaded.type
+    photoImage: converted.bytes as PrismaBytes,
+    photoMimeType: converted.mimeType
   };
 }
 

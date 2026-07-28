@@ -38,7 +38,7 @@ const recentWorkItems = [
   {
     title: "Kualitas, aksesibilitas, dan jangkauan",
     description:
-      "Saya juga sedang memperkuat kualitas produk melalui optimasi performa, mode gelap, kontrol aksesibilitas, struktur SEO, peta situs, Search Console, dan Google Analytics. Tujuannya agar setiap layanan lebih cepat, inklusif, mudah ditemukan, serta dapat dievaluasi menggunakan data."
+      "Saya juga sedang memperkuat kualitas produk melalui optimasi performa, struktur SEO, peta situs, Search Console, dan Google Analytics. Tujuannya agar setiap layanan lebih cepat, mudah ditemukan, serta dapat dievaluasi menggunakan data."
   },
   {
     title: "Riset keamanan informasi",

@@ -142,7 +142,7 @@ export function JournalForm({ action }: JournalFormProps) {
             name="photoFile"
             type="file"
           />
-          <p className="text-[12px] font-medium text-[color:var(--text)]/42">Foto akan otomatis dikompres ke sekitar 200KB.</p>
+          <p className="text-[12px] font-medium text-[color:var(--text)]/42">Foto otomatis diubah ke WebP dan dikompres ke sekitar 200KB.</p>
         </label>
 
         {state.error ? <p className="rounded-2xl bg-[#ff4f0a]/10 px-4 py-3 text-sm font-bold text-[#ff4f0a]">{state.error}</p> : null}

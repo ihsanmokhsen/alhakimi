@@ -3,8 +3,6 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import { Plus_Jakarta_Sans } from "next/font/google";
 
 import "@/app/globals.css";
-import { ThemeProvider } from "@/components/theme/theme-provider";
-import { AccessibilityControlsWrapper } from "@/components/portfolio/accessibility-controls-wrapper";
 import { ChatWidgetWrapper } from "@/components/portfolio/chat-widget-wrapper";
 import { VisitTracker } from "@/components/portfolio/visit-tracker";
 import { StructuredData } from "@/components/seo/structured-data";
@@ -91,7 +89,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#0b0b0b"
+  themeColor: "#e9eceb",
+  colorScheme: "light"
 };
 
 export default function RootLayout({
@@ -112,12 +111,9 @@ export default function RootLayout({
             "@graph": [PERSON_JSON_LD, WEBSITE_JSON_LD, SITE_NAVIGATION_JSON_LD]
           }}
         />
-        <ThemeProvider>
-          <VisitTracker />
-          {children}
-          <AccessibilityControlsWrapper />
-          <ChatWidgetWrapper />
-        </ThemeProvider>
+        <VisitTracker />
+        {children}
+        <ChatWidgetWrapper />
       </body>
       {googleAnalyticsId && <GoogleAnalytics gaId={googleAnalyticsId} />}
     </html>

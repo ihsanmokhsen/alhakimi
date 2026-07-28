@@ -23,7 +23,7 @@ export default async function PovPage() {
   const videos = await getPovVideos();
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-black text-white [color-scheme:dark]">
+    <main className="min-h-screen overflow-x-hidden bg-[color:var(--surface-muted)] text-[color:var(--text)]">
       <StructuredData
         data={[
           breadcrumbJsonLd([
@@ -47,10 +47,10 @@ export default async function PovPage() {
       <section className="mx-auto w-full max-w-7xl px-4 pb-14 pt-16 sm:px-6 sm:pb-20 sm:pt-24 lg:px-8">
         <div className="max-w-4xl">
           <p className="text-[12px] font-black uppercase text-[#ff4f0a]">POV</p>
-          <h1 className="mt-5 text-[clamp(3.8rem,10vw,8.5rem)] font-black leading-[0.86] tracking-tight text-white">
+          <h1 className="mt-5 text-[clamp(3.8rem,10vw,8.5rem)] font-black leading-[0.86] tracking-tight text-[color:var(--text)]">
             documenting my boring life.
           </h1>
-          <p className="mt-8 max-w-2xl text-[17px] font-medium leading-8 text-white/58 sm:text-[20px]">
+          <p className="mt-8 max-w-2xl text-[17px] font-medium leading-8 text-[color:var(--text-58)] sm:text-[20px]">
             Short vertical videos. Scroll down to watch.
           </p>
         </div>
@@ -58,15 +58,15 @@ export default async function PovPage() {
 
       <section className="mx-auto w-full max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
         {videos.length === 0 ? (
-          <div className="rounded-[24px] border border-[color:var(--border-solid)] bg-[color:var(--surface)]/[0.04] p-10 text-center">
-            <p className="text-[15px] font-bold text-white/50">No videos yet. Check back soon.</p>
+          <div className="rounded-[24px] border border-[color:var(--border-solid)] bg-[color:var(--surface-card)] p-10 text-center">
+            <p className="text-[15px] font-bold text-[color:var(--text-50)]">No videos yet. Check back soon.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-x-5 gap-y-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {videos.map((video) => (
               <article className="w-full space-y-3" key={video.id}>
                 <div
-                  className="relative w-full overflow-hidden rounded-[20px] border border-[color:var(--border-solid)] bg-[color:var(--surface)]/[0.04] shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
+                  className="relative w-full overflow-hidden rounded-[20px] border border-[color:var(--border-solid)] bg-[color:var(--surface-card)] shadow-[var(--shadow-card)]"
                   style={{ aspectRatio: "9 / 16" }}
                 >
                   <iframe
@@ -78,7 +78,7 @@ export default async function PovPage() {
                     title={video.title}
                   />
                 </div>
-                <p className="px-1 text-[14px] font-bold text-white/70">{video.title}</p>
+                <p className="px-1 text-[14px] font-bold text-[color:var(--text-70)]">{video.title}</p>
               </article>
             ))}
           </div>

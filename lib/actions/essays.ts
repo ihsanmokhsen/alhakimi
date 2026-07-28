@@ -6,6 +6,7 @@ import { z } from "zod";
 
 import { requireAdmin } from "@/lib/auth";
 import { extractEssayImageTokens, stripEssayImageMarkers } from "@/lib/essay-content";
+import { convertImageToWebp } from "@/lib/image-processing";
 import { prisma } from "@/lib/prisma";
 import { parseMakassarDateTimeInput } from "@/lib/utils";
 
@@ -84,9 +85,14 @@ async function parseCover(formData: FormData) {
   if (!uploaded.type.startsWith("image/")) throw new Error("Sampul harus berupa gambar.");
   if (uploaded.size > MAX_ESSAY_COVER_SIZE) throw new Error("Sampul terlalu besar. Maksimal 5MB.");
 
+  const converted = await convertImageToWebp(await uploaded.arrayBuffer(), {
+    maxWidth: 1600,
+    quality: 80
+  });
+
   return {
-    coverImage: new Uint8Array(await uploaded.arrayBuffer()) as PrismaBytes,
-    coverMimeType: uploaded.type
+    coverImage: converted.bytes as PrismaBytes,
+    coverMimeType: converted.mimeType
   };
 }
 
@@ -158,11 +164,19 @@ async function parseInlineImages(
       throw new Error("Total foto sisipan terlalu besar. Maksimal 5MB.");
     }
 
+    const converted = await convertImageToWebp(await file.arrayBuffer(), {
+      maxWidth: 1600,
+      maxHeight: 1800,
+      quality: 78
+    });
+
     uploadedImages.push({
       ...manifest[index],
       alt: manifest[index].alt || "Foto dalam essay",
-      image: new Uint8Array(await file.arrayBuffer()) as PrismaBytes,
-      mimeType: file.type
+      width: converted.width,
+      height: converted.height,
+      image: converted.bytes as PrismaBytes,
+      mimeType: converted.mimeType
     });
   }
 
