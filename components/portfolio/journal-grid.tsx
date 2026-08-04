@@ -11,13 +11,6 @@ type JournalGridProps = {
   journals: JournalView[];
 };
 
-const storyHeights = [
-  "min-h-[420px] sm:min-h-[520px]",
-  "min-h-[360px] sm:min-h-[430px]",
-  "min-h-[460px] sm:min-h-[600px]",
-  "min-h-[390px] sm:min-h-[500px]"
-];
-
 export function JournalGrid({ journals }: JournalGridProps) {
   if (journals.length === 0) {
     return (
@@ -29,81 +22,87 @@ export function JournalGrid({ journals }: JournalGridProps) {
 
   return (
     <div className="mx-auto w-full max-w-7xl">
-      <div className="mb-10 flex flex-col justify-between gap-4 border-t border-[color:var(--border-strong)] pt-8 sm:flex-row sm:items-end">
+      <div className="mb-8 flex flex-col justify-between gap-4 border-t border-[color:var(--border-strong)] pt-8 sm:mb-10 sm:flex-row sm:items-end">
         <div>
           <p className="inline-flex items-center gap-2 text-[12px] font-black uppercase text-[#ff4f0a]">
-            <span className="h-2 w-2 rounded-full bg-[#ff4f0a] animate-pulse" />
+            <span className="h-2 w-2 bg-[#ff4f0a] animate-pulse" />
             Latest entries
           </p>
-          <h2 className="mt-2 bg-gradient-to-r from-black via-[#ff4f0a] to-black bg-[length:200%_auto] bg-clip-text text-[32px] font-black leading-none tracking-tight text-transparent sm:text-[44px]" style={{ animation: "gradientText 4s ease infinite" }}>
+          <h2
+            className="mt-2 bg-gradient-to-r from-black via-[#ff4f0a] to-black bg-[length:200%_auto] bg-clip-text text-[32px] font-black leading-none tracking-tight text-transparent sm:text-[44px]"
+            style={{ animation: "gradientText 4s ease infinite" }}
+          >
             Modern journals
           </h2>
         </div>
         <p className="max-w-sm text-[14px] font-medium leading-6 text-[color:var(--text)]/50">
-          Editorial notes presented with the same calm, intelligent visual language as the main showcase.
+          Editorial notes presented in a cleaner horizontal reading flow for every screen size.
         </p>
       </div>
 
-      <div className="grid grid-cols-3 gap-4 sm:gap-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+      <div className="border-t border-[color:var(--border)]">
         {journals.map((journal, index) => {
           const photoVersion = new Date(journal.updatedAt).getTime();
 
           return (
-            <FadeIn delay={index * 80} key={journal.id}>
-            <Link
-              className={`group relative block overflow-hidden rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface)] shadow-[var(--shadow-card)] transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_32px_100px_rgba(18,22,34,0.18),0_0_40px_-4px_rgba(255,79,10,0.12)] hover:border-[#ff4f0a]/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff4f0a]/50 focus-visible:ring-offset-2 ${
-                storyHeights[index % storyHeights.length]
-              }`}
-              href={`/journal/${journal.id}`}
-              key={journal.id}
-              style={{ animation: `subtleFloat ${4.5 + index * 0.5}s ease-in-out infinite` }}
-            >
-              {/* Glow ring on hover */}
-              <div aria-hidden="true" className="pointer-events-none absolute -inset-[1px] rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ background: "linear-gradient(135deg, rgba(255,79,10,0.15), rgba(139,92,246,0.1), rgba(255,79,10,0.06))", filter: "blur(1px)" }} />
+            <FadeIn delay={index * 70} key={journal.id}>
+              <Link
+                className="group block border-b border-[color:var(--border)] py-5 transition duration-300 hover:bg-[color:var(--surface)]/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff4f0a]/50 focus-visible:ring-offset-2 sm:py-7 lg:py-8"
+                href={`/journal/${journal.id}`}
+              >
+                <article className="grid grid-cols-[7rem_minmax(0,1fr)] gap-4 sm:grid-cols-[14rem_minmax(0,1fr)] sm:gap-7 lg:grid-cols-[22rem_minmax(0,1fr)] lg:gap-10">
+                  {journal.hasPhoto ? (
+                    <div className="relative h-32 overflow-hidden bg-[#e1e5e3] sm:h-48 lg:h-64">
+                      <Image
+                        alt={`Foto untuk ${journal.title}`}
+                        className="object-cover transition duration-700 group-hover:scale-105"
+                        fill
+                        quality={85}
+                        sizes="(max-width: 640px) 112px, (max-width: 1024px) 224px, 352px"
+                        src={`/api/journal-photo/${journal.id}?v=${photoVersion}`}
+                      />
+                      <div aria-hidden="true" className="card-shine-overlay" />
+                    </div>
+                  ) : (
+                    <div className="relative flex h-32 items-end overflow-hidden bg-[#e1e5e3] p-3 sm:h-48 sm:p-5 lg:h-64">
+                      <div
+                        aria-hidden="true"
+                        className="absolute inset-0 bg-[linear-gradient(135deg,#ffffff,#e5e8e6_52%,#ffe0d4)] bg-[length:200%_200%]"
+                        style={{ animation: "gradientShiftSlow 6s ease infinite" }}
+                      />
+                      <p className="relative line-clamp-3 text-[24px] font-black leading-[0.86] tracking-normal text-black/[0.14] sm:text-[44px]">
+                        {journal.title}
+                      </p>
+                    </div>
+                  )}
 
-              <article className="flex h-full flex-col">
-                {journal.hasPhoto ? (
-                  <div className="relative min-h-56 flex-1 overflow-hidden bg-[#e1e5e3]">
-                    <Image
-                      alt={`Foto untuk ${journal.title}`}
-                      className="object-cover transition duration-700 group-hover:scale-110"
-                      fill
-                      quality={85}
-                      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-                      src={`/api/journal-photo/${journal.id}?v=${photoVersion}`}
-                    />
-                    {/* Shine overlay on hover */}
-                    <div aria-hidden="true" className="card-shine-overlay" />
-                    {/* Blue glow overlay on hover */}
-                    <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-[#ff4f0a]/12 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                  <div className="flex min-w-0 flex-col justify-between py-1 sm:py-2 lg:py-3">
+                    <div>
+                      <p className="text-[10px] font-black uppercase leading-none text-[#ff4f0a] sm:text-[12px]">
+                        {String(index + 1).padStart(2, "0")} / {formatJournalDate(journal.publishedAt)}
+                      </p>
+                      <h3 className="mt-3 line-clamp-2 text-[22px] font-black leading-[0.94] tracking-tight text-[color:var(--text)] transition-colors duration-300 group-hover:text-[#ff4f0a] sm:mt-4 sm:text-[38px] lg:text-[54px]">
+                        {journal.title}
+                      </h3>
+                    </div>
+                    <p className="mt-3 line-clamp-2 text-[12px] font-medium leading-5 text-[color:var(--text)]/56 sm:mt-5 sm:line-clamp-3 sm:text-[15px] sm:leading-7 lg:max-w-3xl">
+                      {journal.content}
+                    </p>
+                    <span className="mt-4 hidden w-fit items-center gap-2 bg-black px-4 py-2.5 text-[12px] font-bold text-white transition-all duration-300 group-hover:bg-[#ff4f0a] group-hover:shadow-[0_8px_24px_rgba(255,79,10,0.28)] sm:inline-flex">
+                      Read Story
+                      <svg
+                        className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={2.5}
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M5 12h14m0 0l-6-6m6 6l-6 6" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </span>
                   </div>
-                ) : (
-                  <div className="relative min-h-56 flex-1 overflow-hidden">
-                    <div className="absolute inset-0 bg-[linear-gradient(135deg,#ffffff,#e5e8e6_52%,#ffe0d4)] bg-[length:200%_200%] transition-all duration-500 group-hover:saturate-150" style={{ animation: "gradientShiftSlow 6s ease infinite" }} />
-                    {/* Shine overlay */}
-                    <div aria-hidden="true" className="card-shine-overlay" />
-                  </div>
-                )}
-
-                <div className="p-5 sm:p-6">
-                  <p className="text-[12px] font-black uppercase text-[#ff4f0a]">
-                    {formatJournalDate(journal.publishedAt)}
-                  </p>
-                  <h3 className="mt-4 text-[28px] font-black leading-none tracking-tight text-[color:var(--text)] transition-colors duration-300 group-hover:text-[#ff4f0a] sm:text-[34px]">
-                    {journal.title}
-                  </h3>
-                  <p className="mt-4 line-clamp-3 text-[14px] font-medium leading-7 text-[color:var(--text)]/56">
-                    {journal.content}
-                  </p>
-                  <span className="mt-6 inline-flex items-center gap-2 rounded-full bg-black px-4 py-2.5 text-[12px] font-bold text-white transition-all duration-300 group-hover:bg-[#ff4f0a] group-hover:shadow-[0_8px_24px_rgba(255,79,10,0.35)] group-hover:gap-3">
-                    Read Story
-                    <svg className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-                      <path d="M5 12h14m0 0l-6-6m6 6l-6 6" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </span>
-                </div>
-              </article>
-            </Link>
+                </article>
+              </Link>
             </FadeIn>
           );
         })}
