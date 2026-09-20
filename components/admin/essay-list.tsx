@@ -18,7 +18,7 @@ export function EssayList({ essays }: { essays: EssayView[] }) {
           <article className="flex gap-4 border border-[color:var(--border)] bg-[color:var(--surface)] p-4 shadow-[0_18px_55px_rgba(18,22,34,0.07)] sm:p-5" key={essay.id}>
             {essay.hasCover ? (
               <div className="relative hidden h-24 w-32 shrink-0 overflow-hidden bg-[color:var(--surface-muted)] sm:block">
-                <Image alt="" className="object-cover" fill sizes="128px" src={`/api/essay-cover/${essay.id}?v=${new Date(essay.updatedAt).getTime()}`} />
+                <Image alt="" className="object-contain" fill sizes="128px" src={`/api/essay-cover/${essay.id}?v=${new Date(essay.updatedAt).getTime()}`} />
               </div>
             ) : null}
             <div className="min-w-0 flex-1">

@@ -134,7 +134,7 @@ export function PortfolioGrid({ projects }: PortfolioGridProps) {
                     <article className="relative h-full overflow-hidden rounded-2xl">
                       <Image
                         alt={`${project.title} visual`}
-                        className="object-cover transition duration-500 group-hover:scale-105"
+                        className="object-contain"
                         fill
                         quality={85}
                         sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
@@ -187,7 +187,7 @@ export function PortfolioGrid({ projects }: PortfolioGridProps) {
                     <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-[color:var(--surface-muted)] sm:h-24 sm:w-24">
                       <Image
                         alt={`${project.title} visual`}
-                        className="object-cover transition duration-500 group-hover:scale-105"
+                        className="object-contain"
                         fill
                         quality={85}
                         sizes="96px"

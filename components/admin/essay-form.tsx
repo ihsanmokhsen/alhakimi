@@ -324,7 +324,7 @@ export function EssayForm({ action, essay, submitLabel = "Terbitkan essay" }: Es
             </div>
             {inlineImages.map((image, index) => (
               <div className="flex items-center gap-3 border border-[color:var(--border)] bg-[color:var(--surface)] p-2.5" key={image.token}>
-                <Image alt="" className="h-16 w-20 shrink-0 object-cover" height={64} src={image.previewUrl} unoptimized width={80} />
+                <Image alt="" className="h-16 w-20 shrink-0 bg-[color:var(--surface-muted)] object-contain" height={64} src={image.previewUrl} unoptimized width={80} />
                 <label className="min-w-0 flex-1 space-y-1">
                   <span className="text-[10px] font-black uppercase text-[color:var(--text)]/36">Teks alternatif foto {index + 1}</span>
                   <input
@@ -347,7 +347,7 @@ export function EssayForm({ action, essay, submitLabel = "Terbitkan essay" }: Es
             <div className="flex flex-col gap-3 border border-[color:var(--border-strong)] bg-[color:var(--surface-muted)] p-3 sm:flex-row sm:items-center">
               <Image
                 alt={`Sampul ${essay.title}`}
-                className="h-24 w-36 object-cover"
+                className="h-24 w-36 bg-[color:var(--surface-muted)] object-contain"
                 height={96}
                 src={`/api/essay-cover/${essay.id}?v=${new Date(essay.updatedAt).getTime()}`}
                 unoptimized

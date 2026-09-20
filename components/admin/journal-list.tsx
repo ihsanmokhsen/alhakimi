@@ -39,7 +39,7 @@ export function JournalList({ journals }: JournalListProps) {
                   <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-[16px] border border-[color:var(--border)] bg-[color:var(--surface-muted)] shadow-[0_10px_24px_rgba(18,22,34,0.09)]">
                     <Image
                       alt={`Foto untuk ${journal.title}`}
-                      className="object-cover"
+                      className="object-contain"
                       fill
                       quality={85}
                       sizes="56px"

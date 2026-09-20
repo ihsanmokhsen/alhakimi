@@ -68,7 +68,7 @@ export function PortfolioModal({ project, onClose }: PortfolioModalProps) {
           <div className="relative min-h-[320px] overflow-hidden bg-[#e5e8e6] sm:min-h-[440px] lg:min-h-[620px]">
             <Image
               alt={`${project.title} visual`}
-              className="object-cover"
+              className="object-contain"
               fill
               priority
               quality={85}

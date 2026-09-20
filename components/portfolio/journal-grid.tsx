@@ -55,7 +55,7 @@ export function JournalGrid({ journals }: JournalGridProps) {
                     <div className="relative h-32 overflow-hidden bg-[#e1e5e3] sm:h-48 lg:h-64">
                       <Image
                         alt={`Foto untuk ${journal.title}`}
-                        className="object-cover transition duration-700 group-hover:scale-105"
+                        className="object-contain"
                         fill
                         quality={85}
                         sizes="(max-width: 640px) 112px, (max-width: 1024px) 224px, 352px"
