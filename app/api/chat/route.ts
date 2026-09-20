@@ -221,8 +221,19 @@ export async function POST(req: Request) {
       messages: await convertToModelMessages(recentMessages)
     });
 
-    return result.toUIMessageStreamResponse();
-  } catch {
+    return result.toUIMessageStreamResponse({
+      /**
+       * Kegagalan dari Gemini (key salah, kuota habis, model tidak tersedia)
+       * terjadi di tengah stream, jadi tanpa handler ini penyebabnya cuma
+       * muncul sebagai "An error occurred." dan tidak terlacak di log Vercel.
+       */
+      onError: (error) => {
+        console.error("[chat] stream gagal:", error);
+        return "Asisten AI sedang bermasalah. Coba lagi sebentar lagi ya.";
+      }
+    });
+  } catch (error) {
+    console.error("[chat] permintaan gagal:", error);
     return new Response("Asisten AI sedang sibuk. Coba lagi sebentar lagi ya.", {
       status: 502
     });
