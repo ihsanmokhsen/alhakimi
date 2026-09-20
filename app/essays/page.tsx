@@ -5,10 +5,12 @@ import type { Metadata } from "next";
 import { WorksFooter, WorksHeader } from "@/components/portfolio/makna-shell";
 import { StructuredData } from "@/components/seo/structured-data";
 import { getEssays } from "@/lib/data/essays";
+import { fetchForPrerender } from "@/lib/data/build-safe";
 import { breadcrumbJsonLd, SITE_URL } from "@/lib/seo";
 import { formatJournalDate } from "@/lib/utils";
 
-export const dynamic = "force-dynamic";
+/** Halaman statis + ISR; diperbarui oleh revalidatePath saat admin mengedit. */
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: "Essays",
@@ -23,7 +25,7 @@ export const metadata: Metadata = {
 };
 
 export default async function EssaysPage() {
-  const essays = await getEssays();
+  const essays = await fetchForPrerender(getEssays, []);
 
   return (
     <main className="min-h-screen bg-white text-[#101211]">
@@ -71,7 +73,7 @@ export default async function EssaysPage() {
               </div>
               {essay.hasCover ? (
                 <Link className="relative aspect-[4/3] overflow-hidden bg-[#e9eceb]" href={`/essays/${essay.slug}`}>
-                  <Image alt={`Sampul ${essay.title}`} className="object-cover transition duration-500 hover:scale-[1.03]" fill sizes="(max-width: 1024px) 100vw, 220px" src={`/api/essay-cover/${essay.id}?v=${new Date(essay.updatedAt).getTime()}`} />
+                  <Image alt={`Sampul ${essay.title}`} className="object-contain" fill sizes="(max-width: 1024px) 100vw, 220px" src={`/api/essay-cover/${essay.id}?v=${new Date(essay.updatedAt).getTime()}`} />
                 </Link>
               ) : null}
             </article>

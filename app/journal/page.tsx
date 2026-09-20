@@ -2,10 +2,12 @@ import { WorksFooter, WorksHeader } from "@/components/portfolio/makna-shell";
 import { JournalGrid } from "@/components/portfolio/journal-grid";
 import { StructuredData } from "@/components/seo/structured-data";
 import { getJournals } from "@/lib/data/journals";
+import { fetchForPrerender } from "@/lib/data/build-safe";
 import { breadcrumbJsonLd, SITE_URL } from "@/lib/seo";
 import type { Metadata } from "next";
 
-export const dynamic = "force-dynamic";
+/** Halaman statis + ISR; diperbarui oleh revalidatePath saat admin mengedit. */
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: "Stories & Catatan",
@@ -21,7 +23,7 @@ export const metadata: Metadata = {
 };
 
 export default async function JournalPage() {
-  const journals = await getJournals();
+  const journals = await fetchForPrerender(getJournals, []);
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-[color:var(--surface-muted)] text-[color:var(--text)]">

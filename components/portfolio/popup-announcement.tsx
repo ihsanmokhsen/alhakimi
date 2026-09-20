@@ -10,7 +10,15 @@ type AnnouncementState =
   | { status: "hidden" }
   | { status: "visible"; imageUrl: string };
 
-export function PopupAnnouncement() {
+/**
+ * Versi gambar welcome dari server — membuat URL `/api/welcome-image?v=...`
+ * berubah saat admin mengganti gambar, sehingga cache immutable selalu fresh.
+ */
+type PopupAnnouncementProps = {
+  welcomeVersion?: number;
+};
+
+export function PopupAnnouncement({ welcomeVersion }: PopupAnnouncementProps) {
   const [state, setState] = useState<AnnouncementState>({ status: "loading" });
   const [ready, setReady] = useState(false);
 
@@ -36,7 +44,10 @@ export function PopupAnnouncement() {
 
     const controller = new AbortController();
 
-    fetch("/api/welcome-image", { signal: controller.signal })
+    fetch(
+      welcomeVersion ? `/api/welcome-image?v=${welcomeVersion}` : "/api/welcome-image",
+      { signal: controller.signal }
+    )
       .then((res) => {
         if (!res.ok) return { ok: false } as const;
         const contentType = res.headers.get("content-type") ?? "";
@@ -60,7 +71,7 @@ export function PopupAnnouncement() {
       });
 
     return () => controller.abort();
-  }, []);
+  }, [welcomeVersion]);
 
   const overlayReady = useCallback(() => setReady(true), []);
 

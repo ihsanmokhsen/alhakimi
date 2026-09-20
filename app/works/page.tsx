@@ -4,9 +4,11 @@ import { WorksFooter, WorksHeader } from "@/components/portfolio/makna-shell";
 import { PortfolioGrid } from "@/components/portfolio/portfolio-grid";
 import { StructuredData } from "@/components/seo/structured-data";
 import { getProjects } from "@/lib/data/projects";
+import { fetchForPrerender } from "@/lib/data/build-safe";
 import { breadcrumbJsonLd } from "@/lib/seo";
 
-export const dynamic = "force-dynamic";
+/** Halaman statis + ISR; diperbarui oleh revalidatePath saat admin mengedit. */
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: "Works — Aplikasi & Karya Digital",
@@ -23,7 +25,7 @@ export const metadata: Metadata = {
 };
 
 export default async function WorksPage() {
-  const projects = await getProjects();
+  const projects = await fetchForPrerender(getProjects, []);
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-[color:var(--surface)] text-[color:var(--text)]">

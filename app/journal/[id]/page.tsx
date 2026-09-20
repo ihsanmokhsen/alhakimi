@@ -10,6 +10,9 @@ import { getJournalById } from "@/lib/data/journals";
 import { absoluteUrl, breadcrumbJsonLd, SITE_URL } from "@/lib/seo";
 import { formatJournalDate } from "@/lib/utils";
 
+/** Detail dirender on-demand lalu di-cache; diperbarui via revalidatePath. */
+export const revalidate = 300;
+
 type JournalDetailPageProps = {
   params: Promise<{
     id: string;
@@ -113,7 +116,7 @@ export default async function JournalDetailPage({ params }: JournalDetailPagePro
               <div className="relative min-h-[320px] overflow-hidden bg-[#e1e5e3] sm:min-h-[460px]">
                 <Image
                   alt={`Foto untuk ${journal.title}`}
-                  className="object-cover"
+                  className="object-contain"
                   fill
                   priority
                   quality={85}

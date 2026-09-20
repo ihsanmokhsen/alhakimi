@@ -88,6 +88,7 @@ export async function createJournalAction(
   });
 
   revalidatePath("/");
+  revalidatePath("/journal");
   revalidatePath("/admin");
   return {};
 }
@@ -100,5 +101,7 @@ export async function deleteJournalAction(id: string) {
   });
 
   revalidatePath("/");
+  revalidatePath("/journal");
+  revalidatePath(`/journal/${id}`);
   revalidatePath("/admin");
 }

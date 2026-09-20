@@ -88,6 +88,7 @@ export async function createProjectAction(
   });
 
   revalidatePath("/");
+  revalidatePath("/works");
   revalidatePath("/admin");
   redirect("/admin");
 }
@@ -121,6 +122,7 @@ export async function updateProjectAction(
   });
 
   revalidatePath("/");
+  revalidatePath("/works");
   revalidatePath("/admin");
   redirect("/admin");
 }
@@ -147,6 +149,7 @@ export async function deleteProjectAction(id: string) {
   );
 
   revalidatePath("/");
+  revalidatePath("/works");
   revalidatePath("/admin");
 }
 
@@ -167,6 +170,7 @@ export async function reorderProjectsAction(projectIds: string[]): Promise<Proje
   );
 
   revalidatePath("/");
+  revalidatePath("/works");
   revalidatePath("/admin");
   return {};
 }

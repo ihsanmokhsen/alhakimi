@@ -11,13 +11,18 @@ type HomeShellProps = {
   projects: ProjectCard[];
   heroTitle?: string | null;
   heroSubtitle?: string | null;
+  /** Timestamp updatedAt hero — untuk bust cache gambar background. */
+  heroImageVersion?: number;
 };
 
-export function HomeShell({ projects, heroTitle, heroSubtitle }: HomeShellProps) {
+export function HomeShell({ projects, heroTitle, heroSubtitle, heroImageVersion }: HomeShellProps) {
   const title = heroTitle || "works";
   const subtitle =
     heroSubtitle ||
     "Beberapa Apps yang dibuat untuk kebutuhan kantor dan pribadi.";
+  const heroImageSrc = heroImageVersion
+    ? `/api/hero-image?v=${heroImageVersion}`
+    : "/api/hero-image";
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-[color:var(--surface)] text-[color:var(--text)]">
@@ -25,8 +30,9 @@ export function HomeShell({ projects, heroTitle, heroSubtitle }: HomeShellProps)
 
       {/* ─────── HERO SECTION ─────── */}
       <section
-        className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-[url('/api/hero-image')] bg-cover bg-center px-4 pb-20 pt-10 text-center sm:px-6 sm:pb-24 sm:pt-14 lg:px-8"
+        className={`relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-cover bg-center px-4 pb-20 pt-10 text-center sm:px-6 sm:pb-24 sm:pt-14 lg:px-8 ${heroImageVersion ? "" : "bg-[url('/api/hero-image')]"}`}
         id="explore"
+        style={heroImageVersion ? { backgroundImage: `url('${heroImageSrc}')` } : undefined}
       >
         {/* Animated background overlay gradient */}
         <div

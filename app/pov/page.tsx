@@ -3,9 +3,11 @@ import type { Metadata } from "next";
 import { WorksFooter, WorksHeader } from "@/components/portfolio/makna-shell";
 import { StructuredData } from "@/components/seo/structured-data";
 import { getPovVideos } from "@/lib/data/pov-videos";
+import { fetchForPrerender } from "@/lib/data/build-safe";
 import { breadcrumbJsonLd, SITE_URL } from "@/lib/seo";
 
-export const dynamic = "force-dynamic";
+/** Halaman statis + ISR; diperbarui oleh revalidatePath saat admin mengedit. */
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: "POV — Video Keseharian",
@@ -20,7 +22,7 @@ export const metadata: Metadata = {
 };
 
 export default async function PovPage() {
-  const videos = await getPovVideos();
+  const videos = await fetchForPrerender(getPovVideos, []);
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-[color:var(--surface-muted)] text-[color:var(--text)]">

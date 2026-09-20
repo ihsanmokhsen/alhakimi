@@ -14,7 +14,7 @@ export async function GET(_request: Request, context: { params: Promise<{ id: st
   return new NextResponse(new Uint8Array(image.image), {
     headers: {
       "Content-Type": image.mimeType,
-      "Cache-Control": "public, max-age=86400, stale-while-revalidate=604800",
+      "Cache-Control": "public, max-age=31536000, s-maxage=31536000, immutable",
       "X-Content-Type-Options": "nosniff"
     }
   });

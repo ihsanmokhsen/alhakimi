@@ -11,6 +11,9 @@ import { splitEssayContent, stripEssayImageMarkers } from "@/lib/essay-content";
 import { absoluteUrl, breadcrumbJsonLd, SITE_URL } from "@/lib/seo";
 import { formatJournalDate } from "@/lib/utils";
 
+/** Detail dirender on-demand lalu di-cache; diperbarui via revalidatePath. */
+export const revalidate = 300;
+
 type EssayPageProps = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: EssayPageProps): Promise<Metadata> {
@@ -95,7 +98,7 @@ export default async function EssayPage({ params }: EssayPageProps) {
 
         {essay.hasCover ? (
           <div className="relative mx-auto aspect-[16/8] w-full max-w-7xl overflow-hidden bg-[#e9eceb]">
-            <Image alt={`Sampul ${essay.title}`} className="object-cover" fill priority sizes="100vw" src={`/api/essay-cover/${essay.id}?v=${new Date(essay.updatedAt).getTime()}`} />
+            <Image alt={`Sampul ${essay.title}`} className="object-contain" fill priority sizes="100vw" src={`/api/essay-cover/${essay.id}?v=${new Date(essay.updatedAt).getTime()}`} />
           </div>
         ) : null}
 
@@ -113,7 +116,7 @@ export default async function EssayPage({ params }: EssayPageProps) {
                       className="h-auto w-full bg-[#e9eceb] object-contain"
                       height={image.height}
                       sizes="(max-width: 760px) 100vw, 760px"
-                      src={`/api/essay-image/${image.id}`}
+                      src={`/api/essay-image/${image.id}?v=${essay.updatedAt.getTime()}`}
                       width={image.width}
                     />
                   </figure>
