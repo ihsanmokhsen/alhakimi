@@ -2,7 +2,10 @@
 
 import { useChat } from "@ai-sdk/react";
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
+import Link from "next/link";
+import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
+
+import { parseChatMarkdown, type ChatInline } from "@/lib/chat-markdown";
 
 // ── Constants ─────────────────────────────────────────
 const SUGGESTED_QUESTIONS = [
@@ -54,6 +57,98 @@ function TypingDots() {
       <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-current/40 [animation-delay:0ms]" />
       <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-current/40 [animation-delay:150ms]" />
       <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-current/40 [animation-delay:300ms]" />
+    </div>
+  );
+}
+
+// ── Markdown rendering ────────────────────────────────
+const LINK_CLASS = "font-semibold text-[#d63f00] underline decoration-from-font underline-offset-2";
+
+function InlineContent({ inlines }: { inlines: ChatInline[] }) {
+  return (
+    <>
+      {inlines.map((inline, index) => {
+        if (inline.type === "strong") {
+          return (
+            <strong className="font-black" key={index}>
+              {inline.value}
+            </strong>
+          );
+        }
+
+        if (inline.type === "em") {
+          return (
+            <em className="italic" key={index}>
+              {inline.value}
+            </em>
+          );
+        }
+
+        if (inline.type === "code") {
+          return (
+            <code
+              className="rounded bg-black/[0.08] px-1 py-px font-mono text-[12.5px] text-[color:var(--text)]"
+              key={index}
+            >
+              {inline.value}
+            </code>
+          );
+        }
+
+        if (inline.type === "link") {
+          return inline.href.startsWith("/") ? (
+            <Link className={LINK_CLASS} href={inline.href} key={index}>
+              {inline.value}
+            </Link>
+          ) : (
+            <a className={LINK_CLASS} href={inline.href} key={index} rel="noreferrer" target="_blank">
+              {inline.value}
+            </a>
+          );
+        }
+
+        return <span key={index}>{inline.value}</span>;
+      })}
+    </>
+  );
+}
+
+/** Render balasan AI sebagai teks rapi, bukan markdown mentah (`**bold**`, `- list`). */
+function MessageBody({ text }: { text: string }) {
+  const blocks = useMemo(() => parseChatMarkdown(text), [text]);
+
+  return (
+    <div className="space-y-2">
+      {blocks.map((block, index) => {
+        if (block.type === "heading") {
+          return (
+            <p className="font-black" key={index}>
+              <InlineContent inlines={block.inlines} />
+            </p>
+          );
+        }
+
+        if (block.type === "list") {
+          return (
+            <ul
+              className={`ml-4 space-y-1 ${block.ordered ? "list-decimal" : "list-disc"}`}
+              key={index}
+            >
+              {block.items.map((item, itemIndex) => (
+                <li key={itemIndex}>
+                  <InlineContent inlines={item} />
+                </li>
+              ))}
+            </ul>
+          );
+        }
+
+        return (
+          <p key={index}>
+            <InlineContent inlines={block.inlines} />
+          </p>
+        );
+      })}
     </div>
   );
 }
@@ -264,22 +359,30 @@ export function ChatWidget() {
             </div>
           ) : (
             <div className="space-y-4">
-              {messages.map((m) => (
-                <div
-                  className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
-                  key={m.id}
-                >
+              {messages.map((m) => {
+                const content = renderMessageContent(m as never);
+
+                return (
                   <div
-                    className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-[14px] leading-6 sm:px-5 sm:py-3 ${
-                      m.role === "user"
-                        ? "bg-[#ff4f0a] text-white"
-                        : "bg-[color:var(--bg-chip)] text-[color:var(--text)]"
-                    }`}
+                    className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
+                    key={m.id}
                   >
-                    {renderMessageContent(m as never) as string | undefined}
+                    <div
+                      className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-[14px] leading-6 sm:px-5 sm:py-3 ${
+                        m.role === "user"
+                          ? "bg-[#ff4f0a] text-white"
+                          : "bg-[color:var(--bg-chip)] text-[color:var(--text)]"
+                      }`}
+                    >
+                      {m.role === "user" || !content ? (
+                        content
+                      ) : (
+                        <MessageBody text={content} />
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
 
               {/* Loading indicator */}
               {isLoading &&
@@ -317,7 +420,9 @@ export function ChatWidget() {
         <div className="shrink-0 border-t border-[color:var(--border-strong)] px-4 pb-5 pt-3 sm:px-5 sm:pb-4 sm:pt-3">
           {error && (
             <p className="mb-2 text-center text-[11px] font-semibold text-red-600">
-              Pesan gagal dikirim. Silakan coba lagi.
+              {/terlalu banyak/i.test(error.message ?? "")
+                ? error.message
+                : "Pesan gagal dikirim. Silakan coba lagi."}
             </p>
           )}
           <form className="flex items-end gap-2" onSubmit={handleSubmit}>
