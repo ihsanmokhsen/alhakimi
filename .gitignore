@@ -3,7 +3,22 @@
 
 .next
 node_modules
+
+# ── Rahasia: jangan pernah masuk repo ──────────────────
 .env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.keystore
+credentials.json
+service-account*.json
+
+# State lokal Vercel CLI (hasil `vercel env pull` berisi nilai rahasia)
+.vercel/
+.vercel-tmp/
+
 .codex/
 coverage
 dist
