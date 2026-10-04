@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 
 import { FadeIn } from "@/components/portfolio/fade-in";
+import { WorksGallery } from "@/components/portfolio/works-gallery";
 import type { ProjectCard } from "@/lib/data/projects";
 
 const PortfolioModal = dynamic(
@@ -14,6 +15,8 @@ const PortfolioModal = dynamic(
 
 type PortfolioGridProps = {
   projects: ProjectCard[];
+  /** Ganti tampilan grid ikon dengan galeri kartu horizontal (dipakai di /works). */
+  gallery?: boolean;
 };
 
 type ViewMode = "grid" | "list";
@@ -39,7 +42,7 @@ function ListModeIcon() {
   );
 }
 
-export function PortfolioGrid({ projects }: PortfolioGridProps) {
+export function PortfolioGrid({ projects, gallery = false }: PortfolioGridProps) {
   const [activeProject, setActiveProject] = useState<ProjectCard | null>(null);
   const [query, setQuery] = useState("");
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
@@ -101,7 +104,7 @@ export function PortfolioGrid({ projects }: PortfolioGridProps) {
               type="button"
             >
               <GridModeIcon />
-              Ikon
+              {gallery ? "Galeri" : "Ikon"}
             </button>
             <button
               aria-pressed={viewMode === "list"}
@@ -119,7 +122,11 @@ export function PortfolioGrid({ projects }: PortfolioGridProps) {
           </div>
         </div>
 
-        {visibleProjects.length > 0 && viewMode === "grid" ? (
+        {visibleProjects.length > 0 && viewMode === "grid" && gallery ? (
+          <WorksGallery onOpen={setActiveProject} projects={visibleProjects} />
+        ) : null}
+
+        {visibleProjects.length > 0 && viewMode === "grid" && !gallery ? (
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4">
             {visibleProjects.map((project, index) => {
               const logoVersion = new Date(project.updatedAt).getTime();

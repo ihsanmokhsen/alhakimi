@@ -474,3 +474,52 @@ textarea {
     animation: none !important;
   }
 }
+
+/* ─── Works gallery: rel horizontal selebar layar, sejajar dengan kontainer 80rem ─── */
+.works-rail-bleed {
+  --rail-pad: 1rem;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+}
+
+@media (min-width: 640px) {
+  .works-rail-bleed {
+    --rail-pad: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .works-rail-bleed {
+    --rail-pad: 2rem;
+  }
+}
+
+.works-rail,
+.works-rail-pad {
+  padding-inline: max(var(--rail-pad), calc((100vw - 80rem) / 2 + var(--rail-pad)));
+}
+
+.works-rail {
+  scroll-padding-inline: max(var(--rail-pad), calc((100vw - 80rem) / 2 + var(--rail-pad)));
+}
+
+.works-card {
+  animation: worksCardIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes worksCardIn {
+  from {
+    opacity: 0;
+    transform: translateX(48px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .works-card {
+    animation: none;
+  }
+}

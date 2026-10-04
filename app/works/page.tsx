@@ -5,6 +5,7 @@ import { PortfolioGrid } from "@/components/portfolio/portfolio-grid";
 import { StructuredData } from "@/components/seo/structured-data";
 import { getProjects } from "@/lib/data/projects";
 import { fetchForPrerender } from "@/lib/data/build-safe";
+import { displayFont } from "@/lib/fonts";
 import { breadcrumbJsonLd } from "@/lib/seo";
 
 /** Halaman statis + ISR; diperbarui oleh revalidatePath saat admin mengedit. */
@@ -28,7 +29,7 @@ export default async function WorksPage() {
   const projects = await fetchForPrerender(getProjects, []);
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-[color:var(--surface)] text-[color:var(--text)]">
+    <main className={`${displayFont.variable} min-h-screen overflow-x-hidden bg-[color:var(--surface)] text-[color:var(--text)]`}>
       <StructuredData
         data={breadcrumbJsonLd([
           { name: "Beranda", path: "/" },
@@ -39,8 +40,8 @@ export default async function WorksPage() {
 
       <section className="mx-auto w-full max-w-7xl px-4 pb-12 pt-16 sm:px-6 sm:pb-16 sm:pt-24 lg:px-8">
         <p className="text-[12px] font-black uppercase text-[#ff4f0a]">Works</p>
-        <h1 className="mt-5 max-w-5xl text-[clamp(3.2rem,8vw,7rem)] font-black leading-[0.9] tracking-normal text-[color:var(--text)]">
-          Aplikasi dan karya digital.
+        <h1 className="mt-5 max-w-5xl font-[family-name:var(--font-display)] text-[clamp(2.6rem,7vw,6.2rem)] uppercase leading-[0.92] tracking-normal text-[color:var(--text)]">
+          Aplikasi dan karya digital<span className="text-[#ff4f0a]">.</span>
         </h1>
         <p className="mt-8 max-w-3xl text-[18px] font-medium leading-8 text-[color:var(--text)]/58 sm:text-[21px]">
           Website, aplikasi internal, prototipe, dan eksperimen digital yang dibuat oleh Muhammad Ihsanul Hakim
@@ -49,7 +50,7 @@ export default async function WorksPage() {
       </section>
 
       <section className="mx-auto w-full max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
-        <PortfolioGrid projects={projects} />
+        <PortfolioGrid gallery projects={projects} />
       </section>
 
       <WorksFooter />
