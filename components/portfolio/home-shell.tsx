@@ -4,6 +4,7 @@ import { WorksFooter, WorksHeader } from "@/components/portfolio/makna-shell";
 import { HeaderClock } from "@/components/portfolio/header-clock";
 import { PortfolioGrid } from "@/components/portfolio/portfolio-grid";
 import { RunningText } from "@/components/portfolio/running-text";
+import { HeroLiquid } from "@/components/portfolio/hero-liquid";
 import { HeroParticles } from "@/components/portfolio/hero-particles";
 import type { ProjectCard } from "@/lib/data/projects";
 
@@ -34,6 +35,9 @@ export function HomeShell({ projects, heroTitle, heroSubtitle, heroImageVersion 
         id="explore"
         style={heroImageVersion ? { backgroundImage: `url('${heroImageSrc}')` } : undefined}
       >
+        {/* Distorsi cair mengikuti kursor; latar CSS di atas tetap jadi fallback */}
+        <HeroLiquid src={heroImageSrc} />
+
         {/* Animated background overlay gradient */}
         <div
           aria-hidden="true"
