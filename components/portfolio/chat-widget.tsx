@@ -1,10 +1,10 @@
 "use client";
 
 import { useChat } from "@ai-sdk/react";
-import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 
+import { Mascot, useMascotLook, type MascotPose } from "@/components/portfolio/mascot";
 import { parseChatMarkdown, type ChatInline } from "@/lib/chat-markdown";
 
 // ── Constants ─────────────────────────────────────────
@@ -182,9 +182,13 @@ export function ChatWidget() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+  const launcherRef = useRef<HTMLButtonElement>(null);
+  const [isLauncherHovered, setIsLauncherHovered] = useState(false);
+  const launcherLook = useMascotLook(launcherRef);
 
   const { messages, sendMessage, status, error } = useChat();
   const isLoading = status === "submitted" || status === "streaming";
+  const isRateLimited = /terlalu banyak/i.test(error?.message ?? "");
 
   // ── Handlers ──────────────────────────────────────
   const open = useCallback(() => {
@@ -249,6 +253,18 @@ export function ChatWidget() {
   const showWelcome = messages.length === 0;
   const showSuggestions = messages.length === 0 && hasOpened;
 
+  const launcherPose: MascotPose = isLauncherHovered ? "starstruck" : (launcherLook ?? "smug");
+  const headerPose: MascotPose =
+    status === "submitted"
+      ? "lookUp"
+      : status === "streaming"
+        ? "talk"
+        : isRateLimited
+          ? "tired"
+          : error
+            ? "shocked"
+            : "smug";
+
   return (
     <>
       {/* ─── Floating button ─── */}
@@ -258,15 +274,14 @@ export function ChatWidget() {
           isOpen ? "scale-0 opacity-0" : "scale-100 opacity-100"
         }`}
         onClick={open}
+        onPointerEnter={() => setIsLauncherHovered(true)}
+        onPointerLeave={() => setIsLauncherHovered(false)}
+        ref={launcherRef}
         type="button"
       >
-        <Image
-          alt=""
-          className="relative z-10 h-full w-full rounded-full object-cover transition-transform duration-300 group-hover:scale-105"
-          height={56}
-          src="/assets/assistant-avatar.webp"
-          unoptimized
-          width={56}
+        <Mascot
+          className="relative z-10 h-full w-full transition-transform duration-300 group-hover:scale-110"
+          pose={launcherPose}
         />
         {/* Pulse ring */}
         <span
@@ -301,14 +316,7 @@ export function ChatWidget() {
         <div className="flex shrink-0 items-center justify-between border-b border-[color:var(--border-strong)] px-4 py-3 sm:px-5 sm:py-4">
           <div className="flex items-center gap-3">
             <div className="h-9 w-9 overflow-hidden rounded-full border border-[color:var(--border-strong)] bg-[#151918]">
-              <Image
-                alt="Avatar works AI"
-                className="h-full w-full object-cover"
-                height={36}
-                src="/assets/assistant-avatar.webp"
-                unoptimized
-                width={36}
-              />
+              <Mascot className="h-full w-full" label="Maskot works AI" pose={headerPose} />
             </div>
             <div>
               <p className="text-[14px] font-black text-[color:var(--text)]">
@@ -339,16 +347,7 @@ export function ChatWidget() {
         <div className="flex-1 overflow-y-auto px-4 py-4 sm:px-5 sm:py-5">
           {showWelcome ? (
             <div className="flex h-full flex-col items-center justify-center text-center">
-              <div className="mb-5 h-16 w-16 overflow-hidden rounded-2xl border border-[color:var(--border-strong)] bg-[#151918] shadow-[0_8px_24px_rgba(21,25,24,0.2)]">
-                <Image
-                  alt="Avatar works AI"
-                  className="h-full w-full object-cover"
-                  height={64}
-                  src="/assets/assistant-avatar.webp"
-                  unoptimized
-                  width={64}
-                />
-              </div>
+              <Mascot className="mb-4" label="Maskot works AI" pose="laugh" size={96} />
               <h3 className="text-[18px] font-black text-[color:var(--text)] sm:text-[20px]">
                 Hai! 👋
               </h3>
@@ -388,7 +387,8 @@ export function ChatWidget() {
               {isLoading &&
                 messages.length > 0 &&
                 messages[messages.length - 1]?.role === "user" && (
-                  <div className="flex justify-start">
+                  <div className="flex items-end justify-start gap-2">
+                    <Mascot pose="lookUp" size={32} />
                     <div className="rounded-2xl bg-[color:var(--bg-chip)] px-5 py-3.5 text-[color:var(--text)]">
                       <TypingDots />
                     </div>
@@ -420,7 +420,7 @@ export function ChatWidget() {
         <div className="shrink-0 border-t border-[color:var(--border-strong)] px-4 pb-5 pt-3 sm:px-5 sm:pb-4 sm:pt-3">
           {error && (
             <p className="mb-2 text-center text-[11px] font-semibold text-red-600">
-              {/terlalu banyak/i.test(error.message ?? "")
+              {isRateLimited
                 ? error.message
                 : "Pesan gagal dikirim. Silakan coba lagi."}
             </p>
