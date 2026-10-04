@@ -7,6 +7,7 @@ import { RunningText } from "@/components/portfolio/running-text";
 import { HeroLiquid } from "@/components/portfolio/hero-liquid";
 import { HeroParticles } from "@/components/portfolio/hero-particles";
 import type { ProjectCard } from "@/lib/data/projects";
+import { displayFont } from "@/lib/fonts";
 
 type HomeShellProps = {
   projects: ProjectCard[];
@@ -26,7 +27,7 @@ export function HomeShell({ projects, heroTitle, heroSubtitle, heroImageVersion 
     : "/api/hero-image";
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-[color:var(--surface)] text-[color:var(--text)]">
+    <main className={`${displayFont.variable} min-h-screen overflow-x-clip bg-[color:var(--surface)] text-[color:var(--text)]`}>
       <WorksHeader overlay />
 
       {/* ─────── HERO SECTION ─────── */}
@@ -136,13 +137,14 @@ export function HomeShell({ projects, heroTitle, heroSubtitle, heroImageVersion 
         className="relative scroll-mt-20 bg-[color:var(--surface)] px-4 pb-24 pt-16 sm:px-6 sm:pt-20 lg:px-8"
         id="works"
       >
-        {/* Section heading with subtle accent */}
-        <div className="mx-auto mb-10 max-w-7xl text-center">
-          <span className="inline-block rounded-full border border-[#ff4f0a]/15 bg-[#ff4f0a]/5 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-[#ff4f0a] sm:text-[12px]">
-            Portfolio
-          </span>
+        {/* Judul bagian, sama dengan halaman Works */}
+        <div className="mx-auto mb-12 max-w-7xl">
+          <p className="text-[12px] font-black uppercase text-[#ff4f0a]">Portfolio</p>
+          <h2 className="mt-5 max-w-5xl font-[family-name:var(--font-display)] text-[clamp(2.4rem,6vw,5.2rem)] uppercase leading-[0.92] tracking-normal text-[color:var(--text)]">
+            Aplikasi dan karya digital<span className="text-[#ff4f0a]">.</span>
+          </h2>
         </div>
-        <PortfolioGrid projects={projects} />
+        <PortfolioGrid gallery projects={projects} />
       </section>
 
       {/* ─────── FOOTER ─────── */}

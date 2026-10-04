@@ -29,7 +29,7 @@ export default async function WorksPage() {
   const projects = await fetchForPrerender(getProjects, []);
 
   return (
-    <main className={`${displayFont.variable} min-h-screen overflow-x-hidden bg-[color:var(--surface)] text-[color:var(--text)]`}>
+    <main className={`${displayFont.variable} min-h-screen overflow-x-clip bg-[color:var(--surface)] text-[color:var(--text)]`}>
       <StructuredData
         data={breadcrumbJsonLd([
           { name: "Beranda", path: "/" },

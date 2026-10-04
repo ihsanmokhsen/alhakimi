@@ -523,3 +523,8 @@ textarea {
     animation: none;
   }
 }
+
+/* Mode menempel: ukuran kartu ikut tinggi layar agar galeri dan kontrol muat dalam satu layar. */
+.works-rail[data-pinned] [data-card] {
+  width: min(29vw, 380px, calc((100svh - 15rem) * 0.75));
+}
