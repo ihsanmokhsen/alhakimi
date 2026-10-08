@@ -56,7 +56,8 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "/",
-    languages: { "id-ID": "/" }
+    languages: { "id-ID": "/" },
+    types: { "text/markdown": "/llms.txt" }
   },
   robots: {
     index: true,
