@@ -154,7 +154,30 @@ function MessageBody({ text }: { text: string }) {
 
 // ── Chat state ────────────────────────────────────
 type ChatMessage = { id: string; role: "user" | "assistant"; text: string };
-type ChatStatus = "ready" | "submitted";
+type ChatStatus = "ready" | "submitted" | "streaming";
+
+/**
+ * Bagian teks yang dimunculkan satu per satu. Link dan teks tebal markdown dianggap satu
+ * bagian utuh agar tanda `[`, `](` atau `**` tidak sempat terlihat setengah jadi.
+ */
+const TYPING_TOKEN_PATTERN = /\[[^\]]+\]\([^)\s]+\)|\*\*[^*]+\*\*|\s+|[^\s[*]+|./g;
+
+/** Jeda "sedang membaca & berpikir" sebelum mulai mengetik (ms). */
+const THINK_MIN_MS = 700;
+const THINK_MAX_MS = 1600;
+/** Kecepatan ketik per kata, dan batas total agar jawaban panjang tidak terlalu lama. */
+const WORD_MS = 55;
+const MAX_TYPING_MS = 5500;
+
+const wait = (ms: number) => new Promise<void>((resolve) => window.setTimeout(resolve, ms));
+
+function randomBetween(min: number, max: number) {
+  return min + Math.random() * (max - min);
+}
+
+function prefersReducedMotion() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
 
 /** Kirim pertanyaan ke /api/chat; jawaban dicari dari konten website (tanpa model generatif). */
 function useSiteChat() {
@@ -162,28 +185,77 @@ function useSiteChat() {
   const [status, setStatus] = useState<ChatStatus>("ready");
   const [error, setError] = useState<Error | null>(null);
   const nextId = useRef(0);
+  const unmounted = useRef(false);
 
-  const sendMessage = useCallback(async ({ text }: { text: string }) => {
-    const makeId = () => `m${(nextId.current += 1)}`;
-    setMessages((current) => [...current, { id: makeId(), role: "user", text }]);
-    setStatus("submitted");
-    setError(null);
-
-    try {
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: text })
-      });
-      if (!response.ok) throw new Error(await response.text());
-      const data = (await response.json()) as { answer?: string };
-      setMessages((current) => [...current, { id: makeId(), role: "assistant", text: data.answer ?? "" }]);
-    } catch (caught) {
-      setError(caught instanceof Error ? caught : new Error("Pesan gagal dikirim."));
-    } finally {
-      setStatus("ready");
-    }
+  useEffect(() => {
+    unmounted.current = false;
+    return () => {
+      unmounted.current = true;
+    };
   }, []);
+
+  /** Munculkan jawaban bertahap seperti orang mengetik, dengan jeda di akhir kalimat. */
+  const typeOut = useCallback(async (id: string, answer: string) => {
+    const tokens = answer.match(TYPING_TOKEN_PATTERN) ?? [answer];
+    const words = tokens.filter((token) => token.trim()).length;
+    const speed = Math.min(WORD_MS, MAX_TYPING_MS / Math.max(words, 1));
+    let shown = "";
+
+    for (const token of tokens) {
+      if (unmounted.current) return;
+      shown += token;
+      if (!token.trim()) continue;
+
+      const text = shown;
+      setMessages((current) => current.map((message) => (message.id === id ? { ...message, text } : message)));
+      let delay = speed * randomBetween(0.6, 1.5);
+      if (/[.!?]$/.test(token)) delay += randomBetween(180, 320);
+      else if (/[,;:]$/.test(token)) delay += randomBetween(60, 140);
+      await wait(delay);
+    }
+    setMessages((current) => current.map((message) => (message.id === id ? { ...message, text: answer } : message)));
+  }, []);
+
+  const sendMessage = useCallback(
+    async ({ text }: { text: string }) => {
+      const makeId = () => `m${(nextId.current += 1)}`;
+      setMessages((current) => [...current, { id: makeId(), role: "user", text }]);
+      setStatus("submitted");
+      setError(null);
+      const startedAt = Date.now();
+
+      try {
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question: text })
+        });
+        if (!response.ok) throw new Error(await response.text());
+        const data = (await response.json()) as { answer?: string };
+        const answer = data.answer ?? "";
+
+        if (prefersReducedMotion()) {
+          setMessages((current) => [...current, { id: makeId(), role: "assistant", text: answer }]);
+          return;
+        }
+
+        // Server menjawab instan; beri jeda "membaca" yang sedikit lebih lama untuk jawaban panjang.
+        const thinkMs = Math.min(randomBetween(THINK_MIN_MS, THINK_MAX_MS) + answer.length * 1.5, 2600);
+        await wait(Math.max(thinkMs - (Date.now() - startedAt), 0));
+        if (unmounted.current) return;
+
+        const id = makeId();
+        setMessages((current) => [...current, { id, role: "assistant", text: "" }]);
+        setStatus("streaming");
+        await typeOut(id, answer);
+      } catch (caught) {
+        setError(caught instanceof Error ? caught : new Error("Pesan gagal dikirim."));
+      } finally {
+        if (!unmounted.current) setStatus("ready");
+      }
+    },
+    [typeOut]
+  );
 
   return { messages, sendMessage, status, error };
 }
@@ -201,7 +273,7 @@ export function ChatWidget() {
   const launcherLook = useMascotLook(launcherRef);
 
   const { messages, sendMessage, status, error } = useSiteChat();
-  const isLoading = status === "submitted";
+  const isLoading = status === "submitted" || status === "streaming";
   const isRateLimited = /terlalu banyak/i.test(error?.message ?? "");
 
   // ── Handlers ──────────────────────────────────────
@@ -240,8 +312,9 @@ export function ChatWidget() {
   // ── Side effects ──────────────────────────────────
   // Scroll to bottom on new messages
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+    // Saat jawaban sedang diketik, scroll langsung agar tidak tersendat tiap kata.
+    messagesEndRef.current?.scrollIntoView({ behavior: status === "streaming" ? "auto" : "smooth" });
+  }, [messages, status]);
 
   // Keyboard: Escape to close
   useEffect(() => {
@@ -271,11 +344,13 @@ export function ChatWidget() {
   const headerPose: MascotPose =
     status === "submitted"
       ? "lookUp"
-      : isRateLimited
-        ? "tired"
-        : error
-          ? "shocked"
-          : "smug";
+      : status === "streaming"
+        ? "talk"
+        : isRateLimited
+          ? "tired"
+          : error
+            ? "shocked"
+            : "smug";
 
   return (
     <>
@@ -372,6 +447,8 @@ export function ChatWidget() {
             <div className="space-y-4">
               {messages.map((m) => {
                 const content = m.text;
+                // Gelembung jawaban baru muncul begitu kata pertama diketik.
+                if (m.role === "assistant" && !content) return null;
 
                 return (
                   <div
