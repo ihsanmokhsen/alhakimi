@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "dev", "runtimeExecutable": "npm", "runtimeArgs": ["run", "dev"], "port": 3000 },
+    {
+      "name": "video",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "cd ../works-promo-video && npx remotion studio --no-open --port 3001"],
+      "port": 3001
+    }
+  ]
+}
