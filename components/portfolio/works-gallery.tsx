@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState, type PointerEvent } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
 
 import type { ProjectCard } from "@/lib/data/projects";
 
@@ -10,28 +10,14 @@ type WorksGalleryProps = {
   onOpen: (project: ProjectCard) => void;
 };
 
-/** Jarak geser (px) sebelum seretan mouse dianggap drag, bukan klik. */
+/** Jarak geser (px) sebelum seretan dianggap drag, bukan klik. */
 const DRAG_THRESHOLD = 6;
-
-/**
- * Di desktop galeri "menempel" dan scroll vertikal menggeser kartu ke samping (seperti coreastudios.com).
- * Layar sentuh tetap memakai usap horizontal biasa.
- */
-const PINNED_QUERY = "(min-width: 768px) and (hover: hover) and (pointer: fine)";
-
-function usePinnedMode() {
-  const [pinned, setPinned] = useState(false);
-
-  useEffect(() => {
-    const media = window.matchMedia(PINNED_QUERY);
-    const update = () => setPinned(media.matches);
-    update();
-    media.addEventListener("change", update);
-    return () => media.removeEventListener("change", update);
-  }, []);
-
-  return pinned;
-}
+/** Jarak seret (px) yang cukup untuk melempar kartu dan lanjut ke kartu berikutnya. */
+const SWIPE_THRESHOLD = 90;
+/** Durasi kartu terlempar keluar sebelum tumpukan berganti (ms). */
+const FLY_DURATION = 320;
+/** Jumlah kartu yang tampak di belakang kartu teratas. */
+const STACK_DEPTH = 3;
 
 function formatWita(date: Date) {
   return new Intl.DateTimeFormat("id-ID", {
@@ -56,7 +42,7 @@ function LiveClock() {
   return (
     <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tabular-nums text-[color:var(--text)]/48">
       <span>Kupang</span>
-      <span className="min-w-[4.6rem]">{time ? `${time} WITA` : " "}</span>
+      <span className="min-w-[4.6rem]">{time ? `${time} WITA` : " "}</span>
       <span aria-hidden="true" className="relative flex h-2 w-2">
         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#ff4f0a]/60" />
         <span className="relative inline-flex h-2 w-2 rounded-full bg-[#ff4f0a]" />
@@ -79,245 +65,260 @@ function ArrowIcon({ direction }: { direction: "left" | "right" }) {
   );
 }
 
+function OpenIcon() {
+  return (
+    <svg aria-hidden="true" className="h-3.5 w-3.5" fill="none" viewBox="0 0 16 16">
+      <path d="M5 11 11 5M6 5h5v5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
+    </svg>
+  );
+}
+
+/** Posisi kartu ke-`depth` di belakang: bergeser ke kiri-atas dan sedikit berputar, seperti kipas. */
+function stackTransform(depth: number) {
+  return `translate(${-depth * 22}px, ${-depth * 16}px) rotate(${-depth * 5}deg) scale(${1 - depth * 0.05})`;
+}
+
+/**
+ * Galeri works berupa tumpukan kartu gelap: seret/usap kartu teratas ke samping,
+ * pakai tombol panah, atau tombol keyboard ← → untuk berpindah karya.
+ */
 export function WorksGallery({ projects, onOpen }: WorksGalleryProps) {
-  const pinned = usePinnedMode();
-  const pinRef = useRef<HTMLDivElement>(null);
-  const railRef = useRef<HTMLDivElement>(null);
-  const drag = useRef({
-    active: false,
-    moved: false,
-    startX: 0,
-    startScroll: 0
-  });
-  const [progress, setProgress] = useState(0);
-  const [canPrev, setCanPrev] = useState(false);
-  const [canNext, setCanNext] = useState(false);
+  const [index, setIndex] = useState(0);
+  const [dragX, setDragX] = useState(0);
   const [dragging, setDragging] = useState(false);
-  // Panjang geser horizontal (px) = tinggi scroll tambahan saat galeri menempel.
-  const [distance, setDistance] = useState(0);
+  // Arah kartu yang sedang dilempar keluar; null saat tidak ada animasi lempar.
+  const [flying, setFlying] = useState<1 | -1 | null>(null);
+  const drag = useRef({ active: false, moved: false, startX: 0 });
+  const flyTimer = useRef<number>(0);
 
-  const syncScrollState = useCallback(() => {
-    const rail = railRef.current;
-    if (!rail) return;
-    const max = rail.scrollWidth - rail.clientWidth;
-    setProgress(max > 0 ? rail.scrollLeft / max : 0);
-    setCanPrev(rail.scrollLeft > 4);
-    setCanNext(rail.scrollLeft < max - 4);
-  }, []);
+  const total = projects.length;
 
   useEffect(() => {
-    const rail = railRef.current;
-    if (!rail) return;
-    // Hasil pencarian berubah: kembali ke awal galeri.
-    rail.scrollTo({ left: 0 });
+    // Hasil pencarian berubah: kembali ke kartu pertama.
+    setIndex(0);
+    setDragX(0);
+    setFlying(null);
+  }, [projects]);
 
-    const measure = () => {
-      setDistance(Math.max(rail.scrollWidth - rail.clientWidth, 0));
-      syncScrollState();
-    };
-    measure();
-    const observer = new ResizeObserver(measure);
-    observer.observe(rail);
-    return () => observer.disconnect();
-  }, [projects, pinned, syncScrollState]);
+  useEffect(() => () => window.clearTimeout(flyTimer.current), []);
 
-  // Mode menempel: posisi scroll halaman diterjemahkan menjadi geseran horizontal.
-  useEffect(() => {
-    const pin = pinRef.current;
-    const rail = railRef.current;
-    if (!pinned || !pin || !rail) return;
-
-    let frame = 0;
-    const update = () => {
-      frame = 0;
-      const travelled = Math.min(Math.max(-pin.getBoundingClientRect().top, 0), distance);
-      rail.scrollLeft = travelled;
-      syncScrollState();
-    };
-    const onScroll = () => {
-      if (!frame) frame = window.requestAnimationFrame(update);
-    };
-
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      if (frame) window.cancelAnimationFrame(frame);
-    };
-  }, [pinned, distance, syncScrollState]);
-
-  function scrollByCard(direction: 1 | -1) {
-    const rail = railRef.current;
-    const card = rail?.querySelector<HTMLElement>("[data-card]");
-    if (!rail || !card) return;
-    const step = direction * (card.offsetWidth + 16) * 2;
-    if (pinned) {
-      window.scrollBy({ top: step, behavior: "smooth" });
-    } else {
-      rail.scrollBy({ left: step, behavior: "smooth" });
-    }
+  function go(direction: 1 | -1) {
+    if (total < 2 || flying) return;
+    setFlying(direction);
+    flyTimer.current = window.setTimeout(() => {
+      setIndex((current) => (current + direction + total) % total);
+      setFlying(null);
+      setDragX(0);
+    }, FLY_DURATION);
   }
 
-  // Seret dengan mouse untuk menggeser galeri; sentuhan memakai scroll bawaan.
   function handlePointerDown(event: PointerEvent<HTMLDivElement>) {
-    if (pinned || event.pointerType !== "mouse" || event.button !== 0 || !railRef.current) return;
-    drag.current = {
-      active: true,
-      moved: false,
-      startX: event.clientX,
-      startScroll: railRef.current.scrollLeft
-    };
+    if (flying || (event.pointerType === "mouse" && event.button !== 0)) return;
+    drag.current = { active: true, moved: false, startX: event.clientX };
   }
 
   function handlePointerMove(event: PointerEvent<HTMLDivElement>) {
     const state = drag.current;
-    const rail = railRef.current;
-    if (!state.active || !rail) return;
+    if (!state.active) return;
     const delta = event.clientX - state.startX;
     if (!state.moved && Math.abs(delta) > DRAG_THRESHOLD) {
       state.moved = true;
       setDragging(true);
-      rail.setPointerCapture(event.pointerId);
+      event.currentTarget.setPointerCapture(event.pointerId);
     }
-    if (state.moved) rail.scrollLeft = state.startScroll - delta;
+    if (state.moved) setDragX(delta);
   }
 
   function handlePointerUp() {
+    if (!drag.current.active) return;
     drag.current.active = false;
     setDragging(false);
+    if (Math.abs(dragX) > SWIPE_THRESHOLD && total > 1) {
+      // Usap ke kiri = kartu berikutnya, ke kanan = sebelumnya.
+      go(dragX < 0 ? 1 : -1);
+    } else {
+      setDragX(0);
+    }
   }
 
-  const count = String(projects.length).padStart(2, "0");
+  function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      go(1);
+    } else if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      go(-1);
+    }
+  }
+
+  const visible = Array.from({ length: Math.min(STACK_DEPTH + 1, total) }, (_, depth) => ({
+    depth,
+    project: projects[(index + depth) % total]
+  }));
+  const current = projects[index];
 
   return (
-    <div
-      className="works-rail-bleed"
-      ref={pinRef}
-      style={pinned ? { height: `calc(100svh + ${distance}px)` } : undefined}
-    >
-      <div className={pinned ? "sticky top-0 flex h-[100svh] flex-col justify-center pt-20" : undefined}>
-        <div
-          aria-label="Galeri works"
-          className={`works-rail flex gap-4 pb-6 pt-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${
-            pinned
-              ? "overflow-x-hidden"
-              : `overflow-x-auto ${dragging ? "cursor-grabbing select-none" : "snap-x snap-mandatory md:cursor-grab"}`
-          }`}
-          data-pinned={pinned || undefined}
-          onClickCapture={(event) => {
-            // Klik di akhir seretan tidak boleh membuka proyek.
-            if (drag.current.moved) {
-              event.preventDefault();
-              event.stopPropagation();
-              drag.current.moved = false;
-            }
-          }}
-          onPointerCancel={handlePointerUp}
-          onPointerDown={handlePointerDown}
-          onPointerMove={handlePointerMove}
-          onPointerUp={handlePointerUp}
-          onScroll={syncScrollState}
-          ref={railRef}
-          role="region"
-        >
-          {projects.map((project, index) => {
+    <div className="works-deck">
+      <div
+        aria-label="Galeri works"
+        aria-roledescription="carousel"
+        className={`relative mx-auto flex h-[min(78svh,640px)] min-h-[520px] items-center justify-center touch-pan-y select-none outline-none ${
+          dragging ? "cursor-grabbing" : "cursor-grab"
+        }`}
+        onClickCapture={(event) => {
+          // Klik di akhir seretan tidak boleh membuka proyek.
+          if (drag.current.moved) {
+            event.preventDefault();
+            event.stopPropagation();
+            drag.current.moved = false;
+          }
+        }}
+        onKeyDown={handleKeyDown}
+        onPointerCancel={handlePointerUp}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        role="region"
+        tabIndex={0}
+      >
+        {/* Cahaya lembut di belakang tumpukan, seperti panggung. */}
+        <div aria-hidden="true" className="works-deck-glow pointer-events-none absolute inset-0" />
+
+        {visible
+          .slice()
+          .reverse()
+          .map(({ depth, project }) => {
+            const isTop = depth === 0;
             const imageSrc = `/api/project-logo/${project.id}?v=${new Date(project.updatedAt).getTime()}`;
+            const number = String(((index + depth) % total) + 1).padStart(2, "0");
+
+            // Saat kartu teratas dilempar, kartu di belakangnya ikut maju satu tingkat.
+            const effectiveDepth = flying && !isTop ? depth - 1 : depth;
+            let transform = stackTransform(effectiveDepth);
+            if (isTop) {
+              const x = flying ? flying * -640 : dragX;
+              transform = `translate(${x}px, ${Math.abs(x) * 0.06}px) rotate(${x * 0.05}deg)`;
+            }
 
             return (
-              <button
-                className="works-card group relative aspect-[3/4] w-[78vw] max-w-[380px] shrink-0 snap-start overflow-hidden rounded-[18px] bg-[color:var(--surface-muted)] text-left shadow-[0_18px_60px_rgba(18,24,22,0.10)] outline-none transition-[transform,box-shadow] duration-500 [animation-delay:var(--delay)] focus-visible:ring-2 focus-visible:ring-[#ff4f0a]/60 focus-visible:ring-offset-2 sm:w-[44vw] lg:w-[29vw] [@media(hover:hover)]:hover:-translate-y-1.5 [@media(hover:hover)]:hover:shadow-[0_30px_90px_rgba(18,24,22,0.18)]"
-                data-card
-                draggable={false}
-                key={project.id}
-                onClick={() => onOpen(project)}
+              <article
+                aria-hidden={!isTop}
+                className="works-deck-card absolute flex aspect-[3/4.15] w-[min(80vw,340px)] flex-col rounded-[30px] bg-[#161718] p-3 text-white shadow-[0_40px_90px_-20px_rgba(10,12,14,0.55)] ring-1 ring-white/[0.06]"
+                key={`${project.id}-${(index + depth) % total}`}
                 style={{
-                  ["--delay" as string]: `${Math.min(index, 6) * 70}ms`
+                  transform,
+                  zIndex: STACK_DEPTH + 1 - depth,
+                  opacity: isTop && flying ? 0 : depth > STACK_DEPTH - 1 && !flying ? 0 : 1 - effectiveDepth * 0.18,
+                  filter: effectiveDepth > 0 ? `brightness(${1 - effectiveDepth * 0.14})` : undefined,
+                  transition: dragging && isTop ? "none" : undefined
                 }}
-                type="button"
               >
-                {/* Lapisan warna: gambar yang sama, diburamkan sebagai latar. */}
-                <Image
-                  alt=""
-                  aria-hidden="true"
-                  className="scale-[1.3] object-cover blur-[18px] saturate-[1.7] transition duration-700 [@media(hover:hover)]:group-hover:scale-[1.15] [@media(hover:hover)]:group-hover:blur-[12px]"
-                  draggable={false}
-                  fill
-                  quality={40}
-                  sizes="(max-width: 640px) 78vw, (max-width: 1024px) 44vw, 29vw"
-                  src={imageSrc}
-                />
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(247,248,247,0.04)_0%,rgba(247,248,247,0.22)_50%,rgba(247,248,247,0.92)_88%)]" />
+                <div className="flex items-center justify-between px-1.5 pt-0.5">
+                  <span className="font-[family-name:var(--font-display)] text-[12px] tabular-nums text-white/45">
+                    {number}
+                  </span>
+                  <button
+                    aria-label={`Buka ${project.title}`}
+                    className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-md transition hover:bg-[#ff4f0a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff4f0a]/70"
+                    onClick={() => onOpen(project)}
+                    tabIndex={isTop ? 0 : -1}
+                    type="button"
+                  >
+                    <OpenIcon />
+                  </button>
+                </div>
 
-                {/* Gambar proyek: tajam di layar sentuh; di desktop samar lalu tajam saat hover. */}
-                <div className="absolute inset-x-[9%] top-[8%] h-[46%] transition duration-500 [@media(hover:hover)]:translate-y-2 [@media(hover:hover)]:scale-[0.96] [@media(hover:hover)]:opacity-55 [@media(hover:hover)]:blur-[6px] [@media(hover:hover)]:group-hover:translate-y-0 [@media(hover:hover)]:group-hover:scale-100 [@media(hover:hover)]:group-hover:opacity-100 [@media(hover:hover)]:group-hover:blur-0 [@media(hover:hover)]:group-focus-visible:opacity-100 [@media(hover:hover)]:group-focus-visible:blur-0">
+                <h3 className="mt-3 line-clamp-2 px-3 text-center font-[family-name:var(--font-display)] text-[clamp(1.55rem,6.5vw,2.05rem)] uppercase leading-[0.98] text-white/90">
+                  {project.title}
+                </h3>
+
+                <button
+                  className="group relative mt-4 min-h-0 flex-1 overflow-hidden rounded-[22px] bg-[#222425] text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff4f0a]/70"
+                  draggable={false}
+                  onClick={() => onOpen(project)}
+                  tabIndex={-1}
+                  type="button"
+                >
+                  {/* Gambar yang sama diburamkan sebagai latar penuh warna. */}
                   <Image
-                    alt={`${project.title} visual`}
-                    className="object-contain drop-shadow-[0_18px_40px_rgba(0,0,0,0.18)]"
+                    alt=""
+                    aria-hidden="true"
+                    className="scale-[1.35] object-cover opacity-80 blur-[22px] saturate-[1.6]"
                     draggable={false}
                     fill
-                    quality={85}
-                    sizes="(max-width: 640px) 64vw, (max-width: 1024px) 36vw, 24vw"
+                    quality={40}
+                    sizes="340px"
                     src={imageSrc}
                   />
-                </div>
-
-                <div className="absolute inset-x-0 bottom-0 flex flex-col gap-4 p-5 sm:p-6">
-                  <h2 className="line-clamp-4 break-words font-[family-name:var(--font-display)] text-[clamp(1.6rem,2.6vw,2.4rem)] uppercase leading-[0.95] text-[#121413] transition-colors duration-300 group-hover:text-[#ff4f0a]">
-                    {project.title}
-                  </h2>
-                  <div className="flex items-end justify-between gap-3 text-[11px] font-bold uppercase text-[#121413]/55">
-                    <span className="truncate">{project.category}</span>
-                    <span className="shrink-0 tabular-nums">{new Date(project.createdAt).getFullYear()}</span>
+                  <div className="absolute inset-[14%] transition duration-500 [@media(hover:hover)]:group-hover:scale-[1.04]">
+                    <Image
+                      alt={`${project.title} visual`}
+                      className="object-contain drop-shadow-[0_18px_40px_rgba(0,0,0,0.35)]"
+                      draggable={false}
+                      fill
+                      quality={85}
+                      sizes="260px"
+                      src={imageSrc}
+                    />
                   </div>
-                </div>
+                  <span className="absolute bottom-3 left-1/2 inline-flex max-w-[85%] -translate-x-1/2 items-center gap-1.5 truncate rounded-full bg-black/55 px-3 py-1.5 text-[10px] font-bold uppercase text-white/90 backdrop-blur-md">
+                    <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#ff4f0a]" />
+                    <span className="truncate">{project.category}</span>
+                  </span>
+                </button>
 
-                <span className="absolute right-4 top-4 font-[family-name:var(--font-display)] text-[12px] tabular-nums text-[#121413]/40">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-              </button>
+                <div className="px-5 pb-2 pt-4">
+                  <p className="line-clamp-2 text-center text-[11.5px] leading-[1.5] text-white/45">
+                    {project.description}
+                  </p>
+                </div>
+              </article>
             );
           })}
-        </div>
+      </div>
 
-        <div className="works-rail-pad mt-2 flex items-center gap-4">
-          <div className="hidden items-center gap-2 sm:flex">
-            <button
-              aria-label="Geser ke kiri"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--border)] bg-[color:var(--surface)] text-[color:var(--text)] transition hover:border-[#ff4f0a]/30 hover:text-[#ff4f0a] disabled:pointer-events-none disabled:opacity-30"
-              disabled={!canPrev}
-              onClick={() => scrollByCard(-1)}
-              type="button"
-            >
-              <ArrowIcon direction="left" />
-            </button>
-            <button
-              aria-label="Geser ke kanan"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--border)] bg-[color:var(--surface)] text-[color:var(--text)] transition hover:border-[#ff4f0a]/30 hover:text-[#ff4f0a] disabled:pointer-events-none disabled:opacity-30"
-              disabled={!canNext}
-              onClick={() => scrollByCard(1)}
-              type="button"
-            >
-              <ArrowIcon direction="right" />
-            </button>
-          </div>
+      <p aria-live="polite" className="sr-only">
+        {current ? `${current.title}, karya ${index + 1} dari ${total}` : null}
+      </p>
 
+      <div className="mx-auto mt-4 flex max-w-xl items-center gap-4">
+        <button
+          aria-label="Karya sebelumnya"
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[color:var(--border)] bg-[color:var(--surface)] text-[color:var(--text)] transition hover:border-[#ff4f0a]/30 hover:text-[#ff4f0a] disabled:pointer-events-none disabled:opacity-30"
+          disabled={total < 2}
+          onClick={() => go(-1)}
+          type="button"
+        >
+          <ArrowIcon direction="left" />
+        </button>
+
+        <div className="flex flex-1 flex-col items-center gap-2">
+          <span className="font-[family-name:var(--font-display)] text-[12px] tabular-nums text-[color:var(--text)]/48">
+            {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")} Works
+          </span>
           <div
             aria-hidden="true"
-            className="relative h-[2px] flex-1 overflow-hidden rounded-full bg-[color:var(--text)]/10"
+            className="relative h-[2px] w-full overflow-hidden rounded-full bg-[color:var(--text)]/10"
           >
             <div
-              className="absolute inset-y-0 left-0 w-full origin-left rounded-full bg-[#ff4f0a] transition-transform duration-150"
-              style={{ transform: `scaleX(${Math.max(progress, 0.04)})` }}
+              className="absolute inset-y-0 left-0 w-full origin-left rounded-full bg-[#ff4f0a] transition-transform duration-300"
+              style={{ transform: `scaleX(${total ? (index + 1) / total : 0})` }}
             />
           </div>
-
-          <span className="font-[family-name:var(--font-display)] text-[12px] tabular-nums text-[color:var(--text)]/48">
-            {count} Works
-          </span>
           <span className="hidden md:inline-flex">
             <LiveClock />
           </span>
         </div>
+
+        <button
+          aria-label="Karya berikutnya"
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[color:var(--border)] bg-[color:var(--surface)] text-[color:var(--text)] transition hover:border-[#ff4f0a]/30 hover:text-[#ff4f0a] disabled:pointer-events-none disabled:opacity-30"
+          disabled={total < 2}
+          onClick={() => go(1)}
+          type="button"
+        >
+          <ArrowIcon direction="right" />
+        </button>
       </div>
     </div>
   );

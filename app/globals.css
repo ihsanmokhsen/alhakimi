@@ -475,56 +475,42 @@ textarea {
   }
 }
 
-/* ─── Works gallery: rel horizontal selebar layar, sejajar dengan kontainer 80rem ─── */
-.works-rail-bleed {
-  --rail-pad: 1rem;
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
+/* ─── Works gallery: tumpukan kartu gelap yang bisa diusap ─── */
+.works-deck-glow {
+  background: radial-gradient(closest-side, rgba(150, 154, 176, 0.28), transparent 72%);
+  filter: blur(12px);
 }
 
-@media (min-width: 640px) {
-  .works-rail-bleed {
-    --rail-pad: 1.5rem;
-  }
+.works-deck-card {
+  transform-origin: 50% 85%;
+  transition:
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.4s ease,
+    filter 0.4s ease;
+  will-change: transform;
 }
 
-@media (min-width: 1024px) {
-  .works-rail-bleed {
-    --rail-pad: 2rem;
-  }
+.works-deck {
+  animation: worksDeckIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.works-rail,
-.works-rail-pad {
-  padding-inline: max(var(--rail-pad), calc((100vw - 80rem) / 2 + var(--rail-pad)));
-}
-
-.works-rail {
-  scroll-padding-inline: max(var(--rail-pad), calc((100vw - 80rem) / 2 + var(--rail-pad)));
-}
-
-.works-card {
-  animation: worksCardIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-@keyframes worksCardIn {
+@keyframes worksDeckIn {
   from {
     opacity: 0;
-    transform: translateX(48px);
+    transform: translateY(40px);
   }
   to {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateY(0);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .works-card {
+  .works-deck {
     animation: none;
   }
-}
 
-/* Mode menempel: ukuran kartu ikut tinggi layar agar galeri dan kontrol muat dalam satu layar. */
-.works-rail[data-pinned] [data-card] {
-  width: min(29vw, 380px, calc((100svh - 15rem) * 0.75));
+  .works-deck-card {
+    transition: opacity 0.2s ease;
+  }
 }
