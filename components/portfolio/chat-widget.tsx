@@ -1,6 +1,5 @@
 "use client";
 
-import { useChat } from "@ai-sdk/react";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 
@@ -153,25 +152,40 @@ function MessageBody({ text }: { text: string }) {
   );
 }
 
-// ── Helpers ───────────────────────────────────────────
-/** Extract display text from a UIMessage, supporting both `content` and `parts` formats. */
-function renderMessageContent(m: Record<string, unknown>): string | undefined {
-  if (typeof m.content === "string" && m.content.length > 0) {
-    return m.content;
-  }
-  // UIMessage in ai v7 may use `parts` array
-  const parts = m.parts as Array<Record<string, unknown>> | undefined;
-  if (parts) {
-    const texts = parts
-      .filter((p): p is Record<string, unknown> & { text: string } =>
-        typeof p.text === "string"
-      )
-      .map((p) => p.text);
-    if (texts.length > 0) {
-      return texts.join("");
+// ── Chat state ────────────────────────────────────
+type ChatMessage = { id: string; role: "user" | "assistant"; text: string };
+type ChatStatus = "ready" | "submitted";
+
+/** Kirim pertanyaan ke /api/chat; jawaban dicari dari konten website (tanpa model generatif). */
+function useSiteChat() {
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [status, setStatus] = useState<ChatStatus>("ready");
+  const [error, setError] = useState<Error | null>(null);
+  const nextId = useRef(0);
+
+  const sendMessage = useCallback(async ({ text }: { text: string }) => {
+    const makeId = () => `m${(nextId.current += 1)}`;
+    setMessages((current) => [...current, { id: makeId(), role: "user", text }]);
+    setStatus("submitted");
+    setError(null);
+
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question: text })
+      });
+      if (!response.ok) throw new Error(await response.text());
+      const data = (await response.json()) as { answer?: string };
+      setMessages((current) => [...current, { id: makeId(), role: "assistant", text: data.answer ?? "" }]);
+    } catch (caught) {
+      setError(caught instanceof Error ? caught : new Error("Pesan gagal dikirim."));
+    } finally {
+      setStatus("ready");
     }
-  }
-  return undefined;
+  }, []);
+
+  return { messages, sendMessage, status, error };
 }
 
 // ── Component ─────────────────────────────────────────
@@ -186,8 +200,8 @@ export function ChatWidget() {
   const [isLauncherHovered, setIsLauncherHovered] = useState(false);
   const launcherLook = useMascotLook(launcherRef);
 
-  const { messages, sendMessage, status, error } = useChat();
-  const isLoading = status === "submitted" || status === "streaming";
+  const { messages, sendMessage, status, error } = useSiteChat();
+  const isLoading = status === "submitted";
   const isRateLimited = /terlalu banyak/i.test(error?.message ?? "");
 
   // ── Handlers ──────────────────────────────────────
@@ -257,19 +271,17 @@ export function ChatWidget() {
   const headerPose: MascotPose =
     status === "submitted"
       ? "lookUp"
-      : status === "streaming"
-        ? "talk"
-        : isRateLimited
-          ? "tired"
-          : error
-            ? "shocked"
-            : "smug";
+      : isRateLimited
+        ? "tired"
+        : error
+          ? "shocked"
+          : "smug";
 
   return (
     <>
       {/* ─── Floating button ─── */}
       <button
-        aria-label={isOpen ? "Tutup chat" : "Buka chat AI"}
+        aria-label={isOpen ? "Tutup chat" : "Buka asisten works"}
         className={`group fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border-2 border-white/80 bg-[#151918] p-0.5 shadow-[0_8px_32px_rgba(21,25,24,0.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(21,25,24,0.45)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ef4444]/50 focus-visible:ring-offset-2 sm:bottom-6 sm:right-6 sm:h-15 sm:w-15 ${
           isOpen ? "scale-0 opacity-0" : "scale-100 opacity-100"
         }`}
@@ -352,14 +364,14 @@ export function ChatWidget() {
                 Hai! 👋
               </h3>
               <p className="mt-2 max-w-xs text-[13px] font-medium leading-6 text-[color:var(--text-56)] sm:text-[14px]">
-                Saya asisten AI untuk website ini. Tanya apapun tentang portfolio,
-                project, atau Ihsan!
+                Saya asisten pencari untuk website ini. Tanya tentang works, tulisan,
+                atau profil Ihsan, jawabannya diambil langsung dari konten website.
               </p>
             </div>
           ) : (
             <div className="space-y-4">
               {messages.map((m) => {
-                const content = renderMessageContent(m as never);
+                const content = m.text;
 
                 return (
                   <div
@@ -447,7 +459,7 @@ export function ChatWidget() {
             </button>
           </form>
           <p className="mt-2 text-center text-[10px] font-medium text-[color:var(--text-30)]">
-            Powered by Gemini — gratis, tidak perlu login
+            Menjawab dari konten website — tanpa login
           </p>
         </div>
       </div>

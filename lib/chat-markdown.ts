@@ -1,9 +1,9 @@
 /**
- * Parser markdown ringan khusus untuk bubble chat AI.
+ * Parser markdown ringan khusus untuk bubble chat asisten.
  *
- * Balasan Gemini selalu memakai markdown (`**bold**`, `- list`, `### heading`),
+ * Jawaban asisten (lib/site-rag.ts) memakai markdown (`**bold**`, `- list`, `[link](/path)`),
  * sedangkan bubble chat menampilkan teks mentah sehingga tanda `**` ikut terlihat.
- * Parser ini hanya menangani subset yang benar-benar dipakai model, tanpa
+ * Parser ini hanya menangani subset yang benar-benar dipakai, tanpa
  * menambah dependency baru.
  */
 
