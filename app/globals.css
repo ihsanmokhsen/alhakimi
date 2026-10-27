@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Layar melebar (landscape dan cukup lebar): kartu works ditata mendatar. */
+@custom-variant land (@media (orientation: landscape) and (min-width: 640px));
+
 @theme {
   --color-background: #e9eceb;
   --color-foreground: #121413;

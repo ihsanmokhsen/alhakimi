@@ -18,6 +18,22 @@ const SWIPE_THRESHOLD = 90;
 const FLY_DURATION = 320;
 /** Jumlah kartu yang tampak di belakang kartu teratas. */
 const STACK_DEPTH = 3;
+/** Sama dengan varian `land` di globals.css: kartu mendatar di layar landscape. */
+const LANDSCAPE_QUERY = "(orientation: landscape) and (min-width: 640px)";
+
+function useLandscape() {
+  const [landscape, setLandscape] = useState(false);
+
+  useEffect(() => {
+    const query = window.matchMedia(LANDSCAPE_QUERY);
+    const update = () => setLandscape(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
+
+  return landscape;
+}
 
 function formatWita(date: Date) {
   return new Intl.DateTimeFormat("id-ID", {
@@ -73,9 +89,13 @@ function OpenIcon() {
   );
 }
 
-/** Posisi kartu ke-`depth` di belakang: bergeser ke kiri-atas dan sedikit berputar, seperti kipas. */
-function stackTransform(depth: number) {
-  return `translate(${-depth * 22}px, ${-depth * 16}px) rotate(${-depth * 5}deg) scale(${1 - depth * 0.05})`;
+/**
+ * Posisi kartu ke-`depth` di belakang: bergeser ke kiri-atas dan sedikit berputar, seperti kipas.
+ * Kartu mendatar jauh lebih lebar, jadi putarannya dibuat lebih landai agar tidak keluar layar.
+ */
+function stackTransform(depth: number, landscape: boolean) {
+  const rotate = landscape ? 1.6 : 5;
+  return `translate(${-depth * 22}px, ${-depth * 16}px) rotate(${-depth * rotate}deg) scale(${1 - depth * 0.05})`;
 }
 
 /**
@@ -90,6 +110,7 @@ export function WorksGallery({ projects, onOpen }: WorksGalleryProps) {
   const [flying, setFlying] = useState<1 | -1 | null>(null);
   const drag = useRef({ active: false, moved: false, startX: 0 });
   const flyTimer = useRef<number>(0);
+  const landscape = useLandscape();
 
   const total = projects.length;
 
@@ -162,7 +183,7 @@ export function WorksGallery({ projects, onOpen }: WorksGalleryProps) {
       <div
         aria-label="Galeri works"
         aria-roledescription="carousel"
-        className={`relative mx-auto flex h-[min(78svh,640px)] min-h-[520px] items-center justify-center touch-pan-y select-none outline-none ${
+        className={`relative mx-auto flex h-[min(78svh,640px)] min-h-[520px] items-center land:h-[clamp(240px,calc(100svh-150px),600px)] land:min-h-0 justify-center touch-pan-y select-none outline-none ${
           dragging ? "cursor-grabbing" : "cursor-grab"
         }`}
         onClickCapture={(event) => {
@@ -194,16 +215,17 @@ export function WorksGallery({ projects, onOpen }: WorksGalleryProps) {
 
             // Saat kartu teratas dilempar, kartu di belakangnya ikut maju satu tingkat.
             const effectiveDepth = flying && !isTop ? depth - 1 : depth;
-            let transform = stackTransform(effectiveDepth);
+            let transform = stackTransform(effectiveDepth, landscape);
             if (isTop) {
-              const x = flying ? flying * -640 : dragX;
-              transform = `translate(${x}px, ${Math.abs(x) * 0.06}px) rotate(${x * 0.05}deg)`;
+              const x = flying ? flying * (landscape ? -1100 : -640) : dragX;
+              const tilt = landscape ? 0.02 : 0.05;
+              transform = `translate(${x}px, ${Math.abs(x) * 0.06}px) rotate(${x * tilt}deg)`;
             }
 
             return (
               <article
                 aria-hidden={!isTop}
-                className="works-deck-card absolute flex aspect-[3/4.15] w-[min(80vw,340px)] flex-col rounded-[30px] bg-[#161718] p-3 text-white shadow-[0_40px_90px_-20px_rgba(10,12,14,0.55)] ring-1 ring-white/[0.06]"
+                className="works-deck-card absolute flex aspect-[3/4.15] w-[min(80vw,340px)] flex-col rounded-[30px] bg-[#161718] p-3 text-white shadow-[0_40px_90px_-20px_rgba(10,12,14,0.55)] ring-1 ring-white/[0.06] land:aspect-auto land:h-[clamp(200px,calc(100svh-190px),460px)] land:w-[min(88vw,880px)] land:flex-row land:gap-2"
                 key={`${project.id}-${(index + depth) % total}`}
                 style={{
                   transform,
@@ -213,27 +235,8 @@ export function WorksGallery({ projects, onOpen }: WorksGalleryProps) {
                   transition: dragging && isTop ? "none" : undefined
                 }}
               >
-                <div className="flex items-center justify-between px-1.5 pt-0.5">
-                  <span className="font-[family-name:var(--font-display)] text-[12px] tabular-nums text-white/45">
-                    {number}
-                  </span>
-                  <button
-                    aria-label={`Buka ${project.title}`}
-                    className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-md transition hover:bg-[#ff4f0a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff4f0a]/70"
-                    onClick={() => onOpen(project)}
-                    tabIndex={isTop ? 0 : -1}
-                    type="button"
-                  >
-                    <OpenIcon />
-                  </button>
-                </div>
-
-                <h3 className="mt-3 line-clamp-2 px-3 text-center font-[family-name:var(--font-display)] text-[clamp(1.55rem,6.5vw,2.05rem)] uppercase leading-[0.98] text-white/90">
-                  {project.title}
-                </h3>
-
                 <button
-                  className="group relative mt-4 min-h-0 flex-1 overflow-hidden rounded-[22px] bg-[#222425] text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff4f0a]/70"
+                  className="group relative order-3 mt-4 min-h-0 flex-1 overflow-hidden rounded-[22px] bg-[#222425] text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff4f0a]/70 land:order-none land:mt-0 land:flex-[1.5]"
                   draggable={false}
                   onClick={() => onOpen(project)}
                   tabIndex={-1}
@@ -247,17 +250,17 @@ export function WorksGallery({ projects, onOpen }: WorksGalleryProps) {
                     draggable={false}
                     fill
                     quality={40}
-                    sizes="340px"
+                    sizes={`${LANDSCAPE_QUERY} 520px, 340px`}
                     src={imageSrc}
                   />
-                  <div className="absolute inset-[14%] transition duration-500 [@media(hover:hover)]:group-hover:scale-[1.04]">
+                  <div className="absolute inset-[14%] transition duration-500 land:inset-[11%] [@media(hover:hover)]:group-hover:scale-[1.04]">
                     <Image
                       alt={`${project.title} visual`}
                       className="object-contain drop-shadow-[0_18px_40px_rgba(0,0,0,0.35)]"
                       draggable={false}
                       fill
                       quality={85}
-                      sizes="260px"
+                      sizes={`${LANDSCAPE_QUERY} 420px, 260px`}
                       src={imageSrc}
                     />
                   </div>
@@ -267,10 +270,43 @@ export function WorksGallery({ projects, onOpen }: WorksGalleryProps) {
                   </span>
                 </button>
 
-                <div className="px-5 pb-2 pt-4">
-                  <p className="line-clamp-2 text-center text-[11.5px] leading-[1.5] text-white/45">
-                    {project.description}
-                  </p>
+                {/* Potret: isi kolom ini tersusun di atas & bawah gambar. Landscape: jadi kolom teks di kanan. */}
+                <div className="contents land:flex land:min-w-0 land:flex-1 land:flex-col land:px-3 land:py-1">
+                  <div className="order-1 flex items-center justify-between px-1.5 pt-0.5 land:order-none land:shrink-0 land:px-0">
+                    <span className="font-[family-name:var(--font-display)] text-[12px] tabular-nums text-white/45">
+                      {number}
+                      <span className="hidden text-white/25 land:inline"> / {String(total).padStart(2, "0")}</span>
+                    </span>
+                    <button
+                      aria-label={`Buka ${project.title}`}
+                      className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-md transition hover:bg-[#ff4f0a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff4f0a]/70"
+                      onClick={() => onOpen(project)}
+                      tabIndex={isTop ? 0 : -1}
+                      type="button"
+                    >
+                      <OpenIcon />
+                    </button>
+                  </div>
+
+                  <h3 className="order-2 mt-3 line-clamp-2 land:order-none land:shrink-0 px-3 text-center font-[family-name:var(--font-display)] text-[clamp(1.55rem,6.5vw,2.05rem)] uppercase leading-[0.98] text-white/90 land:mt-auto land:line-clamp-3 land:px-0 land:text-left [@media(max-height:500px)]:land:line-clamp-2 land:text-[clamp(1.5rem,3.4vw,2.6rem)]">
+                    {project.title}
+                  </h3>
+
+                  <div className="order-4 px-5 pb-2 pt-4 land:order-none land:min-h-0 land:overflow-hidden land:px-0 land:pb-0 land:pt-3">
+                    <p className="line-clamp-2 text-center text-[11.5px] leading-[1.5] text-white/45 land:line-clamp-4 land:text-left [@media(max-height:500px)]:land:line-clamp-1 land:text-[13px] land:leading-[1.55]">
+                      {project.description}
+                    </p>
+                  </div>
+
+                  <button
+                    className="mt-auto hidden w-fit shrink-0 items-center gap-2 rounded-full bg-white/10 px-4 py-2.5 text-[11px] font-bold uppercase text-white/85 transition hover:bg-[#ff4f0a] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff4f0a]/70 land:inline-flex"
+                    onClick={() => onOpen(project)}
+                    tabIndex={-1}
+                    type="button"
+                  >
+                    Lihat karya
+                    <OpenIcon />
+                  </button>
                 </div>
               </article>
             );
