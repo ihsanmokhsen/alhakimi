@@ -148,18 +148,21 @@ export function WorksShowcase({ projects, onOpen }: WorksShowcaseProps) {
         role="region"
         tabIndex={0}
       >
-        {/* Piringan pusat dengan teks melingkar yang berputar berlawanan arah. */}
+        {/* Piringan pusat: lingkaran titik-titik yang berputar pelan berlawanan arah. */}
         <div aria-hidden="true" className="works-orbit-dial pointer-events-none absolute">
           <svg className="works-orbit-ring h-full w-full" viewBox="0 0 200 200">
-            <defs>
-              <path d="M100,100 m-88,0 a88,88 0 1,1 176,0 a88,88 0 1,1 -176,0" id="works-orbit-path" />
-            </defs>
             <circle cx="100" cy="100" fill="none" r="98" stroke="currentColor" strokeDasharray="2 5" strokeOpacity="0.35" />
-            <text className="fill-current text-[8.4px] font-bold uppercase" letterSpacing="3.2" opacity="0.4">
-              <textPath href="#works-orbit-path">
-                Works • Ihsan Mokhsen • Aplikasi • Karya Digital • Works • Ihsan Mokhsen • Aplikasi • Karya Digital •
-              </textPath>
-            </text>
+            <circle
+              cx="100"
+              cy="100"
+              fill="none"
+              r="88"
+              stroke="currentColor"
+              strokeDasharray="0.1 4"
+              strokeLinecap="round"
+              strokeOpacity="0.4"
+              strokeWidth="1.6"
+            />
           </svg>
         </div>
 
