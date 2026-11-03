@@ -53,13 +53,13 @@ export function HomeShell({ projects, heroTitle, heroSubtitle, heroImageVersion 
         {/* Floating particles */}
         <HeroParticles />
 
-        {/* Clock */}
-        <div className="absolute left-1/2 top-28 z-20 -translate-x-1/2 sm:top-32">
-          <HeaderClock light />
-        </div>
-
         {/* Content */}
         <div className="relative z-10 flex flex-col items-center">
+          {/* Jam ala time.is, di dalam alur konten agar tidak menumpuk judul di layar pendek */}
+          <div className="mb-8 sm:mb-10">
+            <HeaderClock hero light />
+          </div>
+
           {/* Title with reveal animation */}
           <h1
             className="animate-reveal-text max-w-4xl text-[clamp(2.65rem,9vw,7.1rem)] font-black leading-[0.92] tracking-tight text-white sm:leading-[0.88]"
