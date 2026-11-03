@@ -6,6 +6,7 @@ import { useState } from "react";
 
 import { FadeIn } from "@/components/portfolio/fade-in";
 import { WorksGallery } from "@/components/portfolio/works-gallery";
+import { WorksShowcase } from "@/components/portfolio/works-showcase";
 import type { ProjectCard } from "@/lib/data/projects";
 
 const PortfolioModal = dynamic(
@@ -17,6 +18,8 @@ type PortfolioGridProps = {
   projects: ProjectCard[];
   /** Ganti tampilan grid ikon dengan galeri kartu horizontal (dipakai di /works). */
   gallery?: boolean;
+  /** Bersama `gallery`: tampilkan semua karya sekaligus (katalog) alih-alih tumpukan kartu. */
+  showcase?: boolean;
 };
 
 type ViewMode = "grid" | "list";
@@ -42,7 +45,7 @@ function ListModeIcon() {
   );
 }
 
-export function PortfolioGrid({ projects, gallery = false }: PortfolioGridProps) {
+export function PortfolioGrid({ projects, gallery = false, showcase = false }: PortfolioGridProps) {
   const [activeProject, setActiveProject] = useState<ProjectCard | null>(null);
   const [query, setQuery] = useState("");
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
@@ -123,7 +126,11 @@ export function PortfolioGrid({ projects, gallery = false }: PortfolioGridProps)
         </div>
 
         {visibleProjects.length > 0 && viewMode === "grid" && gallery ? (
-          <WorksGallery onOpen={setActiveProject} projects={visibleProjects} />
+          showcase ? (
+            <WorksShowcase onOpen={setActiveProject} projects={visibleProjects} />
+          ) : (
+            <WorksGallery onOpen={setActiveProject} projects={visibleProjects} />
+          )
         ) : null}
 
         {visibleProjects.length > 0 && viewMode === "grid" && !gallery ? (

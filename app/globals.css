@@ -517,3 +517,86 @@ textarea {
     transition: opacity 0.2s ease;
   }
 }
+
+/* ─── Works showcase (halaman depan): roda karya mengelilingi piringan pusat ─── */
+.works-orbit {
+  --r: clamp(230px, 42vw, 500px);
+  --tw: clamp(96px, 14.5vw, 190px);
+  --th: calc(var(--tw) * 1.34);
+  --cy: calc(var(--th) + var(--r) + 40px);
+  height: var(--cy);
+}
+
+.works-orbit-wheel,
+.works-orbit-dial {
+  left: 50%;
+  top: var(--cy);
+}
+
+.works-orbit-wheel {
+  width: 0;
+  height: 0;
+  transform: rotate(var(--spin, 0deg));
+}
+
+.works-orbit-tile {
+  position: absolute;
+  left: calc(var(--tw) / -2);
+  top: calc(-1 * var(--r) - var(--th));
+  width: var(--tw);
+  height: var(--th);
+  transform-origin: 50% 100%;
+  box-shadow: 0 28px 50px -24px rgba(10, 12, 14, 0.6);
+  transition:
+    translate 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    scale 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.4s ease;
+}
+
+.works-orbit-tile.is-active {
+  translate: 0 -14px;
+  scale: 1.06;
+  box-shadow:
+    0 36px 60px -24px rgba(10, 12, 14, 0.65),
+    0 0 0 2px #ff4f0a;
+}
+
+.works-orbit-tile:hover,
+.works-orbit-tile:focus-visible {
+  translate: 0 -22px;
+}
+
+.works-orbit-tile:focus-visible {
+  box-shadow: 0 0 0 3px #ff4f0a;
+}
+
+.works-orbit-dial {
+  width: calc(var(--r) * 1.24);
+  height: calc(var(--r) * 1.24);
+  translate: -50% -50%;
+  color: var(--text);
+}
+
+.works-orbit-ring {
+  animation: worksOrbitRing 60s linear infinite reverse;
+}
+
+@keyframes worksOrbitRing {
+  to {
+    rotate: 360deg;
+  }
+}
+
+.works-orbit-info {
+  top: calc(var(--cy) - var(--r) * 0.62 + 26px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .works-orbit-ring {
+    animation: none;
+  }
+
+  .works-orbit-tile {
+    transition: none;
+  }
+}

@@ -137,14 +137,7 @@ export function HomeShell({ projects, heroTitle, heroSubtitle, heroImageVersion 
         className="relative scroll-mt-20 bg-[color:var(--surface)] px-4 pb-24 pt-16 sm:px-6 sm:pt-20 lg:px-8"
         id="works"
       >
-        {/* Judul bagian, sama dengan halaman Works */}
-        <div className="mx-auto mb-12 max-w-7xl">
-          <p className="text-[12px] font-black uppercase text-[#ff4f0a]">Portfolio</p>
-          <h2 className="mt-5 max-w-5xl font-[family-name:var(--font-display)] text-[clamp(2.4rem,6vw,5.2rem)] uppercase leading-[0.92] tracking-normal text-[color:var(--text)]">
-            Aplikasi dan karya digital<span className="text-[#ff4f0a]">.</span>
-          </h2>
-        </div>
-        <PortfolioGrid gallery projects={projects} />
+        <PortfolioGrid gallery projects={projects} showcase />
       </section>
 
       {/* ─────── FOOTER ─────── */}
