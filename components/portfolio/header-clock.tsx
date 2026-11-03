@@ -52,15 +52,15 @@ export function HeaderClock({ light = false, hero = false }: HeaderClockProps) {
   const c = light ? "text-white" : "text-[color:var(--text)]";
 
   if (hero) {
-    const muted = light ? "text-white/80" : "text-[color:var(--text)]/80";
+    const muted = light ? "text-white/65" : "text-[color:var(--text)]/65";
 
     return (
       <div className={`shrink-0 text-center ${c}`}>
-        <p className={`text-[14px] font-medium leading-tight sm:text-[17px] ${muted}`}>
+        <p className={`text-[12px] font-medium leading-none sm:text-[13px] ${muted}`}>
           Waktu di <strong className={`font-black ${light ? "text-white" : "text-[color:var(--text)]"}`}>Kupang</strong>,
           Indonesia sekarang
         </p>
-        <p className="mt-1 text-[clamp(2.75rem,9vw,5rem)] font-black leading-none tabular-nums tracking-tight">
+        <p className="mt-2 text-[clamp(2rem,4.2vw,2.875rem)] font-black leading-none tabular-nums tracking-tight">
           {now
             ? now.time.split(/[.:]/).map((part, index) => (
                 <span key={index}>
@@ -70,7 +70,7 @@ export function HeaderClock({ light = false, hero = false }: HeaderClockProps) {
               ))
             : "\u00a0"}
         </p>
-        <p className={`mt-2 text-[13px] font-medium sm:text-[15px] ${muted}`}>
+        <p className={`mt-2 text-[12px] font-medium leading-none sm:text-[13px] ${muted}`}>
           {now ? `${now.weekday}, ${now.dateFull}, minggu ${now.week}` : "\u00a0"}
         </p>
       </div>

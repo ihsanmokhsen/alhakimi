@@ -32,7 +32,7 @@ export function HomeShell({ projects, heroTitle, heroSubtitle, heroImageVersion 
 
       {/* ─────── HERO SECTION ─────── */}
       <section
-        className={`relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-cover bg-center px-4 pb-20 pt-10 text-center sm:px-6 sm:pb-24 sm:pt-14 lg:px-8 ${heroImageVersion ? "" : "bg-[url('/api/hero-image')]"}`}
+        className={`relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-cover bg-center px-4 pb-28 pt-24 text-center sm:px-6 sm:pb-32 sm:pt-28 lg:px-8 ${heroImageVersion ? "" : "bg-[url('/api/hero-image')]"}`}
         id="explore"
         style={heroImageVersion ? { backgroundImage: `url('${heroImageSrc}')` } : undefined}
       >
@@ -54,15 +54,15 @@ export function HomeShell({ projects, heroTitle, heroSubtitle, heroImageVersion 
         <HeroParticles />
 
         {/* Content */}
-        <div className="relative z-10 flex flex-col items-center">
-          {/* Jam ala time.is, di dalam alur konten agar tidak menumpuk judul di layar pendek */}
-          <div className="mb-8 sm:mb-10">
+        <div className="relative z-10 flex w-full flex-col items-center">
+          {/* Jam ala time.is: ringkas sebagai pendukung, judul tetap satu-satunya fokus utama */}
+          <div className="animate-reveal-text mb-10 sm:mb-12">
             <HeaderClock hero light />
           </div>
 
           {/* Title with reveal animation */}
           <h1
-            className="animate-reveal-text max-w-4xl text-[clamp(2.65rem,9vw,7.1rem)] font-black leading-[0.92] tracking-tight text-white sm:leading-[0.88]"
+            className="animate-reveal-text max-w-4xl text-[clamp(3.75rem,12vw,8.75rem)] font-black leading-[0.85] tracking-[-0.04em] text-white"
             style={{ animationDelay: "0.15s" }}
           >
             <span className="block">{title}</span>
@@ -70,7 +70,7 @@ export function HomeShell({ projects, heroTitle, heroSubtitle, heroImageVersion 
 
           {/* Subtitle with staggered reveal */}
           <p
-            className="animate-reveal-text mt-6 max-w-xl text-[15px] font-medium leading-7 text-white/85 sm:mt-8 sm:max-w-2xl sm:text-[18px] sm:leading-8"
+            className="animate-reveal-text mt-5 max-w-[34ch] text-balance text-[16px] font-medium leading-relaxed text-white/80 sm:mt-6 sm:text-[19px]"
             style={{ animationDelay: "0.35s" }}
           >
             {subtitle}
@@ -78,7 +78,7 @@ export function HomeShell({ projects, heroTitle, heroSubtitle, heroImageVersion 
 
           {/* CTA buttons with staggered reveal */}
           <div
-            className="animate-reveal-text mt-7 flex flex-col items-center gap-3 sm:mt-9 sm:flex-row"
+            className="animate-reveal-text mt-8 flex w-full max-w-xs flex-col items-stretch gap-3 sm:mt-10 sm:w-auto sm:max-w-none sm:flex-row sm:items-center"
             style={{ animationDelay: "0.55s" }}
           >
             <Link
